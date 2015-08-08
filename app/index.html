@@ -9,37 +9,18 @@
   <app></app>
 
   <script src="bower_components/traceur-runtime/traceur-runtime.js"></script>
-  <!--<script src="bower_components/es6-module-loader/dist/es6-module-loader.js"></script>-->
-  <!--<script src="bower_components/system.js/dist/system.js"></script>-->
-  <script src="https://jspm.io/system@0.16.js"></script>
+  <script src="//jspm.io/system@0.16.js"></script><!--todo bowerify-->
   <script src="bower_components/angular2-build/angular2.js"></script>
   <script src="bower_components/firebase/firebase.js"></script>
   <script src="bower_components/requirejs/require.js"></script>
-  <!--<script>
-    require.config({
-      paths: {
-        'angular2/angular2': 'bower_components/angular2-build/angular2'
-      }
-    });
-
-    require(['app'])
-  </script>-->
   <script>
     System.config({
       baseUrl: '/',
       paths: {
         '*': '*.js',
         transpiler: 'typescript'
-        /*,
-
-        'angular2/!*': 'bower_components/angular2-build/!*.js'*/
       }
     });
-    /*System.paths = {
-      'app/!*': '**.js',
-      'firebase/!*': 'bower_components/firebase/!*.js',
-      'lib/!*': 'lib/!*.js'
-    };*/
     System.import('app');
   </script>
 </body>

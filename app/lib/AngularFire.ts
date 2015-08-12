@@ -17,7 +17,7 @@ export class AngularFire {
 export class FirebaseArray {
   ref: Firebase;
   error: any;
-  list: Array;
+  list: Array<{}>;
 
   constructor(ref: Firebase) {
     this.ref = ref;

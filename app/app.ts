@@ -1,24 +1,26 @@
 /// <reference path="../typings/angular2/angular2.d.ts" />
 
 import * as ng from 'angular2/angular2';
-import * as fire from 'lib/AngularFire';
+import PlayersDA from 'dataAccess/playersDA';
 import PickList from 'pickList/pickList';
 import TeamList from 'teamList/teamList';
 
 @ng.Component({
-  selector: 'app'
+  selector: 'app',
+  viewInjector: [PlayersDA]
 })
 @ng.View({
   templateUrl: 'app.html',
   directives: [ng.NgFor, PickList, TeamList]
 })
-export class App {
-  players:Array<{}>;
+class App {
+  players: Array<{}>;
 
-  constructor() {
-    var fireRef = new fire.AngularFire("https://rockfordkeeper2015.firebaseio.com/players");
-    this.players = fireRef.asArray().list;
+  constructor(playersDA: PlayersDA) {
+    this.players = playersDA.getPlayers();
   }
 }
 
 ng.bootstrap(App);
+
+export default App;

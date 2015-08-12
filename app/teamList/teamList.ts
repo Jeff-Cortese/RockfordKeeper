@@ -17,4 +17,4 @@ class TeamList {
   }
 }
 
-export default TeamList
+export default TeamList;

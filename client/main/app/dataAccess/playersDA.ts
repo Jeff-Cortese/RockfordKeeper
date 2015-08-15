@@ -1,5 +1,5 @@
-import * as endpoints from 'dataAccess/endpoints';
-import * as fire from 'lib/AngularFire';
+import * as endpoints from './endpoints';
+import * as fire from '../lib/AngularFire';
 
 class PlayerDA {
   private fireRef: fire.AngularFire;

@@ -1,11 +1,11 @@
 import * as ng from 'angular2/angular2';
-import * as fire from 'lib/AngularFire';
+import * as fire from '../lib/AngularFire';
 
 @ng.Component({
   selector: 'team-list'
 })
 @ng.View({
-  templateUrl: 'teamList/teamList.html',
+  templateUrl: 'app/teamList/teamList.html',
   directives: [ng.NgFor]
 })
 class TeamList {

@@ -1,8 +1,9 @@
-app/bower_components
+main/bower_components
+main/jspm_packages
 node_modules
 typings
-app/**/*.js
-app/**/*.js.map
+main/app/**/*.js
+main/app/**/*.js.map
 
 
 # Created by .ignore support plugin (hsz.mobi)

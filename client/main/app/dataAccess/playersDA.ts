@@ -1,28 +1,12 @@
-import * as endpoints from './endpoints';
-import * as fire from '../lib/AngularFire';
+import * as endpoints from 'dataAccess/endpoints';
+import * as fire from 'lib/AngularFire';
+import * as api from './dataAccessApi';
 
-class PlayerDA {
-  private fireRef: fire.AngularFire;
-  private firePlayers: fire.FirebaseArray;
-  private players: Array<{}>;
+export class PlayersDA{
+  static newPlayersObservable() {
+    var fireRef = new fire.AngularFire(endpoints.players);
+    var firePlayers = fireRef.asArray();
 
-  constructor() {
-    this.fireRef = new fire.AngularFire(endpoints.players);
-  }
 
-  private fetchPlayers() {
-    this.firePlayers = this.fireRef.asArray();
-    this.players = this.firePlayers.list;
-  }
-
-  getPlayers() {
-    if (!this.players) {
-      this.fetchPlayers();
-    }
-
-    //todo promise so that spinners can happen and what not
-    return this.players;
   }
 }
-
-export default PlayerDA;

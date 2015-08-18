@@ -7,6 +7,7 @@ import * as com from './common/common';
 import * as da from './dataAccess/dataAccess';
 import PickList from './pickList/pickList';
 import TeamList from './teamList/teamList';
+import PlayerList from './playerList/playerList';
 
 
 @ng.Component({
@@ -15,16 +16,10 @@ import TeamList from './teamList/teamList';
 })
 @ng.View({
   templateUrl: 'app/app.html',
-  directives: [ng.NgFor, PickList, TeamList]
+  directives: [ng.NgFor, PickList, TeamList, PlayerList]
 })
 class App {
-  players: Array<{}>;
-  observablePlayers: com.IObservedCollection;
-
-  constructor(playersFactory: da.ObservableFactory) {
-    this.observablePlayers = playersFactory.newObservablePlayers().observe();
-    this.players = this.observablePlayers.list;
-  }
+  constructor() {}
 }
 
 ng.bootstrap(App)

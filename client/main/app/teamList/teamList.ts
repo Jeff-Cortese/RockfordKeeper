@@ -1,5 +1,6 @@
 import * as ng from 'angular2/angular2';
-import * as fire from '../lib/AngularFire';
+import * as com from 'app/common/common';
+import * as da from 'app/dataAccess/dataAccess';
 
 @ng.Component({
   selector: 'team-list'
@@ -10,10 +11,11 @@ import * as fire from '../lib/AngularFire';
 })
 class TeamList {
   teams: Array<{}>;
+  observableTeams: com.IObservedCollection;
 
-  constructor() {
-    var fireRef = new fire.AngularFire("https://rockfordkeeper2015.firebaseio.com/teams");
-    this.teams = fireRef.asArray().list;
+  constructor(teamFactory: da.ObservableFactory) {
+    this.observableTeams = teamFactory.newObservableTeams().observe();
+    this.teams = this.observableTeams.list;
   }
 }
 

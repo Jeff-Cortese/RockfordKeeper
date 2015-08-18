@@ -1,35 +1,44 @@
-export class AngularFire {
-  static asArray(ref: Firebase) {
-    return new FirebaseArray(this.ref);
+import * as com from './IObservedCollection'
+
+class ObservableFireCollection {
+  ref;
+  addedObservable;
+  movedObservable;
+  changedObservable;
+  removedObservable;
+  valueObservable;
+
+  constructor(fireRef: Firebase) {
+    this.ref = fireRef;
+    var observable = Rx.Observable.fromEvent.bind(this, this.ref);
+    this.addedObservable = observable('child_added');
+    this.movedObservable = observable('child_moved');
+    this.changedObservable = observable('child_changed');
+    this.removedObservable = observable('child_removed');
+    this.valueObservable = observable('value').take(1);
   }
 }
 
-
-export class FirebaseArray<T> {
-  ref: Firebase;
+// theres really no reason for this to be a subclass
+export class ObservedCollection extends ObservableFireCollection implements com.IObservedCollection{
   error: any;
-  list: Array<T>;
+  list: Array<any>;
 
   constructor(ref: Firebase) {
-    this.ref = ref;
+    super(ref);
     this.list = [];
+  }
 
-    // listen for changes at the Firebase instance
-    Rx.Observable.fromEvent(this.ref.orderByChild('teamId'), 'child_added')
-      .subscribe(this.created.bind(this), this.error);
+  static fromEndpoint(endpoint: string) {
+    return new this(new Firebase(endpoint));
+  }
 
-    Rx.Observable.fromEvent(this.ref, 'child_moved')
-      .subscribe(this.moved.bind(this), this.error);
-
-    Rx.Observable.fromEvent(this.ref, 'child_changed')
-      .subscribe(this.updated.bind(this), this.error);
-
-    Rx.Observable.fromEvent(this.ref, 'child_removed')
-      .subscribe(this.removed.bind(this), this.error);
-
-    // determine when initial load is completed
-    Rx.Observable.fromEvent(this.ref, 'value')
-      .take(1).subscribe(() => console.log('loaded'))
+  observe() {
+    this.addedObservable.subscribe(this.created.bind(this), this.error);
+    this.movedObservable.subscribe(this.moved.bind(this), this.error);
+    this.changedObservable.subscribe(this.updated.bind(this), this.error);
+    this.removedObservable.subscribe(this.removed.bind(this), this.error);
+    return this;
   }
 
   getItem(recOrIndex: any) {
@@ -105,5 +114,4 @@ export class FirebaseArray<T> {
   getRecord(key) {
     return this.list.find((item) => key === item._key);
   }
-
 }

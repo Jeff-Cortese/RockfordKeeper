@@ -3,14 +3,15 @@
 /// <reference path="../../typings/rx/rx.d.ts" />
 
 import * as ng from 'angular2/angular2';
-import PlayersDA from './dataAccess/playersDA';
+import * as com from './common/common';
+import * as da from './dataAccess/dataAccess';
 import PickList from './pickList/pickList';
 import TeamList from './teamList/teamList';
 
 
 @ng.Component({
   selector: 'app',
-  viewInjector: [PlayersDA]
+  viewInjector: [da.ObservableFactory]
 })
 @ng.View({
   templateUrl: 'app/app.html',
@@ -18,12 +19,19 @@ import TeamList from './teamList/teamList';
 })
 class App {
   players: Array<{}>;
+  observablePlayers: com.IObservedCollection;
 
-  constructor(playersDA: PlayersDA) {
-    this.players = playersDA.getPlayers();
+  constructor(playersFactory: da.ObservableFactory) {
+    this.observablePlayers = playersFactory.newObservablePlayers().observe();
+    this.players = this.observablePlayers.list;
   }
 }
 
-ng.bootstrap(App);
+ng.bootstrap(App)
+  .then(function() {
+    console.log('Bootstrap successful');
+  }, function(e) {
+    console.log(e);
+  });
 
 export default App;

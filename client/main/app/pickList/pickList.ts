@@ -1,5 +1,6 @@
 import * as ng from 'angular2/angular2';
-import * as fire from '../lib/AngularFire';
+import * as com from 'app/common/common';
+import * as da from 'app/dataAccess/dataAccess';
 
 @ng.Component({
   selector: 'pick-list'
@@ -10,10 +11,11 @@ import * as fire from '../lib/AngularFire';
 })
 class PickList {
   picks: Array<{}>;
+  observablePicks: com.IObservedCollection;
 
-  constructor() {
-    var fireRef = new fire.AngularFire("https://rockfordkeeper2015.firebaseio.com/picks");
-    this.picks = fireRef.asArray().list;
+  constructor(picksFactory: da.ObservableFactory) {
+    this.observablePicks = picksFactory.newObservablePicks().observe();
+    this.picks = this.observablePicks.list;
   }
 }
 

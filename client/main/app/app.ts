@@ -15,7 +15,7 @@ import PlayerList from './playerList/playerList';
   viewInjector: [da.ObservableFactory]
 })
 @ng.View({
-  templateUrl: 'app/app.html',
+  templateUrl: 'main/app/app.html',
   directives: [ng.NgFor, PickList, TeamList, PlayerList]
 })
 class App {

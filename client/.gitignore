@@ -1,4 +1,5 @@
 main/bower_components
+bower_components
 main/jspm_packages
 node_modules
 typings

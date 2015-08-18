@@ -1,12 +1,12 @@
 import * as ng from 'angular2/angular2';
-import * as com from 'app/common/common';
-import * as da from 'app/dataAccess/dataAccess';
+import * as com from '../common/common';
+import * as da from '../dataAccess/dataAccess';
 
 @ng.Component({
   selector: 'pick-list'
 })
 @ng.View({
-  templateUrl: 'app/pickList/pickList.html',
+  templateUrl: 'main/app/pickList/pickList.html',
   directives: [ng.NgFor]
 })
 class PickList {

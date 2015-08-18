@@ -1,3 +1,4 @@
+/*
 import * as ng from 'angular2/angular2'
 
 describe('yo', function () {
@@ -5,3 +6,4 @@ describe('yo', function () {
 
     })
 });
+*/

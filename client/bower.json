@@ -17,6 +17,7 @@
     "system.js": "~0.18.8",
     "traceur-runtime": "0.0.91",
     "firebase": "2.2.9",
-    "es6-module-loader": "0.17.5"
+    "es6-module-loader": "0.17.5",
+    "rxjs": "~3.0.1"
   }
 }

@@ -1,4 +1,6 @@
 /// <reference path="../../typings/angular2/angular2.d.ts" />
+/// <reference path="../../typings/firebase/firebase.d.ts" />
+/// <reference path="../../typings/rx/rx.d.ts" />
 
 import * as ng from 'angular2/angular2';
 import PlayersDA from './dataAccess/playersDA';

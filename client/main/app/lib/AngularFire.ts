@@ -1,37 +1,35 @@
-//import Firebase from 'firebase/firebase';
-
 export class AngularFire {
-  ref: Firebase;
-  constructor(url: string) {
-    this.ref = new Firebase(url);
-  }
-  asArray() {
+  static asArray(ref: Firebase) {
     return new FirebaseArray(this.ref);
   }
 }
 
-/*
- FirebaseArray
- */
 
-export class FirebaseArray {
+export class FirebaseArray<T> {
   ref: Firebase;
   error: any;
-  list: Array<{}>;
+  list: Array<T>;
 
   constructor(ref: Firebase) {
     this.ref = ref;
     this.list = [];
 
     // listen for changes at the Firebase instance
-    this.ref.on('child_added', this.created.bind(this), this.error);
-    this.ref.on('child_moved', this.moved.bind(this), this.error);
-    this.ref.on('child_changed', this.updated.bind(this), this.error);
-    this.ref.on('child_removed', this.removed.bind(this), this.error);
+    Rx.Observable.fromEvent(this.ref.orderByChild('teamId'), 'child_added')
+      .subscribe(this.created.bind(this), this.error);
+
+    Rx.Observable.fromEvent(this.ref, 'child_moved')
+      .subscribe(this.moved.bind(this), this.error);
+
+    Rx.Observable.fromEvent(this.ref, 'child_changed')
+      .subscribe(this.updated.bind(this), this.error);
+
+    Rx.Observable.fromEvent(this.ref, 'child_removed')
+      .subscribe(this.removed.bind(this), this.error);
 
     // determine when initial load is completed
-    // ref.once('value', function() { resolve(null); }, resolve);
-
+    Rx.Observable.fromEvent(this.ref, 'value')
+      .take(1).subscribe(() => console.log('loaded'))
   }
 
   getItem(recOrIndex: any) {

@@ -1,43 +1,57 @@
 import * as com from './IObservedCollection'
+import * as rx from 'rx';
 
-class ObservableFireCollection {
-  ref;
-  addedObservable;
-  movedObservable;
-  changedObservable;
-  removedObservable;
-  valueObservable;
+export class ObservedCollection implements com.IObservedCollection {
+  ref: Firebase;
+  addedObservable: rx.Observable<{}>;
+  movedObservable: rx.Observable<{}>;
+  changedObservable: rx.Observable<{}>;
+  removedObservable: rx.Observable<{}>;
+  valueObservable: rx.Observable<{}>;
+
+  error: any;
+  list: Array<any>;
+  private subscriptions: Array<rx.IDisposable>;
 
   constructor(fireRef: Firebase) {
     this.ref = fireRef;
-    var observable = Rx.Observable.fromEvent.bind(this, this.ref);
+    this.list = [];
+    this.subscriptions = [];
+
+    var observable = ObservedCollection.toObservable.bind(this, this.ref);
     this.addedObservable = observable('child_added');
     this.movedObservable = observable('child_moved');
     this.changedObservable = observable('child_changed');
     this.removedObservable = observable('child_removed');
     this.valueObservable = observable('value').take(1);
   }
-}
 
-// theres really no reason for this to be a subclass
-export class ObservedCollection extends ObservableFireCollection implements com.IObservedCollection{
-  error: any;
-  list: Array<any>;
+  private static toObservable(ref: Firebase, event: string) {
+    return Rx.Observable.create(observer => {
+      var off = ref.on(event, snap => observer.onNext(snap), e => observer.onError(e));
 
-  constructor(ref: Firebase) {
-    super(ref);
-    this.list = [];
+      return () => ref.off(event, off);
+    });
   }
 
   static fromEndpoint(endpoint: string) {
-    return new this(new Firebase(endpoint));
+    return new ObservedCollection(new Firebase(endpoint));
   }
 
   observe() {
-    this.addedObservable.subscribe(this.created.bind(this), this.error);
-    this.movedObservable.subscribe(this.moved.bind(this), this.error);
-    this.changedObservable.subscribe(this.updated.bind(this), this.error);
-    this.removedObservable.subscribe(this.removed.bind(this), this.error);
+    this.list.length = 0;
+    this.subscriptions.push(this.addedObservable.subscribe(this.created.bind(this), this.error));
+    this.subscriptions.push(this.movedObservable.subscribe(this.moved.bind(this), this.error));
+    this.subscriptions.push(this.changedObservable.subscribe(this.updated.bind(this), this.error));
+    this.subscriptions.push(this.removedObservable.subscribe(this.removed.bind(this), this.error));
+
+    return this;
+  }
+
+  unobserve() {
+    this.subscriptions.forEach(obs => obs.dispose());
+    this.subscriptions.length = 0;
+
     return this;
   }
 
@@ -49,7 +63,7 @@ export class ObservedCollection extends ObservableFireCollection implements com.
     return item;
   }
 
-  getChild(recOrIndex: any) {
+  /*getChild(recOrIndex: any) {
     var item = this.getItem(recOrIndex);
     return this.ref.child(item._key);
   }
@@ -66,6 +80,10 @@ export class ObservedCollection extends ObservableFireCollection implements com.
     var item = this.getItem(recOrIndex);
     this.getChild(recOrIndex).update(item);
   }
+
+  bulkUpdate(items) {
+   this.ref.update(items);
+  }*/
 
   keyify(snap) {
     var item = snap.val();
@@ -94,10 +112,6 @@ export class ObservedCollection extends ObservableFireCollection implements com.
     this.spliceOut(key);
   }
 
-  bulkUpdate(items) {
-    this.ref.update(items);
-  }
-
   spliceOut(key) {
     var i = this.indexFor(key);
     if( i > -1 ) {
@@ -112,6 +126,6 @@ export class ObservedCollection extends ObservableFireCollection implements com.
   }
 
   getRecord(key) {
-    return this.list.find((item) => key === item._key);
+    return this.list.find(item => key === item._key);
   }
 }

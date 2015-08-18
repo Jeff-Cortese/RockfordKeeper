@@ -1,2 +1,2 @@
-export * from './fire'
-export * from './IObservedCollection'
+export * from './observedCollection';
+export * from './IObservedCollection';

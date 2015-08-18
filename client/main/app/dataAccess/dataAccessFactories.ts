@@ -1,17 +1,17 @@
 import * as endpoints from './endpoints';
-import * as com from 'app/common/common';
+import { IObservedCollection, ObservedCollection } from 'app/common/common';
 
-
+//todo inject endpoints
 export class ObservableFactory {
-  newObservablePlayers(): com.IObservedCollection {
-    return com.ObservedCollection.fromEndpoint(endpoints.players);
+  newObservablePlayers(): IObservedCollection {
+    return ObservedCollection.fromEndpoint(endpoints.players);
   }
 
-  newObservablePicks(): com.IObservedCollection {
-    return com.ObservedCollection.fromEndpoint(endpoints.picks);
+  newObservablePicks(): IObservedCollection {
+    return ObservedCollection.fromEndpoint(endpoints.picks);
   }
 
-  newObservableTeams(): com.IObservedCollection {
-    return com.ObservedCollection.fromEndpoint(endpoints.teams);
+  newObservableTeams(): IObservedCollection {
+    return ObservedCollection.fromEndpoint(endpoints.teams);
   }
 }

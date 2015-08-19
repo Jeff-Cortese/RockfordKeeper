@@ -1,12 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="col fill full">
 <head>
   <meta charset="UTF-8">
   <title>Rockford Keeper</title>
-</head>
-<body>
 
-  <app></app>
+  <link rel="stylesheet" href="bower_components/flex-capacitor/index.css"/>
+  <style>
+    .scroll, .scroll-x {
+      overflow-x: auto;
+    }
+    .scroll, .scroll-y {
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body class="col fill full" style="margin: 0;">
+
+  <app class="col fill full"></app>
 
   <script src="bower_components/traceur-runtime/traceur-runtime.js"></script>
   <script src="//jspm.io/system@0.16.js"></script><!--todo bowerify-->

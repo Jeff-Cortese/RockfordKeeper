@@ -7,7 +7,7 @@ import * as da from '../dataAccess/dataAccess';
 })
 @ng.View({
   templateUrl: 'main/app/pickList/pickList.html',
-  directives: [ng.NgFor]
+  directives: [ng.NgFor, com.Typeahead]
 })
 class PickList {
   picks: Array<{}>;

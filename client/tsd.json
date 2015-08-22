@@ -19,6 +19,9 @@
     },
     "firebase/firebase.d.ts": {
       "commit": "5109e1269d6ab8e8e73b1a5e85d8ceb836d3099f"
+    },
+    "jquery/jquery.d.ts": {
+      "commit": "8f081073e6cb416f901b272810d8b04d6e01c9e0"
     }
   }
 }

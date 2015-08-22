@@ -1,10 +1,21 @@
 <div>
-  <h1>Picks</h1>
-  <pick-list></pick-list>
+  <input type="text" placeholder="pick id" [(ng-model)]="pickId"/>
+  <input type="text" placeholder="player id" [(ng-model)]="playerId"/>
+  <input type="text" placeholder="team id" [(ng-model)]="teamId"/>
 
-  <h1>Players</h1>
-  <player-list></player-list>
+  <button (click)="draft(pickId, playerId)">draft</button>
+  <!--<button (click)="draft(pickId, playerId)">draft</button>-->
+  <!--<button (click)="undraft(pickBox.value)">undraft</button>
+  <button (click)="changeTeam(teamBox.value)">change team</button>-->
+  <side-header title="Picks">
+    <pick-list body></pick-list>
+  </side-header>
 
-  <h1>Teams</h1>
-  <team-list></team-list>
+  <side-header title="Players">
+    <player-list body></player-list>
+  </side-header>
+
+  <side-header title="Teams">
+    <team-list body></team-list>
+  </side-header>
 </div>

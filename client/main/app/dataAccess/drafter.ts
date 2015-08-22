@@ -1,9 +1,8 @@
 import * as rx from 'rx';
-import {FireTraits} from './fire/fireTraits';
 import {IPickDataAccess, IPlayerDataAccess} from './dataAccessAPI';
 import {IPick, IPlayer, ITeam} from '../contracts/contracts';
 
-export default class Drafter {
+export class Drafter {
   pickDA: IPickDataAccess;
   playerDA: IPlayerDataAccess;
 

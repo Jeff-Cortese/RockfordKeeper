@@ -6,6 +6,7 @@
 import * as ng from 'angular2/angular2'; //probably an anti-pattern to use *. So sue me
 import * as com from './common/common';
 import * as da from './dataAccess/dataAccess';
+import {IPick, IPlayer, ITeam} from './contracts/contracts'
 import PickList from './pickList/pickList';
 import TeamList from './teamList/teamList';
 import PlayerList from './playerList/playerList';
@@ -36,7 +37,7 @@ class App {
   }
 
   draft(pickId, playerId) {
-    this.drafter.selectPlayer(<da.IPick>{key: () => pickId}, <da.IPlayer>{key: () => playerId})
+    this.drafter.selectPlayer(<IPick>{key: () => pickId}, <IPlayer>{key: () => playerId})
       .subscribe(() => alert('yay'), e => console.log(e));
   }
 }

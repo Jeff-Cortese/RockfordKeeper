@@ -1,8 +1,8 @@
 import * as endpoints from './endpoints';
 import {IObservedCollection, ObservedCollection} from '../common/common';
-import Drafter from './drafter';
-import FirePick from './fire/firePick';
-import FirePlayer from './fire/firePlayer';
+import {Drafter} from './drafter';
+import {FirePick} from './fire/firePick';
+import {FirePlayer} from './fire/firePlayer';
 
 
 //todo inject endpoints

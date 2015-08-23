@@ -2,6 +2,7 @@
 /// <reference path="../../typings/firebase/firebase.d.ts" />
 /// <reference path="../../typings/rx/rx.d.ts" />
 /// <reference path="../../typings/jquery/jquery.d.ts" />
+/// <reference path="../../typings/typeahead/typeahead.d.ts" />
 
 import * as ng from 'angular2/angular2'; //probably an anti-pattern to use *. So sue me
 import * as com from './common/common';

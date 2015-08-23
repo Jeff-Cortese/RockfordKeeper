@@ -28,7 +28,12 @@ class Typeahead {
     this.elem = element;
   }
 
+  // called once the component is initialized
   onInit() {
+    this.initTypeahead();
+  }
+
+  initTypeahead() {
     var display = suggestion => suggestion.name + ' ' + suggestion.team;
 
     $(this.elem.nativeElement.firstChild).typeahead({

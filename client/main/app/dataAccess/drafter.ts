@@ -31,10 +31,3 @@ export class Drafter {
     return this.pickDA.setTeamId(pick.key(), team.key());
   }
 }
-
-
-
-
-
-
-

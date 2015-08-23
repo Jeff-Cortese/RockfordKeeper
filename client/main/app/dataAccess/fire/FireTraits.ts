@@ -1,6 +1,5 @@
 import * as rx from 'rx';
 
-
 class FireObservable {
   static fromEndpoint(endpoint: string, event: string): rx.Observable<any> {
     return FireObservable.toObservable(new Firebase(endpoint), event)

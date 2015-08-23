@@ -7,10 +7,6 @@ import {FirePlayer} from './fire/firePlayer';
 
 //todo inject endpoints
 export class ObservableFactory {
-  newObservablePlayers(): IObservedCollection {
-    return ObservedCollection.fromEndpoint(endpoints.players);
-  }
-
   newObservablePicks(): IObservedCollection {
     return ObservedCollection.fromEndpoint(endpoints.picks);
   }
@@ -18,6 +14,26 @@ export class ObservableFactory {
   newObservableTeams(): IObservedCollection {
     return ObservedCollection.fromEndpoint(endpoints.teams);
   }
+
+  newObservablePlayers(): IObservedCollection {
+    return ObservedCollection.fromEndpoint(endpoints.players);
+  }
+
+  newObservablePlayersForPosition(posistion: string): IObservedCollection {
+    var ref = new Firebase(endpoints.players)
+      .orderByChild('position')
+      .equalTo(posistion);
+
+    return new ObservedCollection(ref);
+  }
+
+  //todo make into hash instead???
+  newObservableQBs = () => this.newObservablePlayersForPosition('QB');
+  newObservableRBs = () => this.newObservablePlayersForPosition('RB');
+  newObservableWRs = () => this.newObservablePlayersForPosition('WR');
+  newObservableTEs = () => this.newObservablePlayersForPosition('TE');
+  newObservableDSTs = () => this.newObservablePlayersForPosition('DST');
+  newObservableKs = () => this.newObservablePlayersForPosition('K');
 }
 
 export class DataAccessFactory {

@@ -2,7 +2,7 @@ import * as com from './IObservedCollection'
 import * as rx from 'rx';
 
 export class ObservedCollection implements com.IObservedCollection {
-  ref: Firebase;
+  ref: FirebaseQuery;
   addedObservable: rx.Observable<{}>;
   movedObservable: rx.Observable<{}>;
   changedObservable: rx.Observable<{}>;
@@ -13,7 +13,7 @@ export class ObservedCollection implements com.IObservedCollection {
   list: Array<any>;
   private subscriptions: Array<rx.IDisposable>;
 
-  constructor(fireRef: Firebase) {
+  constructor(fireRef: FirebaseQuery) {
     this.ref = fireRef;
     this.list = [];
     this.subscriptions = [];
@@ -26,7 +26,7 @@ export class ObservedCollection implements com.IObservedCollection {
     this.valueObservable = observable('value').take(1);
   }
 
-  private static toObservable(ref: Firebase, event: string) {
+  private static toObservable(ref: FirebaseQuery, event: string) {
     return Rx.Observable.create(observer => {
       var off = ref.on(event, snap => observer.onNext(snap), e => observer.onError(e));
 

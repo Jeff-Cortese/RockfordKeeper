@@ -1,5 +1,14 @@
+<typeahead
+  [quarterbacks]="observableQBs.list"
+  [runningbacks]="observableRBs.list"
+  [receivers]="observableWRs.list"
+  [tightends]="observableTEs.list"
+  [defenses]="observableDSTs.list"
+  [kickers]="observableKs.list">
+</typeahead>
+
 <ul>
   <li *ng-for="#pick of picks">
-    {{ pick.overallPick }} - {{ pick.teamId }}   <!--<typeahead></typeahead>-->
+    {{ pick.overallPick }} - {{ pick.teamId }}
   </li>
 </ul>

@@ -13,8 +13,8 @@ class PlayerList {
   players: Array<{}>;
   observablePlayers: com.IObservedCollection;
 
-  constructor(teamFactory: da.ObservableFactory) {
-    this.observablePlayers = teamFactory.newObservablePlayers().observe();
+  constructor(playersFactory: da.ObservableFactory) {
+    this.observablePlayers = playersFactory.newObservablePlayers().observe();
     this.players = this.observablePlayers.list;
   }
 }

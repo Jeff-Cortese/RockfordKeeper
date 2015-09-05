@@ -1,5 +1,14 @@
-<ul>
-  <li *ng-for="#team of teams">
-    {{ team.owner }} - {{ team.name || 'TBD' }}
-  </li>
-</ul>
+<div>
+  <header>
+    <team-drop-down
+      [teams]="teams"
+      [include-on-the-clock]="true"
+      (on-team-selected)="onTeamSelected($event)"
+      (on-on-the-clock-selected)="onTheClockSelected()">
+    </team-drop-down>
+  </header>
+
+  <div>
+    ROSTER HERE
+  </div>
+</div>

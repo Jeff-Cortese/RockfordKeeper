@@ -1,0 +1,29 @@
+body {
+  margin: 0;
+}
+
+.full-height {
+  height: 100vh;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.full {
+  &:extend(.full-height);
+  &:extend(.full-width);
+}
+
+.scroll-vertical {
+  overflow-y: auto;
+}
+
+.scroll-horizontal {
+  overflow-x: auto;
+}
+
+.scroll {
+  &:extend(.scroll-vertical);
+  &:extend(.scroll-horizontal);
+}

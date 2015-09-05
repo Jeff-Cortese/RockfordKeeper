@@ -18,9 +18,8 @@
     "traceur-runtime": "0.0.91",
     "firebase": "2.2.9",
     "es6-module-loader": "0.17.5",
-    "rxjs": "~3.0.1"
-  },
-  "devDependencies": {
+    "rxjs": "~3.0.1",
+    "flex-capacitor": "http://raw.githubusercontent.com/Jeff-Cortese/flex-capacitor/dist/dist/css/flex-capacitor.css",
     "typeahead.js": "~0.11.1",
     "jquery": "~2.1.4"
   }

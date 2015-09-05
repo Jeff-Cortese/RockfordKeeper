@@ -6,7 +6,7 @@ import * as ng from 'angular2/angular2';
 })
 @ng.View({
   template: `
-    <section>
+    <section class="full">
       <header *ng-if="header">{{header}}</header>
       <ng-content select="[head]"></ng-content>
       <ng-content select="[body]"></ng-content>

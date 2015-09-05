@@ -4,6 +4,7 @@
   "description": "",
   "devDependencies": {
     "bower": "^1.4.1",
+    "less": "^2.5.1",
     "tsd": "^0.6.3",
     "typescript": "^1.5.3"
   },

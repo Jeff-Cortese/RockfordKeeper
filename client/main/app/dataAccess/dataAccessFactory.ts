@@ -3,24 +3,26 @@ import {IObservedCollection, ObservedCollection} from '../common/common';
 import {Drafter} from './drafter';
 import {FirePick} from './fire/firePick';
 import {FirePlayer} from './fire/firePlayer';
+import {ICurrentPickDataAccess} from './dataAccessAPI';
+import {FireCurrentPick} from './fire/fireCurrentPick';
 
 
 //todo inject endpoints
 export class ObservableFactory {
   newObservablePicks(): IObservedCollection {
-    return ObservedCollection.fromEndpoint(endpoints.picks);
+    return ObservedCollection.fromEndpoint(endpoints.baseUrl + endpoints.picks);
   }
 
   newObservableTeams(): IObservedCollection {
-    return ObservedCollection.fromEndpoint(endpoints.teams);
+    return ObservedCollection.fromEndpoint(endpoints.baseUrl + endpoints.teams);
   }
 
   newObservablePlayers(): IObservedCollection {
-    return ObservedCollection.fromEndpoint(endpoints.players);
+    return ObservedCollection.fromEndpoint(endpoints.baseUrl + endpoints.players);
   }
 
   newObservablePlayersForPosition(posistion: string): IObservedCollection {
-    var ref = new Firebase(endpoints.players)
+    var ref = new Firebase(endpoints.baseUrl + endpoints.players)
       .orderByChild('position')
       .equalTo(posistion);
 
@@ -38,8 +40,12 @@ export class ObservableFactory {
 
 export class DataAccessFactory {
   newDrafter(): Drafter {
-    var pickDA = new FirePick(new Firebase(endpoints.picks));
-    var playerDA = new FirePlayer(new Firebase(endpoints.players));
+    var pickDA = FirePick.create(endpoints.baseUrl);//new FirePick(new Firebase(endpoints.picks));
+    var playerDA = FirePlayer.create(endpoints.baseUrl);//new FirePlayer(new Firebase(endpoints.players));
     return new Drafter(pickDA, playerDA);
+  }
+
+  newCurrentPick(): ICurrentPickDataAccess {
+    return FireCurrentPick.create(endpoints.baseUrl);
   }
 }

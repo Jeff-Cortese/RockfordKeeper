@@ -1,14 +1,19 @@
 import * as rx from 'rx';
 import {FireTraits} from './fireTraits';
 import {IPickDataAccess} from '../dataAccessAPI';
+import * as endpoints from '../endpoints';
 
 export class FirePick extends FireTraits implements IPickDataAccess {
   setPlayerId = (pickId: string, playerId: string): rx.Observable<any> =>
-    super.updateObservable(pickId, 'playerId', playerId);
+    super.update(pickId + '.playerId', playerId);
 
   setTeamId = (pickId: string, teamId: string): rx.Observable<any> =>
-    super.updateObservable(pickId, 'teamId', teamId);
+    super.update(pickId + '.teamId', teamId);
 
   setByWayOf = (pickId: string, byWayOf: string): rx.Observable<any> =>
-    super.updateObservable(pickId, 'byWayOf', byWayOf);
+    super.update(pickId + '.byWayOf', byWayOf);
+
+  static create(baseUrl: string) {
+    return new FirePick(new Firebase(baseUrl + endpoints.picks))
+  }
 }

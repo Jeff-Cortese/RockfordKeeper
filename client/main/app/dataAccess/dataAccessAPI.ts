@@ -9,3 +9,8 @@ export interface IPickDataAccess {
   setTeamId: (pickId: string, teamId: string) => rx.Observable<any>;
   setByWayOf: (pickId: string, byWayOf: string) => rx.Observable<any>;
 }
+
+export interface ICurrentPickDataAccess {
+  setCurrentPick: (pickId: string) => rx.Observable<any>;
+  valueObservable: () => rx.Observable<any>;
+}

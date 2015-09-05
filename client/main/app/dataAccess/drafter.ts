@@ -15,6 +15,7 @@ export class Drafter {
     return rx.Observable.concat(
       this.pickDA.setPlayerId(pick.key(), player.key()),
       this.playerDA.setIsTaken(player.key(), true)
+      //todo increment current pick ??
     );
   }
 

@@ -1,12 +1,6 @@
 <div>
-  <input type="text" placeholder="pick id" [(ng-model)]="pickId"/>
-  <input type="text" placeholder="player id" [(ng-model)]="playerId"/>
-  <input type="text" placeholder="team id" [(ng-model)]="teamId"/>
+  Current Pick: {{currentPick}}
 
-  <button (click)="draft(pickId, playerId)">draft</button>
-  <!--<button (click)="draft(pickId, playerId)">draft</button>-->
-  <!--<button (click)="undraft(pickBox.value)">undraft</button>
-  <button (click)="changeTeam(teamBox.value)">change team</button>-->
   <side-header title="Picks">
     <pick-list body></pick-list>
   </side-header>

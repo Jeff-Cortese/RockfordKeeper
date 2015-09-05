@@ -25,22 +25,24 @@ import PlayerList from './playerList/playerList';
     PickList,
     TeamList,
     PlayerList,
-    com.SideHeader
+    com.SideHeader,
   ]
 })
 class App {
-  playerId = '-JwjXJUv5_MD8BT9FRze';
-  pickId = '1';
   drafter: da.Drafter;
+  currentPick: number;
 
   constructor(daFactory: da.DataAccessFactory) {
     this.drafter = daFactory.newDrafter();
+
+    daFactory.newCurrentPick().valueObservable()
+      .subscribe(pick => this.currentPick = pick);
   }
 
-  draft(pickId, playerId) {
+  /*draft(pickId, playerId) {
     this.drafter.selectPlayer(<IPick>{key: () => pickId}, <IPlayer>{key: () => playerId})
       .subscribe(() => alert('yay'), e => console.log(e));
-  }
+  }*/
 }
 
 ng.bootstrap(App)

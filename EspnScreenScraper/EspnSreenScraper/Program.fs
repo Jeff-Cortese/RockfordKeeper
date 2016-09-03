@@ -15,5 +15,5 @@ let main argv =
     Players.populatePlayers()
     //Teams.populateTeams();
     //Picks.populatePicks();
-
+    quit ()
     0

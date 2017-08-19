@@ -1,4 +1,5 @@
 export interface IPlayer {
+  espnPlayerId: string;
   name: string;
   position: Position;
   team: string; // todo enum the teams

@@ -1,15 +1,26 @@
 <div class="card">
   <div class="card-header">
-    Round {{ pick.round }}, Pick {{ pick.roundSelection }}
+    <div class="card-text">
+      <span>Round {{ pick.round }}, Pick {{ pick.roundSelection }}</span>
+      <span class="p5" *ngIf="pick.byWayOf">({{ pick.byWayOf }})</span>
+    </div>
+    <h2 class="card-title">
+      {{ pick.teamId }}
+    </h2>
   </div>
 
-  <div class="card-block">
-    <div class="card-title">
-      {{ pick.teamId }} <span class="p5" *ngIf="pick.byWayOf">({{ pick.byWayOf }})</span>
-    </div>
+  <div class="card-img" *ngIf="pick.player">
+    <img src="http://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/{{pick.player.espnPlayerId}}.png&w=250&h=160&scale=crop&background=0xcccccc&transparent=false"
+         [alt]="pick.player.name"/> <!--todo onerror-->
+  </div>
 
+  <div class="card-block" *ngIf="pick.player">
     <div class="card-text">
-      Selected player info and selection controls here
+      <div class="p2">
+        {{pick.player.name}}
+        <span *ngIf="pick.player.tns">{{pick.player.tns}}</span>
+      </div>
+      <div class="p2">{{pick.player.position}} &mdash; {{pick.player.team}}</div>
     </div>
   </div>
 </div>

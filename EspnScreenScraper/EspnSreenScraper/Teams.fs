@@ -3,7 +3,7 @@
 open System.Runtime.Serialization
 open FSharp.Data
 
-
+[<DataContract>]
 type Roster = 
     { [<field: DataMember(Name="qb")>]
     QB: string;
@@ -39,40 +39,40 @@ type Roster =
         Bench = []; }
 
 [<DataContract>]
-type Team = 
-    { [<field: DataMember(Name="owner")>]
-    Owner: string;
-    [<field: DataMember(Name="name")>]
+type Owner = 
+    { [<field: DataMember(Name="name")>]
     Name: string;
+    [<field: DataMember(Name="teamName")>]
+    TeamName: string;
     [<field: DataMember(Name="roster")>]
     Roster: Roster; }
 
     static member Empty =
-        { Owner = "";
-        Name = "";
+        { Name = "";
+        TeamName = "";
         Roster = Roster.Empty; }
 
 
 let teams = 
-    [ { Team.Empty with Owner = "Jeff"; };
-    { Team.Empty with Owner = "Collin"; };
-    { Team.Empty with Owner = "Josh"; };
-    { Team.Empty with Owner = "Andrew"; };
-    { Team.Empty with Owner = "Petey"; };
-    { Team.Empty with Owner = "Erik"; };
-    { Team.Empty with Owner = "Zack"; };
-    { Team.Empty with Owner = "Recker"; };
-    { Team.Empty with Owner = "Shannon"; };
-    { Team.Empty with Owner = "Clark"; };
-    { Team.Empty with Owner = "Brad"; };
-    { Team.Empty with Owner = "Tad"; }; ]
+    [ { Owner.Empty with Name = "Jeff"; };
+    { Owner.Empty with Name = "Collin"; };
+    { Owner.Empty with Name = "Josh"; };
+    { Owner.Empty with Name = "Andrew"; };
+    { Owner.Empty with Name = "Petey"; };
+    { Owner.Empty with Name = "Erik"; };
+    { Owner.Empty with Name = "Zack"; };
+    { Owner.Empty with Name = "Recker"; };
+    { Owner.Empty with Name = "Shannon"; };
+    { Owner.Empty with Name = "Dustin"; };
+    { Owner.Empty with Name = "Brad"; };
+    { Owner.Empty with Name = "Tad"; }; ]
 
 
 let populateTeams () =
     let putTeam team =
         let json = Common.toJson team
 
-        Http.Request("https://rockfordkeeper2015.firebaseio.com/teams/" + team.Owner + ".json", 
+        Http.Request("https://rockfordkeeper.firebaseio.com/owners/" + team.Name + ".json", 
             httpMethod = FSharp.Data.HttpMethod.Put,
             body = HttpRequestBody.TextRequest(json)) |> ignore
 

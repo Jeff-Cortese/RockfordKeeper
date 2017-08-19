@@ -102,7 +102,7 @@ let parsePlayerRow player =
 
 
 let postPlayer playerJson =
-    Http.Request("https://rockfordkeeper2015.firebaseio.com/players.json", 
+    Http.Request("https://rockfordkeeper.firebaseio.com/players.json", 
         httpMethod = FSharp.Data.HttpMethod.Post,
         body = HttpRequestBody.TextRequest(playerJson)) |> ignore
     
@@ -110,13 +110,13 @@ let postPlayer playerJson =
 let parsePage () =
     let playerTable = element "#playertable_0"
     let playerRows = elementsWithin ".pncPlayerRow" playerTable
-//    let playerJsons = 
-//        playerRows
-//        |> List.map (parsePlayerRow >> Common.toJson)
-//
-//    playerJsons 
-//    |> List.iter postPlayer 
-//    |> ignore
+    let playerJsons = 
+        playerRows
+        |> List.map (parsePlayerRow >> Common.toJson)
+
+    playerJsons 
+    |> List.iter postPlayer 
+    |> ignore
     let commadPlayers = playerRows |> List.map parsePlayerRow |> List.map (fun play -> play.toString() + Environment.NewLine)
     let player = String.Join("", commadPlayers)
     player

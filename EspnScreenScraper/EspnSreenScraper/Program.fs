@@ -12,8 +12,8 @@ let main argv =
 
     canopy.configuration.chromeDir <- "./"
 
-    Players.populatePlayers()
-    //Teams.populateTeams();
+    //Players.populatePlayers()
+    Teams.populateTeams();
     //Picks.populatePicks();
     quit ()
     0

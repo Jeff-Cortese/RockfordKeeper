@@ -8,9 +8,9 @@ open System
 type Pick =
     { [<field: DataMember(Name="round")>]
     Round: int;
-    [<field: DataMember(Name="roundPick")>]
+    [<field: DataMember(Name="roundSelection")>]
     RoundPick: int;
-    [<field: DataMember(Name="overallPick")>]
+    [<field: DataMember(Name="overallSelection")>]
     OverallPick: int;
     [<field: DataMember(Name="teamId")>]
     TeamId: string;
@@ -29,7 +29,7 @@ type Pick =
 
 
 let putPick pick =
-    Http.Request("https://rockfordkeeper2015.firebaseio.com/picks/" + pick.OverallPick.ToString() + ".json", 
+    Http.Request("https://rockfordkeeper.firebaseio.com/picks/" + pick.OverallPick.ToString() + ".json", 
         httpMethod = FSharp.Data.HttpMethod.Put,
         body = (pick |> (Common.toJson >> HttpRequestBody.TextRequest))
     ) |> ignore

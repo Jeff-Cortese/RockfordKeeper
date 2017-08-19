@@ -17,15 +17,21 @@ import { AppEffects } from './state/appEffects';
 import { AppComponent } from './app.component';
 import { PicksComponent } from './picks/picks.component';
 import { PlayersComponent } from './players/players.component';
+import { PickCardComponent } from './picks/pick-card.component';
 
 export const REDUCERS_TOKEN = new InjectionToken<ActionReducerMap<{ app: IAppState }>>('Registered Reducers');
 const reducer = { app: appReducer };
 Object.assign(REDUCERS_TOKEN, reducer);
 
+const pickComponents = [
+  PicksComponent,
+  PickCardComponent
+];
+
 @NgModule({
   declarations: [
     AppComponent,
-    PicksComponent,
+    ...pickComponents,
     PlayersComponent
   ],
   imports: [

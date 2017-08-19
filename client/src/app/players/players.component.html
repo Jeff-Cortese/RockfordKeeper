@@ -1,0 +1,43 @@
+<div class="row">
+  <clr-dropdown>
+    <button type="button" class="btn btn-outline-primary" clrDropdownTrigger>
+      Filter
+      <clr-icon shape="caret down"></clr-icon>
+    </button>
+    <clr-dropdown-menu [clrPosition]="'bottom-left'" *clrIfOpen>
+      <label class="dropdown-header">Show</label>
+      <button type="button" clrDropdownItem>Unavailable Players</button>
+      <div class="dropdown-divider"></div>
+      <label class="dropdown-header">By Position</label>
+      <button type="button" clrDropdownItem>Quarter Back</button>
+      <button type="button" clrDropdownItem>Running Back</button>
+      <button type="button" clrDropdownItem>Wide Receiver</button>
+      <button type="button" clrDropdownItem>Tight End</button>
+      <button type="button" clrDropdownItem>Defense</button>
+      <button type="button" clrDropdownItem>Kicker</button>
+    </clr-dropdown-menu>
+  </clr-dropdown>
+</div>
+
+<div class="row">
+  <table class="table table-compact">
+    <thead>
+    <tr>
+      <th>Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let player of players">
+      <td>{{player.name}}</td>
+    </tr>
+    </tbody>
+  </table>
+  <!--<clr-datagrid>
+    <clr-dg-column>Name</clr-dg-column>
+
+    <clr-dg-row *ngFor="let player of players">
+      <clr-dg-cell>{{player.name}}</clr-dg-cell>
+    </clr-dg-row>
+
+  </clr-datagrid>-->
+</div>

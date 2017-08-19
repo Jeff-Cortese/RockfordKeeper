@@ -1,61 +1,43 @@
-main/bower_components
-bower_components
-main/jspm_packages
-node_modules
-typings
-main/**/*.js
-main/**/*.js.map
-main/**/*.css
+# See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# compiled output
+/dist
+/tmp
+/out-tsc
 
+# dependencies
+/node_modules
 
-# Created by .ignore support plugin (hsz.mobi)
-### JetBrains template
-# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
 
-*.iml
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
-## Directory-based project format:
-.idea/
-# if you remove the above rule, at least ignore the following:
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+testem.log
+/typings
+yarn-error.log
 
-# User-specific stuff:
-# .idea/workspace.xml
-# .idea/tasks.xml
-# .idea/dictionaries
+# e2e
+/e2e/*.js
+/e2e/*.map
 
-# Sensitive or high-churn files:
-# .idea/dataSources.ids
-# .idea/dataSources.xml
-# .idea/sqlDataSources.xml
-# .idea/dynamic.xml
-# .idea/uiDesigner.xml
-
-# Gradle:
-# .idea/gradle.xml
-# .idea/libraries
-
-# Mongo Explorer plugin:
-# .idea/mongoSettings.xml
-
-## File-based project format:
-*.ipr
-*.iws
-
-## Plugin-specific files:
-
-# IntelliJ
-out/
-
-# mpeltonen/sbt-idea plugin
-.idea_modules/
-
-# JIRA plugin
-atlassian-ide-plugin.xml
-
-# Crashlytics plugin (for Android Studio and IntelliJ)
-com_crashlytics_export_strings.xml
-crashlytics.properties
-crashlytics-build.properties
-
-
+# System Files
+.DS_Store
+Thumbs.db

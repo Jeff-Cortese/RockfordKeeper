@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IPick } from '../core/picks/IPick';
 
 @Component({
@@ -9,6 +9,7 @@ import { IPick } from '../core/picks/IPick';
 
 export class PickCardComponent implements OnInit {
   @Input() pick: IPick;
+  @Output() removePlayerClick = new EventEmitter<IPick>();
 
   ngOnInit() {}
 }

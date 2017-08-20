@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IPlayer } from '../core/players/IPlayer';
 
 @Component({
@@ -8,6 +8,7 @@ import { IPlayer } from '../core/players/IPlayer';
 })
 export class PlayersComponent implements OnInit {
   @Input() players: IPlayer[];
+  @Output() playerClicked = new EventEmitter<IPlayer>();
 
   constructor() { }
 

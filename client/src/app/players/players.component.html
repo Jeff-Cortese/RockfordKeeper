@@ -27,9 +27,11 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let player of players">
-      <td>{{player.name}}</td>
-    </tr>
+    <ng-container *ngFor="let player of players">
+      <tr *ngIf="!player.isTaken" (click)="playerClicked.emit(player)">
+        <td>{{player.name}}</td>
+      </tr>
+    </ng-container>
     </tbody>
   </table>
   <!--<clr-datagrid>

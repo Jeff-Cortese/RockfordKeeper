@@ -15,7 +15,11 @@ export interface GetPlayersAction { type: 'GET_PLAYERS'; }
 export interface GetPlayersDoneAction { type: 'GET_PLAYERS_DONE'; players: IPlayer[]; }
 export interface GetPlayersFailAction { type: 'GET_PLAYERS_FAIL'; reason: Response; }
 
-export interface SelectPlayerAction { type: 'SELECT_PLAYER'; player: IPlayer; pick: IPick; }
+export interface GetCurrentPickAction { type: 'GET_CURRENT_PICK'; }
+export interface GetCurrentPickDoneAction { type: 'GET_CURRENT_PICK_DONE'; pick: IPick; }
+export interface GetCurrentPickFailAction { type: 'GET_CURRENT_PICK_FAIL'; reason: Response; }
+
+export interface SelectPlayerAction { type: 'SELECT_PLAYER'; player: IPlayer; }
 export interface UnSelectPlayerAction { type: 'UNSELECT_PLAYER'; pick: IPick; }
 export interface ProgressCurrentPick { type: 'PROGRESS_CURRENT_PICK'; }
 
@@ -26,5 +30,6 @@ export type AppAction =
   GetPicksAction | GetPicksDoneAction | GetPicksFailAction |
   GetOwnersAction | GetOwnersDoneAction | GetOwnersFailAction |
   GetPlayersAction | GetPlayersDoneAction | GetPlayersFailAction |
+  GetCurrentPickAction | GetCurrentPickDoneAction | GetCurrentPickFailAction |
   SelectPlayerAction | UnSelectPlayerAction |
   ChangePickOwner;

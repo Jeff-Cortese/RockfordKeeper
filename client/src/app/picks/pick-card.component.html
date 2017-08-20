@@ -23,4 +23,8 @@
       <div class="p2">{{pick.player.position}} &mdash; {{pick.player.team}}</div>
     </div>
   </div>
+
+  <div class="card-footer" *ngIf="pick.player">
+    <button class="btn btn-secondary-outline" (click)="removePlayerClick.emit(pick)">Undo Pick</button>
+  </div>
 </div>

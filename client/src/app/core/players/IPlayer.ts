@@ -1,4 +1,6 @@
-export interface IPlayer {
+import { IWithKey } from '../firebase/IWithKey';
+
+export interface IPlayer extends IWithKey {
   espnPlayerId: string;
   name: string;
   position: Position;

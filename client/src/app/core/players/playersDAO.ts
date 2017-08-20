@@ -13,4 +13,10 @@ export class PlayersDAO {
   getPlayers(): Observable<IPlayer[]> {
     return this.firebase.list(this.playersUrl);
   }
+
+  markTaken(playerId: string, isTaken = true): Observable<any> {
+    return Observable.fromPromise(
+      this.firebase.object(`${this.playersUrl}/${playerId}`).update({ isTaken: isTaken })
+    );
+  }
 }

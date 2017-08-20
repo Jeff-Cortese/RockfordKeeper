@@ -3,7 +3,12 @@ import { Observable } from 'rxjs/Observable';
 
 import { Store } from '@ngrx/store';
 import { IAppState } from './state/appState';
-import { GetOwnersAction, GetPicksAction, GetPlayersAction } from './state/appActions';
+import {
+  GetCurrentPickAction, GetOwnersAction, GetPicksAction, GetPlayersAction,
+  SelectPlayerAction, UnSelectPlayerAction
+} from './state/appActions';
+import { IPlayer } from './core/players/IPlayer';
+import { IPick } from './core/picks/IPick';
 
 @Component({
   selector: 'app-root',
@@ -24,5 +29,14 @@ export class AppComponent implements OnInit {
     this.store.dispatch(<GetOwnersAction> { type: 'GET_OWNERS' });
     this.store.dispatch(<GetPicksAction> { type: 'GET_PICKS' });
     this.store.dispatch(<GetPlayersAction> { type: 'GET_PLAYERS' });
+    this.store.dispatch(<GetCurrentPickAction> { type: 'GET_CURRENT_PICK' });
+  }
+
+  onPlayerClicked(player: IPlayer): void {
+    this.store.dispatch(<SelectPlayerAction> { type: 'SELECT_PLAYER', player });
+  }
+
+  onUndoPick(pick: IPick) {
+    this.store.dispatch(<UnSelectPlayerAction> { type: 'UNSELECT_PLAYER', pick});
   }
 }

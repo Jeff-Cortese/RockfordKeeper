@@ -1,6 +1,7 @@
 import { IPlayer } from '../players/IPlayer';
+import { IWithKey } from '../firebase/IWithKey';
 
-export interface IPick {
+export interface IPick extends IWithKey {
   round: number;
   roundSelection: number;
   overallSelection: number;

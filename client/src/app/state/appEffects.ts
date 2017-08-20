@@ -6,16 +6,18 @@ import { OwnersDAO } from '../core/owners/ownersDAO';
 import { PicksDAO } from '../core/picks/picksDAO';
 import { PlayersDAO } from '../core/players/playersDAO';
 import {
-  AppAction,
+  AppAction, GetCurrentPickDoneAction, GetCurrentPickFailAction,
   GetOwnersDoneAction, GetOwnersFailAction,
   GetPicksDoneAction, GetPicksFailAction,
   GetPlayersDoneAction, GetPlayersFailAction,
-  ProgressCurrentPick, SelectPlayerAction
+  ProgressCurrentPick, SelectPlayerAction, UnSelectPlayerAction
 } from './appActions';
 import { Observable } from 'rxjs/Observable';
 import { IPlayer } from '../core/players/IPlayer';
 import { IPick } from '../core/picks/IPick';
 import { IOwner } from '../core/owners/IOwner';
+import { IAppState } from './appState';
+import { Store } from '@ngrx/store';
 
 @Injectable()
 export class AppEffects {
@@ -43,18 +45,43 @@ export class AppEffects {
           .catch((error: Response) => Observable.of({ type: 'GET_PLAYERS_FAIL', reason: error }))
       );
 
+  @Effect() getCurrentPick: Observable<GetCurrentPickDoneAction | GetCurrentPickFailAction> =
+    this.action$.ofType('GET_CURRENT_PICK')
+      .switchMap(() =>
+        this.picksDao.getCurrentPick()
+          .map((pick: IPick) => <GetCurrentPickDoneAction> { type: 'GET_CURRENT_PICK_DONE', pick })
+          .catch((error: Response) => Observable.of(<GetCurrentPickFailAction> { type: 'GET_CURRENT_PICK_FAIL', reason: error }))
+      );
+
   @Effect() selectPlayer: Observable<ProgressCurrentPick> =
     this.action$.ofType('SELECT_PLAYER')
-      .concatMap(({ pick, player }: SelectPlayerAction) =>
-        Observable.merge(this.picksDao.selectPlayer(pick, player))
-          .map(() => ({ type: 'PROGRESS_CURRENT_PICK' }))
-          .catch(() => Observable.empty()) // todo log or some shit
+      .withLatestFrom(this.store.select('app'))
+      .concatMap(([{ player }, state]: [SelectPlayerAction, IAppState]) =>
+        Observable.merge(
+          this.picksDao.selectPlayer(
+            state.currentPick,
+            player,
+            _.find(state.picks, (p: IPick) => p.overallSelection !== state.currentPick.overallSelection && _.isUndefined(p.player))
+          )
+        )
+          .ignoreElements()// todo log or some shit
+      );
+
+  @Effect() unselectPlayer: Observable<ProgressCurrentPick> =
+    this.action$.ofType('UNSELECT_PLAYER')
+      .withLatestFrom(this.store.select('app'))
+      .concatMap(([{ pick }, state]: [UnSelectPlayerAction, IAppState]) =>
+        Observable.merge(
+          this.picksDao.unselectPlayer(pick, _.find(state.players, (p: IPlayer) => p.espnPlayerId === pick.player.espnPlayerId))
+        )
+          .ignoreElements()// todo log or some shit
       );
 
   constructor(
     private action$: Actions<AppAction>,
     private ownersDao: OwnersDAO,
     private picksDao: PicksDAO,
-    private playersDao: PlayersDAO
+    private playersDao: PlayersDAO,
+    private store: Store<any>
   ) {}
 }

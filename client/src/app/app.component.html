@@ -7,11 +7,14 @@
     <div class="content-area">
       <h2>Round 1 TODO</h2>
       <div class="row">
-        <app-picks class="col-xs-12" [picks]="(state$ | async)?.picks"></app-picks>
+        <app-picks class="col-xs-12"
+                   [picks]="(state$ | async)?.picks"
+                   (undoPick)="onUndoPick($event)">
+        </app-picks>
       </div>
 
       <div class="row">
-        <app-players class="col-xs-7" [players]="(state$ | async)?.players"></app-players>
+        <app-players class="col-xs-7" [players]="(state$ | async)?.players" (playerClicked)="onPlayerClicked($event)"></app-players>
 
         <div class="col-xs-5">
           team

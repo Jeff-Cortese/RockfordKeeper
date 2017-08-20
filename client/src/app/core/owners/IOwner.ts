@@ -1,6 +1,7 @@
 import { IPlayer } from '../players/IPlayer';
+import { IWithKey } from '../firebase/IWithKey';
 
-export interface IOwner {
+export interface IOwner extends IWithKey {
   name: string;
   teamName: string;
 
@@ -8,15 +9,15 @@ export interface IOwner {
 }
 
 export interface IRoster {
-  qb: IPlayer;
-  rb1: IPlayer;
-  rb2: IPlayer;
-  wr1: IPlayer;
-  wr2: IPlayer;
-  te: IPlayer;
-  flx: IPlayer;
-  dst: IPlayer;
-  k: IPlayer;
+  qb?: IPlayer;
+  rb1?: IPlayer;
+  rb2?: IPlayer;
+  wr1?: IPlayer;
+  wr2?: IPlayer;
+  te?: IPlayer;
+  flx?: IPlayer;
+  dst?: IPlayer;
+  k?: IPlayer;
 
-  bench: IPlayer[];
+  bench?: IPlayer[];
 }

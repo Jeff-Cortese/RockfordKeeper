@@ -20,7 +20,26 @@
 </div>
 
 <div class="row">
-  <table class="table table-compact">
+  <ngx-datatable [rows]="players" [trackByProp]="'espnPlayerId'" [columnMode]="'force'" [rowHeight]="'auto'" style="width: 100%;" [rowClass]="getRowClass">
+    <ngx-datatable-column name="Espn" [prop]="'espnRank'" [maxWidth]="50"></ngx-datatable-column>
+    <ngx-datatable-column name="Name">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{row.name}} {{row.tns}}
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Pos" [prop]="'position'" [maxWidth]="50"></ngx-datatable-column>
+    <ngx-datatable-column name="Team" [maxWidth]="50"></ngx-datatable-column>
+    <ngx-datatable-column name="Bye" [maxWidth]="50"></ngx-datatable-column>
+    <ngx-datatable-column name="Proj" [prop]="'projection'" [maxWidth]="50"></ngx-datatable-column>
+    <ngx-datatable-column name="2016" [prop]="'lastYearPoints'" [maxWidth]="50"></ngx-datatable-column>
+    <ngx-datatable-column [maxWidth]="100">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <button class="btn btn-primary" (click)="playerClicked.emit(row)">Pick</button>
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
+
+  <!--<table class="table table-compact">
     <thead>
     <tr>
       <th>Name</th>
@@ -33,7 +52,7 @@
       </tr>
     </ng-container>
     </tbody>
-  </table>
+  </table>-->
   <!--<clr-datagrid>
     <clr-dg-column>Name</clr-dg-column>
 

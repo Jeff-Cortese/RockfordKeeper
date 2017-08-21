@@ -10,7 +10,11 @@ export class PlayersComponent implements OnInit {
   @Input() players: IPlayer[];
   @Output() playerClicked = new EventEmitter<IPlayer>();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {}
+
+  getRowClass(row: IPlayer) {
+    return { 'hide': row.isTaken };
+  }
 }

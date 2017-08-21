@@ -5,7 +5,7 @@ export interface IPlayer extends IWithKey {
   name: string;
   position: Position;
   team: string; // todo enum the teams
-  byeWeek: number;
+  bye: number;
   espnRank: number;
   projection: number;
   lastYearPoints?: number;

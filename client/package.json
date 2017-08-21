@@ -24,6 +24,7 @@
     "@ngrx/effects": "^4.0.2",
     "@ngrx/store": "^4.0.2",
     "@ngrx/store-devtools": "^4.0.0",
+    "@swimlane/ngx-datatable": "^10.0.5",
     "@webcomponents/custom-elements": "^1.0.0-alpha.3",
     "angularfire2": "^4.0.0-rc.1",
     "clarity-angular": "^0.10.0",

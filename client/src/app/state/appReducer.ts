@@ -1,6 +1,8 @@
 import { IAppState, initialState } from './appState';
 import { AppAction } from './appActions';
 
+export const reducerMap = { app: appReducer };
+
 export function appReducer(state: IAppState = initialState, action: AppAction): IAppState {
   switch (action.type) {
     case 'GET_OWNERS_DONE': {

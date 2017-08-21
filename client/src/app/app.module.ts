@@ -11,17 +11,17 @@ import { ActionReducerMap, StoreModule } from '@ngrx/store';
 
 import { environment } from '../environments/environment';
 import { CoreModule } from './core/core.module';
-import { appReducer } from './state/appReducer';
+import { reducerMap } from './state/appReducer';
 import { IAppState } from './state/appState';
 import { AppEffects } from './state/appEffects';
 import { AppComponent } from './app.component';
 import { PicksComponent } from './picks/picks.component';
 import { PlayersComponent } from './players/players.component';
 import { PickCardComponent } from './picks/pick-card.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 export const REDUCERS_TOKEN = new InjectionToken<ActionReducerMap<{ app: IAppState }>>('Registered Reducers');
-const reducer = { app: appReducer };
-Object.assign(REDUCERS_TOKEN, reducer);
+Object.assign(REDUCERS_TOKEN, reducerMap);
 
 const pickComponents = [
   PicksComponent,
@@ -40,12 +40,13 @@ const pickComponents = [
     BrowserModule,
     ClarityModule.forRoot(),
     CoreModule,
+    NgxDatatableModule,
     StoreModule.forRoot(REDUCERS_TOKEN),
     EffectsModule.forRoot([AppEffects]),
-    ...(!environment.production ? [StoreDevtoolsModule.instrument()] : [])
+    // ...(!environment.production ? [StoreDevtoolsModule.instrument()] : [])
   ],
   providers: [
-    { provide: REDUCERS_TOKEN, useValue: reducer }
+    { provide: REDUCERS_TOKEN, useValue: reducerMap }
   ],
   bootstrap: [AppComponent]
 })

@@ -25,10 +25,10 @@ jobs:
           - v1-dependencies-{{ checksum "client/package.json" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
-      - run: pwd && ls -la && cd client
-      - run: npm install
+      - run: pwd && ls -la
+      - run: cd client && npm install
 
-      - run: npm run build --prod
+      - run: cd client && npm run build --prod
 
       - save_cache:
           paths:
@@ -36,6 +36,6 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
         
       # run tests!
-      - run: npm run test
+      - run: cd client && npm run test
 
 

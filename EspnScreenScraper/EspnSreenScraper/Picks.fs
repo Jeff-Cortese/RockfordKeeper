@@ -3,6 +3,7 @@
 open System.Runtime.Serialization
 open FSharp.Data
 open System
+open Common
 
 [<DataContract>]
 type Pick =
@@ -17,7 +18,9 @@ type Pick =
     [<field: DataMember(Name="playerId")>]
     PlayerId: string;
     [<field: DataMember(Name="byWayOf")>]
-    ByWayOf: string; }
+    ByWayOf: string; 
+    [<field: DataMember(Name="links")>]
+    Links: HateoasLink list }
 
     static member Empty =
         { Round = 0;
@@ -25,7 +28,8 @@ type Pick =
         OverallPick = 0;
         TeamId = "";
         PlayerId = "";
-        ByWayOf = ""; }
+        ByWayOf = ""; 
+        Links = List.empty }
 
 
 let putPick pick =
@@ -50,7 +54,8 @@ let populatePicks () =
             RoundPick = roundPick;
             OverallPick = overall;
             TeamId = picker;
-            ByWayOf = byWayOF; }
+            ByWayOf = byWayOF; 
+            Links = { rel = "self"; href = sprintf "/picks/%i" overall } :: Pick.Empty.Links; }
     )
     |> Array.iter putPick
     |> ignore

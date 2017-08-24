@@ -2,6 +2,7 @@
 
 open System.Runtime.Serialization
 open FSharp.Data
+open Common
 
 [<DataContract>]
 type Roster = 
@@ -45,12 +46,15 @@ type Owner =
     [<field: DataMember(Name="teamName")>]
     TeamName: string;
     [<field: DataMember(Name="roster")>]
-    Roster: Roster; }
+    Roster: Roster;
+    [<field: DataMember(Name="links")>]
+    Links: HateoasLink list; }
 
     static member Empty =
         { Name = "";
         TeamName = "";
-        Roster = Roster.Empty; }
+        Roster = Roster.Empty;
+        Links = list.Empty; }
 
 
 let teams = 
@@ -69,11 +73,12 @@ let teams =
 
 
 let populateTeams () =
-    let putTeam team =
-        let json = Common.toJson team
+    let putOwner owner =
+        let ownerWithLink = { owner with Links = { rel = "self"; href = sprintf "/owners/%s" owner.Name } :: owner.Links}
+        let json = Common.toJson ownerWithLink
 
-        Http.Request("https://rockfordkeeper.firebaseio.com/owners/" + team.Name + ".json", 
+        Http.Request("https://rockfordkeeper.firebaseio.com/owners/" + ownerWithLink.Name + ".json", 
             httpMethod = FSharp.Data.HttpMethod.Put,
             body = HttpRequestBody.TextRequest(json)) |> ignore
 
-    teams |> List.iter putTeam
+    teams |> List.iter putOwner

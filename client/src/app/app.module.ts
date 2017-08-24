@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { InjectionToken, NgModule } from '@angular/core';
+import { FormsModule } from "@angular/forms";
 
 import 'rxjs/Rx';
 import { AngularFireModule } from 'angularfire2';
@@ -19,6 +20,7 @@ import { PicksComponent } from './picks/picks.component';
 import { PlayersComponent } from './players/players.component';
 import { PickCardComponent } from './picks/pick-card.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { OwnersComponent } from './owners/owners.component';
 
 export const REDUCERS_TOKEN = new InjectionToken<ActionReducerMap<{ app: IAppState }>>('Registered Reducers');
 Object.assign(REDUCERS_TOKEN, reducerMap);
@@ -32,7 +34,8 @@ const pickComponents = [
   declarations: [
     AppComponent,
     ...pickComponents,
-    PlayersComponent
+    PlayersComponent,
+    OwnersComponent
   ],
   imports: [
     AngularFireDatabaseModule,
@@ -40,10 +43,11 @@ const pickComponents = [
     BrowserModule,
     ClarityModule.forRoot(),
     CoreModule,
+    FormsModule,
     NgxDatatableModule,
     StoreModule.forRoot(REDUCERS_TOKEN),
     EffectsModule.forRoot([AppEffects]),
-    // ...(!environment.production ? [StoreDevtoolsModule.instrument()] : [])
+    ...(!environment.production ? [StoreDevtoolsModule.instrument()] : [])
   ],
   providers: [
     { provide: REDUCERS_TOKEN, useValue: reducerMap }

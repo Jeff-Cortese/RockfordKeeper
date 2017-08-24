@@ -8,10 +8,13 @@ open System.Runtime.Serialization.Json
 open System.IO
 open System.Text
 open System
+open OpenQA.Selenium
 
 [<DataContract>]
 type Player = 
-    { [<field: DataMember(Name="name")>]
+    { [<field: DataMember(Name="espnPlayerId")>]
+    EspnPlayerId: string;
+    [<field: DataMember(Name="name")>]
     Name: string;
     [<field: DataMember(Name="position")>]
     Position: string;
@@ -33,7 +36,8 @@ type Player =
     IsTaken: bool;}
 
     static member Empty = 
-        { Name = "";
+        { EspnPlayerId = "";
+        Name = "";
         Position = "";
         //Points2014 = 0.0;
         Bye = 20;
@@ -88,7 +92,8 @@ let parsePlayerCell (cell: string) =
             
 
 
-let parsePlayerRow player = 
+let parsePlayerRow (player: IWebElement) = 
+    let espnPlayerId = player.GetAttribute("id").Substring(4)
     let rank = (elementWithin ".playertableData" player).Text |> Int32.Parse
     let playerTeamPos = (elementWithin ".playertablePlayerName" player).Text
     let projection = (elementsWithin ".playertableStat" player) |> Seq.last |> (fun elem -> if elem.Text <> "--" then elem.Text |> Double.Parse else 0.0)
@@ -96,6 +101,7 @@ let parsePlayerRow player =
     let newPlayer = parsePlayerCell playerTeamPos
     
     { newPlayer with 
+        EspnPlayerId = espnPlayerId;
         EspnRank = rank; 
         Projection = projection;
         ProjectedAverage = projectedAve; }

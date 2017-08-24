@@ -16,9 +16,7 @@
       <div class="row">
         <app-players class="col-xs-7" [players]="(state$ | async)?.players" (playerClicked)="onPlayerClicked($event)"></app-players>
 
-        <div class="col-xs-5">
-          team
-        </div>
+        <app-owners class="col-xs-5" [owners]="(state$ | async)?.owners"></app-owners>
       </div>
     </div>
   </div>

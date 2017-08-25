@@ -1,36 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import { IAppState } from './state/appState';
-import {
-  GetCurrentPickAction, GetOwnersAction, GetPicksAction, GetPlayersAction,
-  SelectPlayerAction, UnSelectPlayerAction
-} from './state/appActions';
+import { ChangeCurrentPickAction, SelectPlayerAction, UnSelectPlayerAction } from './state/appActions';
 import { IPlayer } from './core/players/IPlayer';
 import { IPick } from './core/picks/IPick';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements OnInit {
-  state$: Observable<IAppState>;
+export class AppComponent {
+  @Input() state: IAppState;
 
-  constructor(private store: Store<{ app: IAppState }>) {
-    this.state$ = this.store
-      .select(thing => thing.app)
-      .publishReplay(1)
-      .refCount();
-  }
-
-  ngOnInit(): void {
-    this.store.dispatch(<GetOwnersAction> { type: 'GET_OWNERS' });
-    this.store.dispatch(<GetPicksAction> { type: 'GET_PICKS' });
-    this.store.dispatch(<GetPlayersAction> { type: 'GET_PLAYERS' });
-    this.store.dispatch(<GetCurrentPickAction> { type: 'GET_CURRENT_PICK' });
-  }
+  constructor(private store: Store<{ app: IAppState }>) {}
 
   onPlayerClicked(player: IPlayer): void {
     this.store.dispatch(<SelectPlayerAction> { type: 'SELECT_PLAYER', player });
@@ -38,5 +23,9 @@ export class AppComponent implements OnInit {
 
   onUndoPick(pick: IPick) {
     this.store.dispatch(<UnSelectPlayerAction> { type: 'UNSELECT_PLAYER', pick});
+  }
+
+  onSelectPick(pick: IPick) {
+    this.store.dispatch(<ChangeCurrentPickAction> { type: 'CHANGE_CURRENT_PICK', newPick: pick });
   }
 }

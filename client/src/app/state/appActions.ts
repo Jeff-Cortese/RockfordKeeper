@@ -24,7 +24,7 @@ export interface UnSelectPlayerAction { type: 'UNSELECT_PLAYER'; pick: IPick; }
 export interface ProgressCurrentPick { type: 'PROGRESS_CURRENT_PICK'; }
 
 export interface ChangePickOwner { type: 'CHANGE_PICK_OWNER'; pick: IPick; newOwner: IOwner; }
-
+export interface ChangeCurrentPickAction { type: 'CHANGE_CURRENT_PICK'; newPick: IPick; }
 
 export type AppAction =
   GetPicksAction | GetPicksDoneAction | GetPicksFailAction |
@@ -32,4 +32,5 @@ export type AppAction =
   GetPlayersAction | GetPlayersDoneAction | GetPlayersFailAction |
   GetCurrentPickAction | GetCurrentPickDoneAction | GetCurrentPickFailAction |
   SelectPlayerAction | UnSelectPlayerAction |
-  ChangePickOwner;
+  ChangePickOwner |
+  ChangeCurrentPickAction;

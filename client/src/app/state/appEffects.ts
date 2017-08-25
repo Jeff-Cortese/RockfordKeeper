@@ -6,7 +6,7 @@ import { OwnersDAO } from '../core/owners/ownersDAO';
 import { PicksDAO } from '../core/picks/picksDAO';
 import { PlayersDAO } from '../core/players/playersDAO';
 import {
-  AppAction, GetCurrentPickDoneAction, GetCurrentPickFailAction,
+  AppAction, ChangeCurrentPickAction, GetCurrentPickDoneAction, GetCurrentPickFailAction,
   GetOwnersDoneAction, GetOwnersFailAction,
   GetPicksDoneAction, GetPicksFailAction,
   GetPlayersDoneAction, GetPlayersFailAction,
@@ -76,6 +76,11 @@ export class AppEffects {
         )
           .ignoreElements()// todo log or some shit
       );
+
+  @Effect() changeCurrentPick: Observable<GetCurrentPickDoneAction> =
+    this.action$.ofType('CHANGE_CURRENT_PICK')
+      .switchMap(({ newPick }: ChangeCurrentPickAction) => this.picksDao.changeCurrentPick(newPick))
+      .ignoreElements();
 
   constructor(
     private action$: Actions<AppAction>,

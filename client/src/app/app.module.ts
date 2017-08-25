@@ -21,6 +21,7 @@ import { PlayersComponent } from './players/players.component';
 import { PickCardComponent } from './picks/pick-card.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { OwnersComponent } from './owners/owners.component';
+import { AppContainerComponent } from './app-container.component';
 
 export const REDUCERS_TOKEN = new InjectionToken<ActionReducerMap<{ app: IAppState }>>('Registered Reducers');
 Object.assign(REDUCERS_TOKEN, reducerMap);
@@ -32,6 +33,7 @@ const pickComponents = [
 
 @NgModule({
   declarations: [
+    AppContainerComponent,
     AppComponent,
     ...pickComponents,
     PlayersComponent,
@@ -52,6 +54,6 @@ const pickComponents = [
   providers: [
     { provide: REDUCERS_TOKEN, useValue: reducerMap }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppContainerComponent]
 })
 export class AppModule { }

@@ -3,6 +3,10 @@ import { IPick } from '../core/picks/IPick';
 import { IOwner } from '../core/owners/IOwner';
 
 export interface IAppState {
+  isLoadingPicks: boolean;
+  isLoadingPlayers: boolean;
+  isLoadingOwners: boolean;
+
   // server state
   picks: IPick[];
   owners: IOwner[];
@@ -13,6 +17,10 @@ export interface IAppState {
 }
 
 export const initialState: IAppState = {
+  isLoadingPicks: true,
+  isLoadingPlayers: true,
+  isLoadingOwners: true,
+
   picks: [],
   owners: [],
   players: []

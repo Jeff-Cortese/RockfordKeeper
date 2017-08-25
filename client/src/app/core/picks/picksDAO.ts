@@ -47,6 +47,10 @@ export class PicksDAO {
       .reduce(() => {});
   }
 
+  changeCurrentPick(newPick: IPick): Observable<any> {
+    return Observable.fromPromise(this.firebase.object(this.currentPickUrl).set(newPick));
+  }
+
   unselectPlayer(pick: IPick, player: IPlayer): Observable<any> {
     return Observable.concat(
       // remove from /pick/:id

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IPick } from '../core/picks/IPick';
 import { IPlayer } from '../core/players/IPlayer';
 import { IOwner } from '../core/owners/IOwner';
@@ -8,16 +8,21 @@ import { IOwner } from '../core/owners/IOwner';
   templateUrl: './picks.component.html',
   styleUrls: ['./picks.component.scss']
 })
-export class PicksComponent implements OnInit {
+export class PicksComponent {
   @Input() picks: IPick[];
   @Input() players: IPlayer[];
   @Input() owners: IOwner[];
+  @Input() currentPick: IPick;
 
+  @Output() selectPick = new EventEmitter<IPick>();
   @Output() undoPick = new EventEmitter<IPick>();
 
-  constructor() { }
+  onUndoClick(pick: IPick): void {
+    this.undoPick.emit(pick);
+  }
 
-  ngOnInit() {
+  onCardClick(pick: IPick): void {
+    this.selectPick.emit(pick);
   }
 }
 

@@ -4,19 +4,27 @@
   </header>
 
   <div class="content-container">
-    <div class="content-area">
+    <ng-template #loading>
+      <span class="spinner" style="">
+        Loading...
+      </span>
+    </ng-template>
+
+    <div class="content-area" *ngIf="!state.isLoadingPlayers && !state.isLoadingPicks && !state.isLoadingOwners; else loading">
       <h2>Round 1 TODO</h2>
       <div class="row">
         <app-picks class="col-xs-12"
-                   [picks]="(state$ | async)?.picks"
-                   (undoPick)="onUndoPick($event)">
+                   [currentPick]="state?.currentPick"
+                   [picks]="state?.picks"
+                   (undoPick)="onUndoPick($event)"
+                   (selectPick)="onSelectPick($event)">
         </app-picks>
       </div>
 
       <div class="row">
-        <app-players class="col-xs-7" [players]="(state$ | async)?.players" (playerClicked)="onPlayerClicked($event)"></app-players>
+        <app-players class="col-xs-7" [players]="state?.players" (playerClicked)="onPlayerClicked($event)"></app-players>
 
-        <app-owners class="col-xs-5" [owners]="(state$ | async)?.owners"></app-owners>
+        <app-owners class="col-xs-5" [owners]="state?.owners"></app-owners>
       </div>
     </div>
   </div>

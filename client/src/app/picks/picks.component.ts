@@ -23,22 +23,15 @@ export class PicksComponent implements OnInit {
   rawScroll = new EventEmitter();
 
   ngOnInit(): void {
-    let skipNext = false;
-
     this.autoScrolled
-      .do(() => skipNext = true)
-      .subscribe();
-
-    this.rawScroll
-      .filter(() => {
-        const doSkip = skipNext;
-        skipNext = false;
-        return !doSkip;
-      })
-      .do(() => {
-        this.userScrolled.emit();
-        this.scrollOverridden = true;
-      })
+      .switchMap(() =>
+        this.rawScroll
+          .skip(1)
+          .do(() => {
+            this.userScrolled.emit();
+            this.scrollOverridden = true;
+          })
+      )
       .subscribe();
   }
 

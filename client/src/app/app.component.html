@@ -11,11 +11,20 @@
     </ng-template>
 
     <div class="content-area" *ngIf="!state.isLoadingPlayers && !state.isLoadingPicks && !state.isLoadingOwners; else loading">
-      <h2>Round 1 TODO</h2>
+      <h2>
+        <a *ngIf="picksScrollOverridden" class="clickable link-normal" (click)="onCurrentPickClick()">
+          Round {{state.currentPick.round}} Pick {{state.currentPick.roundSelection}}
+        </a>
+        <span *ngIf="!picksScrollOverridden">
+          Round {{state.currentPick.round}} Pick {{state.currentPick.roundSelection}}
+        </span>
+      </h2>
       <div class="row">
         <app-picks class="col-xs-12"
                    [currentPick]="state?.currentPick"
                    [picks]="state?.picks"
+                   [scrollOverridden]="picksScrollOverridden"
+                   (userScrolled)="onUserScrolled()"
                    (undoPick)="onUndoPick($event)"
                    (selectPick)="onSelectPick($event)">
         </app-picks>

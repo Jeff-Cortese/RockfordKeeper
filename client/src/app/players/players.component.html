@@ -1,64 +1,53 @@
 <div class="row">
-  <clr-dropdown>
-    <button type="button" class="btn btn-outline-primary" clrDropdownTrigger>
-      Filter
-      <clr-icon shape="caret down"></clr-icon>
-    </button>
-    <clr-dropdown-menu [clrPosition]="'bottom-left'" *clrIfOpen>
-      <label class="dropdown-header">Show</label>
-      <button type="button" clrDropdownItem>Unavailable Players</button>
-      <div class="dropdown-divider"></div>
-      <label class="dropdown-header">By Position</label>
-      <button type="button" clrDropdownItem>Quarter Back</button>
-      <button type="button" clrDropdownItem>Running Back</button>
-      <button type="button" clrDropdownItem>Wide Receiver</button>
-      <button type="button" clrDropdownItem>Tight End</button>
-      <button type="button" clrDropdownItem>Defense</button>
-      <button type="button" clrDropdownItem>Kicker</button>
-    </clr-dropdown-menu>
-  </clr-dropdown>
+  <div class="col-xs">
+    <h2>Available Players</h2>
+  </div>
 </div>
 
 <div class="row">
-  <ngx-datatable [rows]="players" [trackByProp]="'espnPlayerId'" [columnMode]="'force'" [rowHeight]="'auto'" style="width: 100%;" [rowClass]="getRowClass">
-    <ngx-datatable-column name="Espn" [prop]="'espnRank'" [maxWidth]="50"></ngx-datatable-column>
-    <ngx-datatable-column name="Name">
-      <ng-template let-row="row" ngx-datatable-cell-template>
-        {{row.name}} {{row.tns}}
-      </ng-template>
-    </ngx-datatable-column>
-    <ngx-datatable-column name="Pos" [prop]="'position'" [maxWidth]="50"></ngx-datatable-column>
-    <ngx-datatable-column name="Team" [maxWidth]="50"></ngx-datatable-column>
-    <ngx-datatable-column name="Bye" [maxWidth]="50"></ngx-datatable-column>
-    <ngx-datatable-column name="Proj" [prop]="'projection'" [maxWidth]="50"></ngx-datatable-column>
-    <ngx-datatable-column name="2016" [prop]="'lastYearPoints'" [maxWidth]="50"></ngx-datatable-column>
-    <ngx-datatable-column [maxWidth]="100">
-      <ng-template let-row="row" ngx-datatable-cell-template>
-        <button class="btn btn-primary" (click)="playerClicked.emit(row)">Pick</button>
-      </ng-template>
-    </ngx-datatable-column>
-  </ngx-datatable>
+  <div class="col-xs">
+    <clr-dropdown>
+      <button type="button" class="btn btn-outline-primary" clrDropdownTrigger>
+        Filter
+        <clr-icon shape="caret down"></clr-icon>
+      </button>
+      <clr-dropdown-menu [clrPosition]="'bottom-left'" *clrIfOpen>
+        <label class="dropdown-header">Show</label>
+        <button type="button" clrDropdownItem>Unavailable Players</button>
+        <div class="dropdown-divider"></div>
+        <label class="dropdown-header">By Position</label>
+        <button type="button" clrDropdownItem>Quarter Back</button>
+        <button type="button" clrDropdownItem>Running Back</button>
+        <button type="button" clrDropdownItem>Wide Receiver</button>
+        <button type="button" clrDropdownItem>Tight End</button>
+        <button type="button" clrDropdownItem>Defense</button>
+        <button type="button" clrDropdownItem>Kicker</button>
+      </clr-dropdown-menu>
+    </clr-dropdown>
+  </div>
+</div>
 
-  <!--<table class="table table-compact">
-    <thead>
-    <tr>
-      <th>Name</th>
-    </tr>
-    </thead>
-    <tbody>
-    <ng-container *ngFor="let player of players">
-      <tr *ngIf="!player.isTaken" (click)="playerClicked.emit(player)">
-        <td>{{player.name}}</td>
-      </tr>
-    </ng-container>
-    </tbody>
-  </table>-->
-  <!--<clr-datagrid>
-    <clr-dg-column>Name</clr-dg-column>
-
-    <clr-dg-row *ngFor="let player of players">
-      <clr-dg-cell>{{player.name}}</clr-dg-cell>
-    </clr-dg-row>
-
-  </clr-datagrid>-->
+<div class="row">
+  <div class="col-xs">
+    <ngx-datatable [rows]="players" [trackByProp]="'espnPlayerId'" [columnMode]="'force'" [rowHeight]="'auto'"
+                   style="width: 100%;" [rowClass]="getRowClass">
+      <ngx-datatable-column name="Espn" [prop]="'espnRank'" [maxWidth]="50"></ngx-datatable-column>
+      <ngx-datatable-column name="Name">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <div class="clickable row player-name-cell" (click)="playerClicked.emit(row)">
+            <div class="col-xs">
+              <span class="player-name">{{row.name}}</span>
+              <span *ngIf="row.tns">({{row.tns}})</span>
+            </div>
+            <div class="col-xs-5 show-on-hover click-to-pick">Click to draft!</div>
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Pos" [prop]="'position'" [maxWidth]="50"></ngx-datatable-column>
+      <ngx-datatable-column name="Team" [maxWidth]="50"></ngx-datatable-column>
+      <ngx-datatable-column name="Bye" [maxWidth]="50"></ngx-datatable-column>
+      <ngx-datatable-column name="Proj" [prop]="'projection'" [maxWidth]="50"></ngx-datatable-column>
+      <ngx-datatable-column name="2016" [prop]="'lastYearPoints'" [maxWidth]="50"></ngx-datatable-column>
+    </ngx-datatable>
+  </div>
 </div>

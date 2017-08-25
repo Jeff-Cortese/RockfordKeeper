@@ -1,0 +1,21 @@
+.datatable-header {
+  background-color: #fafafa;
+}
+
+.datatable-body-row {
+  :hover {
+    background-color: #f2f2f2;
+  }
+}
+
+.datatable-body-cell {
+  :hover {
+    .show-on-hover {
+      display: block;
+    }
+  }
+
+  .show-on-hover {
+    display: none;
+  }
+}

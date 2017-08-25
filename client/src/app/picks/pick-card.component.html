@@ -1,4 +1,4 @@
-<div class="card clickable" [ngClass]="{ 'selected-pick': isCurrentPick }" (click)="onCardClick($event, pick)">
+<div class="card clickable" [ngClass]="{ 'selected-pick': isCurrentPick }" (click)="onCardClick(pick)">
   <div class="card-block">
     <div *ngIf="isCurrentPick" class="progress top">
       <progress value="100" max="100"></progress>
@@ -6,10 +6,10 @@
 
     <div class="card-text">
       <span>Round {{ pick.round }}, Pick {{ pick.roundSelection }}</span>
-      <span class="p5" *ngIf="pick.byWayOf">({{ pick.byWayOf }})</span>
     </div>
     <h2 class="card-title">
       {{ pick.teamId }}
+      <span class="p5" *ngIf="pick.byWayOf">({{ pick.byWayOf }})</span>
     </h2>
   </div>
 

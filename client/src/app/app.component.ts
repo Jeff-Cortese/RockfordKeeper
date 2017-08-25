@@ -2,7 +2,10 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import { IAppState } from './state/appState';
-import { ChangeCurrentPickAction, SelectPlayerAction, UnSelectPlayerAction } from './state/appActions';
+import {
+  ChangeCurrentPickAction, ResetCurrentPickScrollAction, SelectPlayerAction,
+  UnSelectPlayerAction
+} from './state/appActions';
 import { IPlayer } from './core/players/IPlayer';
 import { IPick } from './core/picks/IPick';
 
@@ -14,6 +17,8 @@ import { IPick } from './core/picks/IPick';
 })
 export class AppComponent {
   @Input() state: IAppState;
+
+  picksScrollOverridden = false;
 
   constructor(private store: Store<{ app: IAppState }>) {}
 
@@ -27,5 +32,14 @@ export class AppComponent {
 
   onSelectPick(pick: IPick) {
     this.store.dispatch(<ChangeCurrentPickAction> { type: 'CHANGE_CURRENT_PICK', newPick: pick });
+  }
+
+  onUserScrolled() {
+    this.picksScrollOverridden = true;
+  }
+
+  onCurrentPickClick() {
+    this.picksScrollOverridden = false;
+    this.store.dispatch(<ResetCurrentPickScrollAction> { type: 'RESET_PICK_AUTO_SCROLL' });
   }
 }

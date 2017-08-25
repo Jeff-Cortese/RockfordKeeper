@@ -1,5 +1,13 @@
-<div class="select">
-  <select>
-    <option *ngFor="let owner of owners" [ngValue]="owner">{{owner.name}}</option>
-  </select>
+<div class="row">
+  <div class="col-xs">
+    <h2>Rosters</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="select col-xs">
+    <select>
+      <option *ngFor="let owner of owners" [ngValue]="owner">{{owner.name}}</option>
+    </select>
+  </div>
 </div>

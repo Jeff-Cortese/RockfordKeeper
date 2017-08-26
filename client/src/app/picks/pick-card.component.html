@@ -1,4 +1,4 @@
-<div class="card clickable" [ngClass]="{ 'selected-pick': isCurrentPick }" (click)="onCardClick(pick)">
+<div class="card" [ngClass]="{ 'selected-pick': isCurrentPick, 'clickable': canClick }" (click)="onCardClick(pick)">
   <div class="card-block">
     <div *ngIf="isCurrentPick" class="progress top">
       <progress value="100" max="100"></progress>
@@ -28,7 +28,7 @@
     </div>
   </div>
 
-  <div class="card-footer" *ngIf="pick.player">
+  <div class="card-footer" *ngIf="pick.player && canDoActions">
     <ng-content></ng-content>
   </div>
 </div>

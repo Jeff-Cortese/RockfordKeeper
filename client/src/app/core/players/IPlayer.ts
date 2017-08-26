@@ -3,7 +3,7 @@ import { IWithKey } from '../firebase/IWithKey';
 export interface IPlayer extends IWithKey {
   espnPlayerId: string;
   name: string;
-  position: Position;
+  position: PlayerPosition;
   team: string; // todo enum the teams
   bye: number;
   espnRank: number;
@@ -14,4 +14,4 @@ export interface IPlayer extends IWithKey {
   ownerId?: string;
 }
 
-export type Position = 'QB' | 'RB' | 'WR' | 'TE' | 'DST' | 'K';
+export type PlayerPosition = 'QB' | 'RB' | 'WR' | 'TE' | 'D/ST' | 'K';

@@ -13,15 +13,36 @@
       </button>
       <clr-dropdown-menu [clrPosition]="'bottom-left'" *clrIfOpen>
         <label class="dropdown-header">Show</label>
-        <button type="button" clrDropdownItem>Unavailable Players</button>
+        <button type="button" clrDropdownItem (click)="onToggleUnavailable()">
+          <clr-icon *ngIf="showUnavailable" shape="check"></clr-icon>
+          Unavailable Players
+        </button>
+
         <div class="dropdown-divider"></div>
+
         <label class="dropdown-header">By Position</label>
-        <button type="button" clrDropdownItem>Quarter Back</button>
-        <button type="button" clrDropdownItem>Running Back</button>
-        <button type="button" clrDropdownItem>Wide Receiver</button>
-        <button type="button" clrDropdownItem>Tight End</button>
-        <button type="button" clrDropdownItem>Defense</button>
-        <button type="button" clrDropdownItem>Kicker</button>
+        <button type="button" clrDropdownItem (click)="toggleFilter('QB')">
+          <clr-icon *ngIf="isFilterOn('QB')" shape="check"></clr-icon> Quarter Back
+        </button>
+        <button type="button" clrDropdownItem (click)="toggleFilter('RB')">
+          <clr-icon *ngIf="isFilterOn('RB')" shape="check"></clr-icon> Running Back
+        </button>
+        <button type="button" clrDropdownItem (click)="toggleFilter('WR')">
+          <clr-icon *ngIf="isFilterOn('WR')" shape="check"></clr-icon> Wide Receiver
+        </button>
+        <button type="button" clrDropdownItem (click)="toggleFilter('TE')">
+          <clr-icon *ngIf="isFilterOn('TE')" shape="check"></clr-icon> Tight End
+        </button>
+        <button type="button" clrDropdownItem (click)="toggleFilter('D/ST')">
+          <clr-icon *ngIf="isFilterOn('D/ST')" shape="check"></clr-icon> Defense
+        </button>
+        <button type="button" clrDropdownItem (click)="toggleFilter('K')">
+          <clr-icon *ngIf="isFilterOn('K')" shape="check"></clr-icon> Kicker
+        </button>
+
+        <div class="dropdown-divider"></div>
+
+        <button type="button" clrDropdownItem (click)="onClearFilterClick()">Clear Filter</button>
       </clr-dropdown-menu>
     </clr-dropdown>
   </div>
@@ -30,16 +51,16 @@
 <div class="row">
   <div class="col-xs">
     <ngx-datatable [rows]="players" [trackByProp]="'espnPlayerId'" [columnMode]="'force'" [rowHeight]="'auto'"
-                   style="width: 100%;" [rowClass]="getRowClass">
+                   style="width: 100%;" [rowClass]="getRowClass.bind(this)">
       <ngx-datatable-column name="Espn" [prop]="'espnRank'" [maxWidth]="50"></ngx-datatable-column>
       <ngx-datatable-column name="Name">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <div class="clickable row player-name-cell" (click)="playerClicked.emit(row)">
+          <div class="row player-name-cell" [class.clickable]="canMakePick && !row.isTaken" (click)="playerClicked.emit(row)">
             <div class="col-xs">
               <span class="player-name">{{row.name}}</span>
               <span *ngIf="row.tns">({{row.tns}})</span>
             </div>
-            <div class="col-xs-5 show-on-hover click-to-pick">Click to draft!</div>
+            <div *ngIf="canMakePick && !row.isTaken" class="col-xs-5 show-on-hover click-to-pick">Click to draft!</div>
           </div>
         </ng-template>
       </ngx-datatable-column>

@@ -97,7 +97,7 @@ export class OwnersDAO {
         }
         break;
       }
-      case 'DST': {
+      case 'D/ST': {
         if (!roster.dst) {
           roster.dst = playerToAdd;
         } else {

@@ -24,6 +24,8 @@
                    [currentPick]="state?.currentPick"
                    [picks]="state?.picks"
                    [scrollOverridden]="picksScrollOverridden"
+                   [canChangeCurrentPick]="state?.isAdmin"
+                   [canUndoPick]="state?.isAdmin"
                    (userScrolled)="onUserScrolled()"
                    (undoPick)="onUndoPick($event)"
                    (selectPick)="onSelectPick($event)">
@@ -31,7 +33,11 @@
       </div>
 
       <div class="row">
-        <app-players class="col-xs-7" [players]="state?.players" (playerClicked)="onPlayerClicked($event)"></app-players>
+        <app-players class="col-xs-7"
+                     [players]="state?.players"
+                     [canMakePick]="state?.isAdmin"
+                     (playerClicked)="onPlayerClicked($event)">
+        </app-players>
 
         <app-owners class="col-xs-5" [owners]="state?.owners"></app-owners>
       </div>

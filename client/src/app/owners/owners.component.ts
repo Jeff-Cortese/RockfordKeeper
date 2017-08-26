@@ -8,13 +8,13 @@ import { IOwner } from '../core/owners/IOwner';
 })
 export class OwnersComponent implements OnInit {
   @Input() owners: IOwner[];
+
   @Output() ownerChanged = new EventEmitter<IOwner>();
 
   constructor() { }
 
   ngOnInit() {
   }
-
 
   onSelectedOwnerChange(event): void {
     console.log(event);

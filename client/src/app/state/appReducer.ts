@@ -30,6 +30,10 @@ export function appReducer(state: IAppState = initialState, action: AppAction): 
       }
     }
 
+    case 'MAKE_USER_ADMIN': {
+      return { ...state, isAdmin: true };
+    }
+
     default: {
       return state;
     }

@@ -22,6 +22,7 @@ import { PickCardComponent } from './picks/pick-card.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { OwnersComponent } from './owners/owners.component';
 import { AppContainerComponent } from './app-container.component';
+import { RouterModule } from '@angular/router';
 
 export const REDUCERS_TOKEN = new InjectionToken<ActionReducerMap<{ app: IAppState }>>('Registered Reducers');
 Object.assign(REDUCERS_TOKEN, reducerMap);
@@ -40,6 +41,7 @@ const pickComponents = [
     OwnersComponent
   ],
   imports: [
+    RouterModule.forRoot([]),
     AngularFireDatabaseModule,
     AngularFireModule.initializeApp(environment.firebase),
     BrowserModule,

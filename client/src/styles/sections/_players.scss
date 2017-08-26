@@ -1,16 +1,21 @@
-.datatable-header {
-
-}
-
 .datatable-body-row {
   :hover {
-    .player-name {
-      color: #006a91;
-      text-decoration: underline;
+    .clickable {
+      .player-name {
+        color: #006a91;
+        text-decoration: underline;
+      }
     }
+  }
+
+  .player-name-cell {
+    margin: 0;
+  }
+
+  &.player-taken {
+    text-decoration: line-through;
   }
 }
 
-.datatable-body-cell {
-
-}
+.datatable-header {}
+.datatable-body-cell {}

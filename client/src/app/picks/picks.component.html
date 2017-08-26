@@ -4,8 +4,10 @@
                  [isCurrentPick]="currentPick?.overallSelection === pick.overallSelection"
                  [pick]="pick"
                  [canAutoScroll]="!scrollOverridden"
+                 [canClick]="canChangeCurrentPick"
+                 [canDoActions]="canChangeCurrentPick"
                  (autoScroll)="autoScrolled.emit()"
                  (cardClick)="onCardClick($event)">
-    <button class="btn btn-secondary-outline" (click)="onUndoClick(pick)">Undo Pick</button>
+    <button *ngIf="canUndoPick" class="btn btn-secondary-outline" (click)="onUndoClick(pick)">Undo Pick</button>
   </app-pick-card>
 </div>

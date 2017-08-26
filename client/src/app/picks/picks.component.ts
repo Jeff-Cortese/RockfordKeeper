@@ -14,6 +14,8 @@ export class PicksComponent implements OnInit {
   @Input() owners: IOwner[];
   @Input() currentPick: IPick;
   @Input() scrollOverridden = false;
+  @Input() canChangeCurrentPick = false;
+  @Input() canUndoPick = false;
 
   @Output() selectPick = new EventEmitter<IPick>();
   @Output() undoPick = new EventEmitter<IPick>();

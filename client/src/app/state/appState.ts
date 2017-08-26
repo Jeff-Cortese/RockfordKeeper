@@ -6,6 +6,8 @@ export interface IAppState {
   isLoadingPicks: boolean;
   isLoadingPlayers: boolean;
   isLoadingOwners: boolean;
+  isAdmin: boolean;
+  selectedOwner?: IOwner;
 
   // server state
   picks: IPick[];
@@ -13,13 +15,13 @@ export interface IAppState {
   players: IPlayer[];
   currentPick?: IPick;
 
-  selectedOwner?: IOwner;
 }
 
 export const initialState: IAppState = {
   isLoadingPicks: true,
   isLoadingPlayers: true,
   isLoadingOwners: true,
+  isAdmin: false,
 
   picks: [],
   owners: [],

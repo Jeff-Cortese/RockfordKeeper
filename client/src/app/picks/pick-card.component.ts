@@ -4,14 +4,17 @@ import { IPick } from '../core/picks/IPick';
 @Component({
   moduleId: module.id,
   selector: 'app-pick-card',
-  styleUrls: ['pick-card.component.scss'],
-  templateUrl: 'pick-card.component.html'
+  templateUrl: 'pick-card.component.html',
+  styleUrls: ['pick-card.component.scss']
 })
 
 export class PickCardComponent implements OnChanges {
   @Input() pick: IPick;
   @Input() isCurrentPick: boolean;
   @Input() canAutoScroll = true;
+  @Input() canClick = false;
+  @Input() canDoActions = false;
+
   @Output() cardClick = new EventEmitter<IPick>();
   @Output() autoScroll = new EventEmitter();
 
@@ -39,6 +42,8 @@ export class PickCardComponent implements OnChanges {
   }
 
   onCardClick(pick): void {
+    if (!this.canClick) { return; }
+
     this.cardClick.emit(pick);
   }
 }

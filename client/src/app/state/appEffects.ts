@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
+
+import { Observable } from 'rxjs/Observable';
 import { Actions, Effect } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 
 import { OwnersDAO } from '../core/owners/ownersDAO';
 import { PicksDAO } from '../core/picks/picksDAO';
@@ -12,12 +15,10 @@ import {
   GetPlayersDoneAction, GetPlayersFailAction,
   ProgressCurrentPick, SelectPlayerAction, UnSelectPlayerAction
 } from './appActions';
-import { Observable } from 'rxjs/Observable';
 import { IPlayer } from '../core/players/IPlayer';
 import { IPick } from '../core/picks/IPick';
 import { IOwner } from '../core/owners/IOwner';
 import { IAppState } from './appState';
-import { Store } from '@ngrx/store';
 
 @Injectable()
 export class AppEffects {

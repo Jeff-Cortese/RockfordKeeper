@@ -1,4 +1,5 @@
 import { Response } from '@angular/http';
+
 import { IPick } from '../core/picks/IPick';
 import { IOwner } from '../core/owners/IOwner';
 import { IPlayer } from '../core/players/IPlayer';
@@ -25,6 +26,7 @@ export interface ProgressCurrentPick { type: 'PROGRESS_CURRENT_PICK'; }
 
 export interface ChangePickOwner { type: 'CHANGE_PICK_OWNER'; pick: IPick; newOwner: IOwner; }
 export interface ChangeCurrentPickAction { type: 'CHANGE_CURRENT_PICK'; newPick: IPick; }
+export interface MakeAdminAction { type: 'MAKE_USER_ADMIN'; }
 
 export type AppAction =
   GetPicksAction | GetPicksDoneAction | GetPicksFailAction |
@@ -33,4 +35,5 @@ export type AppAction =
   GetCurrentPickAction | GetCurrentPickDoneAction | GetCurrentPickFailAction |
   SelectPlayerAction | UnSelectPlayerAction |
   ChangePickOwner |
-  ChangeCurrentPickAction;
+  ChangeCurrentPickAction |
+  MakeAdminAction;

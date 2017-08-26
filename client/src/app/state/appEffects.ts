@@ -26,24 +26,24 @@ export class AppEffects {
     this.action$.ofType('GET_OWNERS')
       .switchMap(() =>
         this.ownersDao.getOwners()
-          .map((owners: IOwner[]) => ({ type: 'GET_OWNERS_DONE', owners }))
-          .catch((error: Response) => Observable.of({ type: 'GET_OWNERS_FAIL', reason: error }))
+          .map((owners: IOwner[]) => <GetOwnersDoneAction> { type: 'GET_OWNERS_DONE', owners })
+          .catch((error: Response) => Observable.of(<GetOwnersFailAction> { type: 'GET_OWNERS_FAIL', reason: error }))
       );
 
   @Effect() fetchPicks: Observable<GetPicksDoneAction | GetPicksFailAction> =
     this.action$.ofType('GET_PICKS')
       .switchMap(() =>
         this.picksDao.getPicks()
-          .map((picks: IPick[]) => ({ type: 'GET_PICKS_DONE', picks }))
-          .catch((error: Response) => Observable.of({ type: 'GET_PICKS_FAIL', reason: error }))
+          .map((picks: IPick[]) => <GetPicksDoneAction> { type: 'GET_PICKS_DONE', picks })
+          .catch((error: Response) => Observable.of(<GetPicksFailAction> { type: 'GET_PICKS_FAIL', reason: error }))
       );
 
   @Effect() fetchPlayers: Observable<GetPlayersDoneAction | GetPlayersFailAction> =
     this.action$.ofType('GET_PLAYERS')
       .switchMap(() =>
         this.playersDao.getPlayers()
-          .map((players: IPlayer[]) => ({ type: 'GET_PLAYERS_DONE', players }))
-          .catch((error: Response) => Observable.of({ type: 'GET_PLAYERS_FAIL', reason: error }))
+          .map((players: IPlayer[]) => <GetPlayersDoneAction> { type: 'GET_PLAYERS_DONE', players })
+          .catch((error: Response) => Observable.of(<GetPlayersFailAction> { type: 'GET_PLAYERS_FAIL', reason: error }))
       );
 
   @Effect() getCurrentPick: Observable<GetCurrentPickDoneAction | GetCurrentPickFailAction> =

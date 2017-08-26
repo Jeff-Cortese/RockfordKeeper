@@ -78,7 +78,7 @@ export class AppEffects {
           .ignoreElements()// todo log or some shit
       );
 
-  @Effect() changeCurrentPick: Observable<GetCurrentPickDoneAction> =
+  @Effect() changeCurrentPick: Observable<any> =
     this.action$.ofType('CHANGE_CURRENT_PICK')
       .switchMap(({ newPick }: ChangeCurrentPickAction) => this.picksDao.changeCurrentPick(newPick))
       .ignoreElements();

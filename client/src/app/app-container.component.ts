@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Store } from '@ngrx/store';
+import { ActivatedRoute, Params } from '@angular/router';
 
 import { IAppState } from './state/appState';
 import {
@@ -8,7 +9,6 @@ import {
   MakeAdminAction
 } from './state/appActions';
 import { Observable } from 'rxjs/Observable';
-import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   moduleId: module.id,

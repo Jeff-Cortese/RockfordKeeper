@@ -1,11 +1,15 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output,
+  SimpleChanges
+} from '@angular/core';
 import { IPick } from '../core/picks/IPick';
 
 @Component({
   moduleId: module.id,
   selector: 'app-pick-card',
   templateUrl: 'pick-card.component.html',
-  styleUrls: ['pick-card.component.scss']
+  styleUrls: ['pick-card.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class PickCardComponent implements OnChanges {

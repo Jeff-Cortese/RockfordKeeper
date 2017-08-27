@@ -14,17 +14,15 @@
   </div>
 
   <div class="card-img" *ngIf="pick.player">
-    <img src="http://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/{{pick.player.espnPlayerId}}.png&w=250&h=160&scale=crop&background=0xcccccc&transparent=false"
-         [alt]="pick.player.name"/> <!--todo onerror-->
+    <img src="http://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/{{pick.player.espnPlayerId}}.png&w=250&h=160&scale=crop&background=0xcccccc&transparent=false"/>
   </div>
 
   <div class="card-block" *ngIf="pick.player">
     <div class="card-text">
-      <div class="p2">
-        {{pick.player.name}}
-        <span *ngIf="pick.player.tns">{{pick.player.tns}}</span>
+      <div>
+        <h6>{{pick.player.name}} <span *ngIf="pick.player.tns">{{pick.player.tns}}</span></h6>
       </div>
-      <div class="p2">{{pick.player.position}} &mdash; {{pick.player.team}}</div>
+      <div>{{pick.player.position}} &mdash; {{pick.player.team}}</div>
     </div>
   </div>
 

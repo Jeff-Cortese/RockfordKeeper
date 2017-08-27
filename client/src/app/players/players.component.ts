@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { some } from 'lodash-es';
+import { isEmpty, includes, some } from 'lodash-es';
 import { IPlayer, PlayerPosition } from '../core/players/IPlayer';
 
 const defaultFilter: { [TKey in PlayerPosition]: boolean } = Object.freeze({
@@ -38,7 +38,8 @@ export class PlayersComponent {
   shouldHidePlayer(player: IPlayer): boolean {
     const hideIfTaken = !this.showUnavailable && player.isTaken;
     const hideIfNotInFilter = this.anyPositionFilters && !this.positionFilter[player.position];
-    return hideIfTaken || hideIfNotInFilter;
+    const hideIfNotSearchedFor = !isEmpty(this.playerSearchQuery) && !includes(player.lowerName, this.playerSearchQuery.toLowerCase());
+    return hideIfTaken || hideIfNotInFilter || hideIfNotSearchedFor;
   }
 
   onToggleUnavailable(): void {

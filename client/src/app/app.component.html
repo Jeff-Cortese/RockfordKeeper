@@ -1,8 +1,4 @@
 <div class="main-container">
-  <header class="header header-6">
-    Rockford Keeper 2017
-  </header>
-
   <div class="content-container">
     <ng-template #loading>
       <span class="spinner" style="">
@@ -39,7 +35,10 @@
                      (playerClicked)="onPlayerClicked($event)">
         </app-players>
 
-        <app-owners class="col-xs-5" [owners]="state?.owners"></app-owners>
+        <app-owners class="col-xs-5"
+                    [owners]="state?.owners"
+                    [currentPick]="state?.currentPick">
+        </app-owners>
       </div>
     </div>
   </div>

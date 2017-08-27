@@ -5,8 +5,13 @@
 </div>
 
 <div class="row">
-  <div class="col-xs">
-    <clr-dropdown>
+  <div class="col-xs row">
+    <input class="col-xs-7"
+           type="text"
+           placeholder="Search Player Name"
+           [(ngModel)]="playerSearchQuery"/>
+
+    <clr-dropdown class="col-xs pull-right">
       <button type="button" class="btn btn-outline-primary" clrDropdownTrigger>
         Filter
         <clr-icon shape="caret down"></clr-icon>

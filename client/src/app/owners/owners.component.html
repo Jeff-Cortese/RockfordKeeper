@@ -6,8 +6,25 @@
 
 <div class="row">
   <div class="select col-xs">
-    <select>
-      <option *ngFor="let owner of owners" [ngValue]="owner">{{owner.name}}</option>
+    <select [(ngModel)]="selectedOwner">
+      <option value="" selected>Team on the Clock</option>
+      <option *ngFor="let owner of owners; let i = index" [ngValue]="owner" [selected]="i === 0">{{owner.name}}</option>
     </select>
   </div>
+</div>
+
+<div class="row">
+  <app-roster-card class="col-xs-12" [player]="qb()" cardTitle="Quarter Back"></app-roster-card>
+  <app-roster-card class="col-xs-12" [player]="rb1()" cardTitle="Running Back"></app-roster-card>
+  <app-roster-card class="col-xs-12" [player]="rb2()" cardTitle="Running Back"></app-roster-card>
+  <app-roster-card class="col-xs-12" [player]="wr1()" cardTitle="Wide Receiver"></app-roster-card>
+  <app-roster-card class="col-xs-12" [player]="wr2()" cardTitle="Wide Receiver"></app-roster-card>
+  <app-roster-card class="col-xs-12" [player]="te()" cardTitle="Tight End"></app-roster-card>
+  <app-roster-card class="col-xs-12" [player]="flx()" cardTitle="Flex"></app-roster-card>
+  <app-roster-card class="col-xs-12" [player]="dst()" cardTitle="Defense / Special Teams"></app-roster-card>
+  <app-roster-card class="col-xs-12" [player]="k()" cardTitle="Kicker"></app-roster-card>
+
+  <h4 *ngIf="bench().length > 0" ngClass="col-xs-12">Bench</h4>
+  <app-roster-card class="col-xs-12" *ngFor="let player of bench(); trackBy: tackBenchBy" [player]="player" cardTitle="Quarter Back"></app-roster-card>
+
 </div>

@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { InjectionToken, NgModule } from '@angular/core';
-import { FormsModule } from "@angular/forms";
+import { Inject, InjectionToken, NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 import 'rxjs/Rx';
 import { AngularFireModule } from 'angularfire2';
@@ -12,8 +13,8 @@ import { ActionReducerMap, StoreModule } from '@ngrx/store';
 
 import { environment } from '../environments/environment';
 import { CoreModule } from './core/core.module';
-import { reducerMap } from './state/appReducer';
-import { IAppState } from './state/appState';
+import { rockfordKeeperReducer } from './state/appReducer';
+import { IRockfordKeeper } from './state/appState';
 import { AppEffects } from './state/appEffects';
 import { AppComponent } from './app.component';
 import { PicksComponent } from './picks/picks.component';
@@ -22,15 +23,31 @@ import { PickCardComponent } from './picks/pick-card.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { OwnersComponent } from './owners/owners.component';
 import { AppContainerComponent } from './app-container.component';
-import { RouterModule } from '@angular/router';
+import { RosterCardComponent } from './owners/roster-card.component';
 
-export const REDUCERS_TOKEN = new InjectionToken<ActionReducerMap<{ app: IAppState }>>('Registered Reducers');
-Object.assign(REDUCERS_TOKEN, reducerMap);
+export const REDUCERS_TOKEN = new InjectionToken<ActionReducerMap<IRockfordKeeper>>('Registered Reducers');
+Object.assign(REDUCERS_TOKEN, rockfordKeeperReducer);
 
 const pickComponents = [
   PicksComponent,
   PickCardComponent
 ];
+
+const ownerComponents = [
+  OwnersComponent,
+  RosterCardComponent
+];
+
+@NgModule({
+  providers: [
+    { provide: REDUCERS_TOKEN, useValue: rockfordKeeperReducer }
+  ]
+})
+export class TempModule {
+  constructor(@Inject(REDUCERS_TOKEN) r: any) {
+    console.log(r);
+  }
+}
 
 @NgModule({
   declarations: [
@@ -38,7 +55,7 @@ const pickComponents = [
     AppComponent,
     ...pickComponents,
     PlayersComponent,
-    OwnersComponent
+    ...ownerComponents
   ],
   imports: [
     RouterModule.forRoot([]),
@@ -49,13 +66,15 @@ const pickComponents = [
     CoreModule,
     FormsModule,
     NgxDatatableModule,
+    TempModule,
     StoreModule.forRoot(REDUCERS_TOKEN),
     EffectsModule.forRoot([AppEffects]),
-    ...(!environment.production ? [StoreDevtoolsModule.instrument()] : [])
+    // ...(!environment.production ? [StoreDevtoolsModule.instrument()] : [])
   ],
   providers: [
-    { provide: REDUCERS_TOKEN, useValue: reducerMap }
+    //{ provide: REDUCERS_TOKEN, useValue: rockfordKeeperReducer }
   ],
   bootstrap: [AppContainerComponent]
 })
 export class AppModule { }
+

@@ -7,14 +7,12 @@ export interface IAppState {
   isLoadingPlayers: boolean;
   isLoadingOwners: boolean;
   isAdmin: boolean;
-  selectedOwner?: IOwner;
 
   // server state
   picks: IPick[];
   owners: IOwner[];
   players: IPlayer[];
   currentPick?: IPick;
-
 }
 
 export const initialState: IAppState = {
@@ -27,3 +25,8 @@ export const initialState: IAppState = {
   owners: [],
   players: []
 };
+
+export interface IRockfordKeeper {
+  app: IAppState;
+}
+

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import 'rxjs/Rx';
+import { noop } from 'lodash-es';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { ClarityModule } from 'clarity-angular';
@@ -43,9 +44,9 @@ const ownerComponents = [
     { provide: REDUCERS_TOKEN, useValue: rockfordKeeperReducer }
   ]
 })
-export class TempModule {
+export class HackModule {
   constructor(@Inject(REDUCERS_TOKEN) r: any) {
-    console.log(r);
+    noop(r);
   }
 }
 
@@ -66,7 +67,7 @@ export class TempModule {
     CoreModule,
     FormsModule,
     NgxDatatableModule,
-    TempModule,
+    HackModule,
     StoreModule.forRoot(REDUCERS_TOKEN),
     EffectsModule.forRoot([AppEffects]),
     // ...(!environment.production ? [StoreDevtoolsModule.instrument()] : [])

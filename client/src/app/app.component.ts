@@ -19,6 +19,7 @@ export class AppComponent {
   @Input() state: IAppState;
 
   picksScrollOverridden = false;
+  mobileTab: 'PLAYERS' | 'ROSTER' = 'PLAYERS';
 
   constructor(private store: Store<{ app: IAppState }>) {}
 

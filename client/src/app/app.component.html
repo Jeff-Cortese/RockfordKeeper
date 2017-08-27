@@ -29,16 +29,54 @@
       </div>
 
       <div class="row">
-        <app-players class="col-xs-7"
-                     [players]="state?.players"
-                     [canMakePick]="state?.isAdmin"
-                     (playerClicked)="onPlayerClicked($event)">
-        </app-players>
 
-        <app-owners class="col-xs-5"
-                    [owners]="state?.owners"
-                    [currentPick]="state?.currentPick">
-        </app-owners>
+        <div class="col-xs">
+          <div class="row hidden-sm-down">
+            <div class="col-xs">
+              <h2>Available Players</h2>
+            </div>
+
+            <div class="row">
+              <div class="col-xs">
+                <h2>Rosters</h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="row hidden-md-up">
+            <ul class="nav" role="tablist">
+              <li role="presentation" class="nav-item">
+                <button class="btn btn-link nav-link"
+                        [class.active]="mobileTab === 'PLAYERS'"
+                        type="button"
+                        (click)="mobileTab = 'PLAYERS'">Players</button>
+              </li>
+              <li role="presentation" class="nav-item">
+                <button class="btn btn-link nav-link"
+                        [class.active]="mobileTab === 'ROSTER'"
+                        type="button"
+                        (click)="mobileTab = 'ROSTER'">Roster</button>
+              </li>
+            </ul>
+            <br/>
+          </div>
+
+          <div class="row">
+            <app-players
+              class="col-xs-12 col-md-7"
+              [class.hidden-sm-down]="mobileTab !== 'PLAYERS'"
+              [players]="state?.players"
+              [canMakePick]="state?.isAdmin"
+              (playerClicked)="onPlayerClicked($event)">
+            </app-players>
+
+            <app-owners class="col-xs-12 col-md-5"
+                        [class.hidden-sm-down]="mobileTab !== 'ROSTER'"
+                        [owners]="state?.owners"
+                        [currentPick]="state?.currentPick">
+            </app-owners>
+          </div>
+        </div>
       </div>
     </div>
   </div>

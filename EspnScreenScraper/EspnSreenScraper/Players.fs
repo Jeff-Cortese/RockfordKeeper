@@ -9,6 +9,8 @@ open System.IO
 open System.Text
 open System
 open OpenQA.Selenium
+open System.Globalization
+open canopy.history
 
 [<DataContract>]
 type Player = 
@@ -16,6 +18,8 @@ type Player =
     EspnPlayerId: string;
     [<field: DataMember(Name="name")>]
     Name: string;
+    [<field: DataMember(Name="lowerName")>]
+    LowerName: string;
     [<field: DataMember(Name="position")>]
     Position: string;
     //[<field: DataMember(Name="points2014")>]
@@ -38,6 +42,7 @@ type Player =
     static member Empty = 
         { EspnPlayerId = "";
         Name = "";
+        LowerName = "";
         Position = "";
         //Points2014 = 0.0;
         Bye = 20;
@@ -75,6 +80,7 @@ let parsePlayerCell (cell: string) =
 
         { Player.Empty with 
             Name = name;
+            LowerName = name.ToLower();
             Team = team;
             Bye = bye;
             Position = position;
@@ -116,28 +122,78 @@ let postPlayer playerJson =
 let parsePage () =
     let playerTable = element "#playertable_0"
     let playerRows = elementsWithin ".pncPlayerRow" playerTable
-    let playerJsons = 
-        playerRows
-        |> List.map (parsePlayerRow >> Common.toJson)
+    playerRows
+    |> List.map parsePlayerRow
 
-    playerJsons 
-    |> List.iter postPlayer 
-    |> ignore
-    let commadPlayers = playerRows |> List.map parsePlayerRow |> List.map (fun play -> play.toString() + Environment.NewLine)
-    let player = String.Join("", commadPlayers)
-    player
+let parseRankedPlayers () =
+    use reader = new StreamReader("2017playerRanks.txt")
+    [while not reader.EndOfStream do
+        let line = reader.ReadLine()
+        let rank = line.Split('.').[0]
+        let namePosTeam = line.Substring(rank.Length + 2).Split(',')
+        let name = namePosTeam.[0].Replace("*", "").Trim()
+        let pos = namePosTeam.[1].Trim()
+        let team = namePosTeam.[2].Split('\t').[0].Trim()
+        yield { 
+            Player.Empty with 
+                Name = name; 
+                EspnRank = rank |> Int32.Parse; 
+                Position = pos; 
+                Team = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(team.ToLower());
+        }
+    ]
+
+let scrapePlayerProjections () =
+    [0..8]
+    |> List.map (fun i ->
+        url <| sprintf "http://games.espn.go.com/ffl/tools/projections?startIndex=%d" (i * 40)
+        parsePage () 
+        )
+    |> List.concat
+
+let joinPlayers ranked projected =
+    let mutable secondaryRank = 199;
+    let rankedMap: Map<string, Player> = ranked |> List.map (fun p -> p.Name, p) |> Map.ofList
+    projected
+    |> List.map 
+        (fun player ->
+            let thing = rankedMap.TryFind (player.Name.Replace("*", ""))
+            let other = match thing with 
+                        | Some p -> p 
+                        | None -> 
+                            secondaryRank <- secondaryRank + 1
+                            { player with EspnRank = secondaryRank }
+            { player with EspnRank = other.EspnRank }
+        )
+    |> List.sortWith (fun player1 player2 -> player1.EspnRank.CompareTo(player2.EspnRank))
+    |> List.mapi (fun i p -> { p with EspnRank = i + 1 } )
+    //ranked
+    //|> List.map 
+    //    (fun rankedPlayer ->
+    //        projected
+    //        |> List.find (fun projectedPlayer -> rankedPlayer.Name = projectedPlayer.Name && rankedPlayer.Position = projectedPlayer.Position && rankedPlayer.Team = projectedPlayer.Team)
+    //    )
+
 
 let populatePlayers () =
     start chrome
     pin types.direction.Right
 
-    let players = 
-        [0..12]
-        |> List.map (fun i ->
-            url <| sprintf "http://games.espn.go.com/ffl/tools/projections?startIndex=%d" (i * 40)
-            parsePage () 
-            )
-    use writer = new StreamWriter("2016players.txt")
-    writer.Write(String.Join(Environment.NewLine, players))
+    let playerProjections = scrapePlayerProjections ()
+    let playerRanks = parseRankedPlayers ()
+    let players = joinPlayers playerRanks playerProjections
+
+    
+    players 
+    |> List.map Common.toJson
+    |> List.iter postPlayer 
+    |> ignore
+    
+    //let commadPlayers = playerRows |> List.map parsePlayerRow |> List.map (fun play -> play.toString() + Environment.NewLine)
+    //let players = String.Join("", commadPlayers)
+    //players
+        
+    //use writer = new StreamWriter("2016players.txt")
+    //writer.Write(String.Join(Environment.NewLine, players))
 
     browser.Close()

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { take, map, mergeMap } from "rxjs/operators";
 
 import { IOwner, IRoster } from './IOwner';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -13,23 +14,25 @@ export class OwnersDAO {
   constructor(private firebase: AngularFireDatabase) {}
 
   getOwners(): Observable<IOwner[]> {
-    return this.firebase.list(this.ownerUrl);
+    return this.firebase.list<IOwner>(this.ownerUrl).valueChanges(); //todo? is valueChanges right???
   }
 
   addToRoster(teamId: string, playerToAdd: IPlayer): Observable<any> {
     const ownerRef = this.firebase.object(`${this.ownerUrl}/${teamId}`);
-    return ownerRef
-      .take(1)
-      .map((owner: IOwner) => this.addPlayer(owner, playerToAdd))
-      .mergeMap((updatedOwner: IOwner) => ownerRef.update(updatedOwner));
+    return ownerRef.valueChanges().pipe(
+      take(1),
+      map((owner: IOwner) => this.addPlayer(owner, playerToAdd)),
+      mergeMap((updatedOwner: IOwner) => ownerRef.update(updatedOwner))
+    );
   }
 
   removeFromRoster(teamId: string, player: IPlayer): Observable<any> {
     const ownerRef = this.firebase.object(`${this.ownerUrl}/${teamId}`);
-    return ownerRef
-      .take(1)
-      .map((owner: IOwner) => this.removePlayer(owner, player))
-      .mergeMap((updatedOwner: IOwner) => ownerRef.update(updatedOwner));
+    return ownerRef.valueChanges().pipe(
+      take(1),
+      map((owner: IOwner) => this.removePlayer(owner, player)),
+      mergeMap((updatedOwner: IOwner) => ownerRef.update(updatedOwner))
+    );
   }
 
   private removePlayer(owner: IOwner, playerToRemove: IPlayer): IOwner {

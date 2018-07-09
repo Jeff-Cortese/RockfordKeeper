@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { Observable } from 'rxjs/Observable';
+import { Observable, from } from 'rxjs';
 
 import { IPlayer } from './IPlayer';
 
@@ -11,12 +11,12 @@ export class PlayersDAO {
   constructor(private firebase: AngularFireDatabase) {}
 
   getPlayers(): Observable<IPlayer[]> {
-    return this.firebase.list(this.playersUrl);
+    return this.firebase.list<IPlayer>(this.playersUrl).valueChanges();
   }
 
   markTaken(playerId: string, isTaken = true): Observable<any> {
-    return Observable.fromPromise(
-      this.firebase.object(`${this.playersUrl}/${playerId}`).update({ isTaken: isTaken })
+    return from(
+      this.firebase.object<IPlayer>(`${this.playersUrl}/${playerId}`).update({ isTaken: isTaken })
     );
   }
 }

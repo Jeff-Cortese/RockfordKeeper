@@ -3,14 +3,14 @@ import { Inject, InjectionToken, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import 'rxjs/Rx';
 import { noop } from 'lodash-es';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { ClarityModule } from 'clarity-angular';
+import { ClarityModule } from '@clr/angular';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ActionReducerMap, StoreModule } from '@ngrx/store';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { environment } from '../environments/environment';
 import { CoreModule } from './core/core.module';
@@ -21,7 +21,6 @@ import { AppComponent } from './app.component';
 import { PicksComponent } from './picks/picks.component';
 import { PlayersComponent } from './players/players.component';
 import { PickCardComponent } from './picks/pick-card.component';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { OwnersComponent } from './owners/owners.component';
 import { AppContainerComponent } from './app-container.component';
 import { RosterCardComponent } from './owners/roster-card.component';
@@ -63,7 +62,7 @@ export class HackModule {
     AngularFireDatabaseModule,
     AngularFireModule.initializeApp(environment.firebase),
     BrowserModule,
-    ClarityModule.forRoot(),
+    ClarityModule,
     CoreModule,
     FormsModule,
     NgxDatatableModule,

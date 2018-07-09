@@ -1,4 +1,8 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
+
+import { Subject } from "rxjs";
+import { switchMap, skip, tap, takeUntil } from "rxjs/operators";
+
 import { IPick } from '../core/picks/IPick';
 import { IPlayer } from '../core/players/IPlayer';
 import { IOwner } from '../core/owners/IOwner';
@@ -9,7 +13,7 @@ import { IOwner } from '../core/owners/IOwner';
   styleUrls: ['./picks.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PicksComponent implements OnInit {
+export class PicksComponent implements OnInit, OnDestroy {
   @Input() picks: IPick[];
   @Input() players: IPlayer[];
   @Input() owners: IOwner[];
@@ -24,18 +28,27 @@ export class PicksComponent implements OnInit {
 
   autoScrolled = new EventEmitter();
   rawScroll = new EventEmitter();
+  ngDestroy$ = new Subject<any>()
 
   ngOnInit(): void {
-    this.autoScrolled
-      .switchMap(() =>
-        this.rawScroll
-          .skip(1)
-          .do(() => {
+    this.autoScrolled.pipe(
+      switchMap(() =>
+        this.rawScroll.pipe(
+          skip(1),
+          tap(() => {
             this.userScrolled.emit();
             this.scrollOverridden = true;
           })
-      )
+        )
+      ),
+      takeUntil(this.ngDestroy$)
+    )
       .subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.ngDestroy$.next();
+    this.ngDestroy$.complete();
   }
 
   onUndoClick(pick: IPick): void {

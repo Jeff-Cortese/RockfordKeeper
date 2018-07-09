@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable, concat, from } from 'rxjs';
+import { reduce } from 'rxjs/operators';
 
 import { IPick } from './IPick';
 import { IPlayer } from '../players/IPlayer';
 import { OwnersDAO } from '../owners/ownersDAO';
 import { PlayersDAO } from '../players/playersDAO';
-import { reduce } from "rxjs/operators";
 
 @Injectable()
 export class PicksDAO {

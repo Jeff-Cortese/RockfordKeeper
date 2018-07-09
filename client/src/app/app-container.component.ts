@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { select, Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
-import { tap, publishReplay, refCount, takeUntil } from "rxjs/operators";
+import { tap, publishReplay, refCount, takeUntil } from 'rxjs/operators';
 
 import { IAppState } from './state/appState';
 import {
@@ -16,7 +16,6 @@ import {
   selector: 'app-container',
   template: `<app-root [state]="state$ | async"></app-root>`
 })
-
 export class AppContainerComponent implements OnInit, OnDestroy {
   state$: Observable<IAppState>;
   ngDestroy$ = new Subject<any>();

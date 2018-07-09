@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
 
-import { Subject } from "rxjs";
-import { switchMap, skip, tap, takeUntil } from "rxjs/operators";
+import { Subject } from 'rxjs';
+import { switchMap, skip, tap, takeUntil } from 'rxjs/operators';
 
 import { IPick } from '../core/picks/IPick';
 import { IPlayer } from '../core/players/IPlayer';
@@ -28,7 +28,7 @@ export class PicksComponent implements OnInit, OnDestroy {
 
   autoScrolled = new EventEmitter();
   rawScroll = new EventEmitter();
-  ngDestroy$ = new Subject<any>()
+  ngDestroy$ = new Subject<any>();
 
   ngOnInit(): void {
     this.autoScrolled.pipe(
@@ -42,8 +42,7 @@ export class PicksComponent implements OnInit, OnDestroy {
         )
       ),
       takeUntil(this.ngDestroy$)
-    )
-      .subscribe();
+    ).subscribe();
   }
 
   ngOnDestroy(): void {

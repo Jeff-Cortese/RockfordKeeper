@@ -72,7 +72,7 @@ export class HackModule {
     // ...(!environment.production ? [StoreDevtoolsModule.instrument()] : [])
   ],
   providers: [
-    //{ provide: REDUCERS_TOKEN, useValue: rockfordKeeperReducer }
+    // { provide: REDUCERS_TOKEN, useValue: rockfordKeeperReducer }
   ],
   bootstrap: [AppContainerComponent]
 })

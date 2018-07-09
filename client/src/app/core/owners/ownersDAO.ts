@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
-import { take, map, mergeMap } from "rxjs/operators";
+import { take, map, mergeMap } from 'rxjs/operators';
 
 import { IOwner, IRoster } from './IOwner';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -14,7 +14,7 @@ export class OwnersDAO {
   constructor(private firebase: AngularFireDatabase) {}
 
   getOwners(): Observable<IOwner[]> {
-    return this.firebase.list<IOwner>(this.ownerUrl).valueChanges(); //todo? is valueChanges right???
+    return this.firebase.list<IOwner>(this.ownerUrl).valueChanges(); // todo? is valueChanges right???
   }
 
   addToRoster(teamId: string, playerToAdd: IPlayer): Observable<any> {

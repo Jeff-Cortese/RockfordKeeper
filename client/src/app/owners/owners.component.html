@@ -19,6 +19,10 @@
   <app-roster-card class="col-xs-12" [player]="k()" cardTitle="Kicker"></app-roster-card>
 
   <h4 *ngIf="bench().length > 0" ngClass="col-xs-12">Bench</h4>
-  <app-roster-card class="col-xs-12" *ngFor="let player of bench(); trackBy: tackBenchBy" [player]="player" cardTitle="Quarter Back"></app-roster-card>
+  <app-roster-card class="col-xs-12"
+                   *ngFor="let player of bench(); trackBy: tackBenchBy"
+                   [player]="player"
+                   [cardTitle]="player | friendlyPositionName">
+  </app-roster-card>
 
 </div>

@@ -28,12 +28,10 @@ export class PlayersComponent {
   positionFilter = defaultFilter;
   anyPositionFilters = false;
 
-  getRowClass(player: IPlayer) {
-    return {
-      'hide': this.shouldHidePlayer(player),
-      'player-taken': player.isTaken
-    };
-  }
+  getRowClass = (player: IPlayer) => ({
+    'hide': this.shouldHidePlayer(player),
+    'player-taken': player.isTaken
+  })
 
   shouldHidePlayer(player: IPlayer): boolean {
     const hideIfTaken = !this.showUnavailable && player.isTaken;

@@ -10,7 +10,7 @@ import { ClarityModule } from '@clr/angular';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ActionReducerMap, StoreModule } from '@ngrx/store';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { AgGridModule } from 'ag-grid-angular';
 
 import { environment } from '../environments/environment';
 import { CoreModule } from './core/core.module';
@@ -24,6 +24,7 @@ import { PickCardComponent } from './picks/pick-card.component';
 import { OwnersComponent } from './owners/owners.component';
 import { AppContainerComponent } from './app-container.component';
 import { RosterCardComponent } from './owners/roster-card.component';
+import { LibsModule } from './libs/libs.module';
 
 export const REDUCERS_TOKEN = new InjectionToken<ActionReducerMap<IRockfordKeeper>>('Registered Reducers');
 Object.assign(REDUCERS_TOKEN, rockfordKeeperReducer);
@@ -59,13 +60,14 @@ export class HackModule {
   ],
   imports: [
     RouterModule.forRoot([]),
+    AgGridModule.withComponents([]),
     AngularFireDatabaseModule,
     AngularFireModule.initializeApp(environment.firebase),
     BrowserModule,
     ClarityModule,
     CoreModule,
     FormsModule,
-    NgxDatatableModule,
+    LibsModule,
     HackModule,
     StoreModule.forRoot(REDUCERS_TOKEN),
     EffectsModule.forRoot([AppEffects]),

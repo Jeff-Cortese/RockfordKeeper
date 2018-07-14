@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { isEmpty, includes, some } from 'lodash-es';
+import { identity, isEmpty, includes, some } from 'lodash-es';
 import { IPlayer, PlayerPosition } from '../core/players/IPlayer';
 
 const defaultFilter: { [TKey in PlayerPosition]: boolean } = Object.freeze({
@@ -27,6 +27,9 @@ export class PlayersComponent {
   playerSearchQuery: string;
   positionFilter = defaultFilter;
   anyPositionFilters = false;
+
+  getPlayerId = (player: IPlayer) =>
+    player.espnPlayerId
 
   getRowClass = (player: IPlayer) => ({
     'hide': this.shouldHidePlayer(player),
@@ -60,6 +63,7 @@ export class PlayersComponent {
       [position]: !this.positionFilter[position]
     };
 
-    this.anyPositionFilters = some(this.positionFilter, (isPositionOn) => isPositionOn);
+    // todo test this still works. used to be (isPositionOn) => isPositionOn instead of identity
+    this.anyPositionFilters = some(this.positionFilter, identity);
   }
 }

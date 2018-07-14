@@ -23,7 +23,8 @@
             "styles": [
               "src/styles.scss",
               "node_modules/@clr/icons/clr-icons.min.css",
-              "node_modules/@clr/ui/clr-ui.min.css"
+              "node_modules/@clr/ui/clr-ui.min.css",
+              "node_modules/ag-grid/dist/styles/ag-grid.css"
             ],
             "scripts": [
               "node_modules/lodash/lodash.min.js",

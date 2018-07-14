@@ -49,24 +49,32 @@
 
 <div class="row">
   <div class="col-xs">
-    <ngx-datatable [rows]="players" [trackByProp]="'espnPlayerId'" [columnMode]="'force'" [rowHeight]="'auto'"
-                   style="width: 100%;" [rowClass]="getRowClass">
-      <ngx-datatable-column name="Espn" [prop]="'espnRank'" [maxWidth]="50"></ngx-datatable-column>
-      <ngx-datatable-column name="Name">
-        <ng-template let-row="row" ngx-datatable-cell-template>
-          <div class="row player-name-cell" [class.clickable]="canMakePick && !row.isTaken" (click)="playerClicked.emit(row)">
-            <div class="col-xs">
-              <span class="player-name">{{row.name}}</span>
-              <span *ngIf="row.tns">({{row.tns}})</span>
+    <ag-grid-angular #grid
+                     [rowData]="players"
+                     [getRowNodeId]="getPlayerId"
+                     [enableSorting]="true"
+                     [enableColResize]="true"
+                     (rowDataUpdated)="grid?.api?.sizeColumnsToFit()"
+                     (gridReady)="grid?.api?.sizeColumnsToFit()"
+                     style="height: 900px; width: 100%;"> <!--TODO correct height-->
+      <ag-grid-column grid-template headerName="Espn" field="espnRank" [maxWidth]=50></ag-grid-column>
+
+      <ag-grid-column grid-template headerName="Name" field="name">
+          <ng-template let-row="row">
+            <div class="row player-name-cell" [class.clickable]="canMakePick && !row.isTaken" (click)="playerClicked.emit(row)">
+              <div class="col-xs">
+                <span class="player-name">{{row.name}}</span>
+                <span *ngIf="row.tns">({{row.tns}})</span>
+              </div>
+              <div *ngIf="canMakePick && !row.isTaken" class="col-xs-5 show-on-hover click-to-pick">Click to draft!</div>
             </div>
-            <div *ngIf="canMakePick && !row.isTaken" class="col-xs-5 show-on-hover click-to-pick">Click to draft!</div>
-          </div>
-        </ng-template>
-      </ngx-datatable-column>
-      <ngx-datatable-column name="Pos" [prop]="'position'" [maxWidth]="50"></ngx-datatable-column>
-      <ngx-datatable-column name="Team" [maxWidth]="50"></ngx-datatable-column>
-      <ngx-datatable-column name="Bye" [maxWidth]="50"></ngx-datatable-column>
-      <ngx-datatable-column name="Proj" [prop]="'projection'" [maxWidth]="50"></ngx-datatable-column>
-    </ngx-datatable>
+          </ng-template>
+      </ag-grid-column>
+
+      <ag-grid-column grid-template headerName="Pos" field="position" [maxWidth]="50"></ag-grid-column>
+      <ag-grid-column grid-template headerName="Team" field="team" [maxWidth]="50"></ag-grid-column>
+      <ag-grid-column grid-template headerName="Bye" field="bye" [maxWidth]="50"></ag-grid-column>
+      <ag-grid-column grid-template headerName="Proj" field="projection" [maxWidth]="50"></ag-grid-column>
+    </ag-grid-angular>
   </div>
 </div>

@@ -47,7 +47,7 @@ export class PicksDAO {
       // set owner roster
       this.ownerDao.addToRoster(pick.payload.val().teamId, player.payload.val()),
       // set current pick to the next pick
-      this.firebase.object(this.currentPickUrl).set(nextPick.payload.val()),
+      this.firebase.object(this.currentPickUrl).set(nextPick && nextPick.payload.val() || pick.payload.val()),
       // set the previous pick to the current pick
       this.firebase.object(this.previousPickUrl).set(pick.payload.val())
     ).pipe(

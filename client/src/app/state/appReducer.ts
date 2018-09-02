@@ -32,6 +32,31 @@ export function appReducer(state: IAppState = initialState, action: AppAction): 
       }
     }
 
+    case 'SELECT_PLAYER': {
+      return {
+        ...state,
+        isSelectingPlayer: true,
+        isSelectionChanging: true
+      };
+    }
+
+    case 'UNSELECT_PLAYER': {
+      return {
+        ...state,
+        isUnselectingPlayer: true,
+        isSelectionChanging: true
+      };
+    }
+
+    case 'SELECTION_CHANGING_DONE': {
+      return {
+        ...state,
+        isSelectingPlayer: false,
+        isUnselectingPlayer: false,
+        isSelectionChanging: false
+      };
+    }
+
     case 'MAKE_USER_ADMIN': {
       return { ...state, isAdmin: true };
     }

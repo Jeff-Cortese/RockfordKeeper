@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 
-import { Observable, of, merge } from 'rxjs';
-import { switchMap, map, catchError, withLatestFrom, ignoreElements, concatMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { switchMap, map, catchError, withLatestFrom, ignoreElements, concatMap, filter } from 'rxjs/operators';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { find, isUndefined } from 'lodash-es';
@@ -15,7 +15,7 @@ import {
   GetOwnersDoneAction, GetOwnersFailAction,
   GetPicksDoneAction, GetPicksFailAction,
   GetPlayersDoneAction, GetPlayersFailAction,
-  ProgressCurrentPick, SelectPlayerAction, UnSelectPlayerAction
+  SelectionChangingDone, SelectPlayerAction, UnSelectPlayerAction
 } from './appActions';
 import { IPlayer } from '../core/players/IPlayer';
 import { IPick } from '../core/picks/IPick';
@@ -69,40 +69,43 @@ export class AppEffects {
       )
     );
 
-  @Effect() selectPlayer: Observable<ProgressCurrentPick> =
+  @Effect() selectPlayer: Observable<SelectionChangingDone> =
     this.action$.pipe(
       ofType('SELECT_PLAYER'),
       withLatestFrom(this.store.pipe(select('app'))),
+      filter(([ignored, state]) => !state.isUnselectingPlayer),
       concatMap(([{ player }, state]: [SelectPlayerAction, IAppState]) =>
-        merge(
-          this.picksDao.selectPlayer(
-            state.currentPick,
-            player,
-            find(state.picks, pick => pick.payload.val().overallSelection !== state.currentPick.payload.val().overallSelection && isUndefined(pick.payload.val().player))
-          )
+        this.picksDao.selectPlayer(
+          state.currentPick,
+          player,
+          find(state.picks, pick => pick.payload.val().overallSelection !== state.currentPick.payload.val().overallSelection && isUndefined(pick.payload.val().player))
         ).pipe(
-          ignoreElements()// todo log or something
+          map(() => <SelectionChangingDone> { type: 'SELECTION_CHANGING_DONE' }),
+          catchError(() => of(<SelectionChangingDone> { type: 'SELECTION_CHANGING_DONE' }))
         )
       )
     );
 
-  @Effect() unselectPlayer: Observable<ProgressCurrentPick> =
+  @Effect() unselectPlayer: Observable<SelectionChangingDone> =
     this.action$.pipe(
       ofType('UNSELECT_PLAYER'),
       withLatestFrom(this.store.pipe(select('app'))),
+      filter(([ignored, state]) => !state.isSelectingPlayer),
       concatMap(([{ pick }, state]: [UnSelectPlayerAction, IAppState]) =>
-        merge(
-          this.picksDao.unselectPlayer(pick, find(state.players, p => p.payload.val().espnPlayerId === pick.payload.val().player.espnPlayerId))
-        ).pipe(
-          ignoreElements()// todo log or something
-        )
+        this.picksDao.unselectPlayer(pick, find(state.players, p => p.payload.val().espnPlayerId === pick.payload.val().player.espnPlayerId))
+          .pipe(
+            map(() => <SelectionChangingDone> { type: 'SELECTION_CHANGING_DONE' }),
+            catchError(() => of(<SelectionChangingDone> { type: 'SELECTION_CHANGING_DONE' }))
+          )
       )
     );
 
   @Effect() changeCurrentPick: Observable<any> =
     this.action$.pipe(
       ofType('CHANGE_CURRENT_PICK'),
-      switchMap(({ newPick }: ChangeCurrentPickAction) => this.picksDao.changeCurrentPick(newPick.payload.val())),
+      withLatestFrom(this.store.pipe(select('app'))),
+      filter(([ignored, state]) => !state.isSelectionChanging),
+      concatMap(([{ newPick }, ignored]: [ChangeCurrentPickAction, IAppState]) => this.picksDao.changeCurrentPick(newPick.payload.val())),
       ignoreElements()
     );
 

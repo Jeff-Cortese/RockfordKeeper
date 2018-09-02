@@ -1,8 +1,8 @@
 <div class="row">
   <div class="select col-xs">
-    <select [(ngModel)]="selectedOwner">
-      <option value="" selected>Team on the Clock</option>
-      <option *ngFor="let owner of owners; let i = index" [ngValue]="owner" [selected]="i === 0">{{owner.payload.val().name}}</option>
+    <select [(ngModel)]="selectedOwner" (change)="ngOnInit()">
+      <option value="TEAM_ON_CLOCK" selected>Team on the Clock ({{currentPick.payload.val()?.teamId}})</option>
+      <option *ngFor="let owner of owners" [ngValue]="owner.key">{{owner.payload.val().name}}</option>
     </select>
   </div>
 </div>

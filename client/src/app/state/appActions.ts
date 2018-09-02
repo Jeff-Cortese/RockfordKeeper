@@ -23,10 +23,10 @@ export interface GetCurrentPickFailAction { type: 'GET_CURRENT_PICK_FAIL'; reaso
 
 export interface SelectPlayerAction { type: 'SELECT_PLAYER'; player: SnapshotAction<IPlayer>; }
 export interface UnSelectPlayerAction { type: 'UNSELECT_PLAYER'; pick: SnapshotAction<IPick>; }
-export interface ProgressCurrentPick { type: 'PROGRESS_CURRENT_PICK'; }
 
 export interface ChangePickOwner { type: 'CHANGE_PICK_OWNER'; pick: IPick; newOwner: SnapshotAction<IOwner>; }
 export interface ChangeCurrentPickAction { type: 'CHANGE_CURRENT_PICK'; newPick: SnapshotAction<IPick>; }
+export interface SelectionChangingDone { type: 'SELECTION_CHANGING_DONE'; }
 export interface MakeAdminAction { type: 'MAKE_USER_ADMIN'; }
 
 export type AppAction =
@@ -37,4 +37,5 @@ export type AppAction =
   SelectPlayerAction | UnSelectPlayerAction |
   ChangePickOwner |
   ChangeCurrentPickAction |
+  SelectionChangingDone |
   MakeAdminAction;

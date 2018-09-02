@@ -7,6 +7,9 @@ export interface IAppState {
   isLoadingPicks: boolean;
   isLoadingPlayers: boolean;
   isLoadingOwners: boolean;
+  isSelectingPlayer: boolean;
+  isUnselectingPlayer: boolean;
+  isSelectionChanging: boolean;
   isAdmin: boolean;
 
   // server state
@@ -20,6 +23,9 @@ export const initialState: IAppState = {
   isLoadingPicks: true,
   isLoadingPlayers: true,
   isLoadingOwners: true,
+  isSelectingPlayer: false,
+  isUnselectingPlayer: false,
+  isSelectionChanging: false,
   isAdmin: false,
 
   picks: [],

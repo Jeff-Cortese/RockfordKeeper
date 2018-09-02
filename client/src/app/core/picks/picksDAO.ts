@@ -35,6 +35,7 @@ export class PicksDAO {
 
   selectPlayer(pick: SnapshotAction<IPick>, player: SnapshotAction<IPlayer>, nextPick: SnapshotAction<IPick>): Observable<any> {
     if (pick.payload.val().player) {
+      console.log('Pick already has a player: skipping...');
       return of({});
     }
 

@@ -6,6 +6,7 @@ import { switchMap, skip, tap, takeUntil } from 'rxjs/operators';
 import { IPick } from '../core/picks/IPick';
 import { IPlayer } from '../core/players/IPlayer';
 import { IOwner } from '../core/owners/IOwner';
+import { SnapshotAction } from 'angularfire2/database';
 
 @Component({
   selector: 'app-picks',
@@ -14,16 +15,16 @@ import { IOwner } from '../core/owners/IOwner';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PicksComponent implements OnInit, OnDestroy {
-  @Input() picks: IPick[];
-  @Input() players: IPlayer[];
-  @Input() owners: IOwner[];
-  @Input() currentPick: IPick;
+  @Input() picks: SnapshotAction<IPick>[];
+  @Input() players: SnapshotAction<IPlayer>[];
+  @Input() owners: SnapshotAction<IOwner>[];
+  @Input() currentPick: SnapshotAction<IPick>;
   @Input() scrollOverridden = false;
   @Input() canChangeCurrentPick = false;
   @Input() canUndoPick = false;
 
-  @Output() selectPick = new EventEmitter<IPick>();
-  @Output() undoPick = new EventEmitter<IPick>();
+  @Output() selectPick = new EventEmitter<SnapshotAction<IPick>>();
+  @Output() undoPick = new EventEmitter<SnapshotAction<IPick>>();
   @Output() userScrolled = new EventEmitter();
 
   autoScrolled = new EventEmitter();
@@ -50,12 +51,16 @@ export class PicksComponent implements OnInit, OnDestroy {
     this.ngDestroy$.complete();
   }
 
-  onUndoClick(pick: IPick): void {
+  onUndoClick(pick: SnapshotAction<IPick>): void {
     this.undoPick.emit(pick);
   }
 
-  onCardClick(pick: IPick): void {
+  onCardClick(pick: SnapshotAction<IPick>): void {
     this.selectPick.emit(pick);
+  }
+
+  trackPickBy(index, pick) {
+    return pick.payload.val().overallSelection;
   }
 }
 

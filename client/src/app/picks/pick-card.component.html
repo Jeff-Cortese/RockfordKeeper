@@ -5,30 +5,29 @@
     </div>
 
     <div class="card-text">
-      <span>Round {{ pick.round }}, Pick {{ pick.roundSelection }}</span>
+      <span>Round {{ pick.payload.val()?.round }}, Pick {{ pick.payload.val()?.roundSelection }}</span>
     </div>
     <h2 class="card-title">
-      {{ pick.teamId }}
-      <span class="p5" *ngIf="pick.byWayOf">({{ pick.byWayOf }})</span>
+      {{ pick.payload.val()?.teamId }}
+      <span class="p5" *ngIf="pick.payload.val()?.byWayOf">{{ pick.payload.val()?.byWayOf }}</span>
     </h2>
   </div>
 
-  <div class="card-img" *ngIf="pick.player">
-    <!-- todo fix 404s
-    <img src="http://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/{{pick.player.espnPlayerId}}.png&w=250&h=160&scale=crop&background=0xcccccc&transparent=false"/>
-    -->
-  </div>
+  <!--<div class="card-img" style="height: 75px; overflow-y: hidden" *ngIf="pick.payload.val()?.player">
+    <img #headshot src="http://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/{{pick.payload.val()?.player.espnPlayerId}}.png&w=250&h=100&scale=crop&background=0xcccccc&transparent=false"
+         (error)="headshot.src = 'http://g.espncdn.com/s/ffllm/14//images/playerpop/design2/no-mugshot-7.png'"/>
+  </div>-->
 
-  <div class="card-block" *ngIf="pick.player">
+  <div class="card-block" *ngIf="pick.payload.val()?.player">
     <div class="card-text">
       <div>
-        <h6>{{pick.player.name}} <span *ngIf="pick.player.tns">{{pick.player.tns}}</span></h6>
+        <h6>{{pick.payload.val()?.player.name}} <span *ngIf="pick.payload.val()?.player.tns">{{pick.payload.val()?.player.tns}}</span></h6>
       </div>
-      <div>{{pick.player.position}} &mdash; {{pick.player.team}}</div>
+      <div>{{pick.payload.val()?.player.position}} &mdash; {{pick.payload.val()?.player.team}}</div>
     </div>
   </div>
 
-  <div class="card-footer" *ngIf="pick.player && canDoActions">
+  <div class="card-footer" *ngIf="pick.payload.val()?.player && canDoActions">
     <ng-content></ng-content>
   </div>
 </div>

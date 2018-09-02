@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase, SnapshotAction } from 'angularfire2/database';
 import { Observable, from } from 'rxjs';
 
 import { IPlayer } from './IPlayer';
@@ -10,8 +10,8 @@ export class PlayersDAO {
 
   constructor(private firebase: AngularFireDatabase) {}
 
-  getPlayers(): Observable<IPlayer[]> {
-    return this.firebase.list<IPlayer>(this.playersUrl).valueChanges();
+  getPlayers(): Observable<SnapshotAction<IPlayer>[]> {
+    return this.firebase.list<IPlayer>(this.playersUrl).snapshotChanges();
   }
 
   markTaken(playerId: string, isTaken = true): Observable<any> {

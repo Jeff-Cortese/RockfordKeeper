@@ -1,13 +1,14 @@
 <div class="row" (scroll)="rawScroll.emit()">
   <app-pick-card class="col-xl-2 col-lg-3 col-md-4 col-sm-5 col-xs-6"
-                 *ngFor="let pick of picks"
-                 [isCurrentPick]="currentPick?.overallSelection === pick.overallSelection"
+                 *ngFor="let pick of picks; trackBy: trackPickBy"
+                 [isCurrentPick]="currentPick.payload.val()?.overallSelection === pick.payload.val().overallSelection"
                  [pick]="pick"
                  [canAutoScroll]="!scrollOverridden"
                  [canClick]="canChangeCurrentPick"
                  [canDoActions]="canChangeCurrentPick"
                  (autoScroll)="autoScrolled.emit()"
                  (cardClick)="onCardClick($event)">
-    <button *ngIf="canUndoPick" class="btn btn-secondary-outline" (click)="onUndoClick(pick)">Undo Pick</button>
+    <!--TODO track by-->
+    <button *ngIf="canUndoPick" class="btn btn-sm btn-secondary-outline" (click)="onUndoClick(pick)">Undo Pick</button>
   </app-pick-card>
 </div>

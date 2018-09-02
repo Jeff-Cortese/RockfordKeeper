@@ -1,6 +1,8 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { identity, isEmpty, includes, some } from 'lodash-es';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { identity, includes, isEmpty, some } from 'lodash-es';
 import { IPlayer, PlayerPosition } from '../core/players/IPlayer';
+import { SnapshotAction } from 'angularfire2/database';
+import { AgGridNg2 } from 'ag-grid-angular';
 
 const defaultFilter: { [TKey in PlayerPosition]: boolean } = Object.freeze({
   'QB': false,
@@ -18,25 +20,29 @@ const defaultFilter: { [TKey in PlayerPosition]: boolean } = Object.freeze({
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlayersComponent {
-  @Input() players: IPlayer[];
+  @Input() players: SnapshotAction<IPlayer>[];
   @Input() canMakePick = false;
 
-  @Output() playerClicked = new EventEmitter<IPlayer>();
+  @Output() playerClicked = new EventEmitter<SnapshotAction<IPlayer>>();
 
+  @ViewChild('grid') grid: AgGridNg2;
   showUnavailable = false;
   playerSearchQuery: string;
   positionFilter = defaultFilter;
   anyPositionFilters = false;
 
-  getPlayerId = (player: IPlayer) =>
-    player.espnPlayerId
+  getPlayerId = (player: SnapshotAction<IPlayer>) => player.payload.val().espnPlayerId;
 
-  getRowClass = (player: IPlayer) => ({
-    'hide': this.shouldHidePlayer(player),
-    'player-taken': player.isTaken
-  })
+  getRowClass = ({ data: playerSnapshot }) =>  playerSnapshot.payload.val().isTaken ? 'player-taken' : '';
 
-  shouldHidePlayer(player: IPlayer): boolean {
+  getPayloadValue = (prop) => ({ data }) => data.payload.val()[prop];
+
+  shouldShowPlayer = p => !this.shouldHidePlayer(p);
+
+  anyFiltersOn = () => some(this.positionFilter, key => key === true) || !this.showUnavailable;
+
+  shouldHidePlayer({ data: playerSnapshot }): boolean {
+    const player = playerSnapshot.payload.val();
     const hideIfTaken = !this.showUnavailable && player.isTaken;
     const hideIfNotInFilter = this.anyPositionFilters && !this.positionFilter[player.position];
     const hideIfNotSearchedFor = !isEmpty(this.playerSearchQuery) && !includes(player.lowerName, this.playerSearchQuery.toLowerCase());
@@ -45,12 +51,14 @@ export class PlayersComponent {
 
   onToggleUnavailable(): void {
     this.showUnavailable = !this.showUnavailable;
+    this.grid.gridOptions.api.onFilterChanged();
   }
 
   onClearFilterClick() {
     this.showUnavailable = false;
     this.positionFilter = defaultFilter;
     this.anyPositionFilters = false;
+    this.grid.gridOptions.api.onFilterChanged();
   }
 
   isFilterOn(position: PlayerPosition): boolean {
@@ -65,5 +73,11 @@ export class PlayersComponent {
 
     // todo test this still works. used to be (isPositionOn) => isPositionOn instead of identity
     this.anyPositionFilters = some(this.positionFilter, identity);
+
+    this.grid.gridOptions.api.onFilterChanged();
+  }
+
+  getQuickFilter() {
+    return this.playerSearchQuery;
   }
 }

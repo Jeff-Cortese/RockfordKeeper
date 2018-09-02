@@ -3,6 +3,7 @@ import { find } from 'lodash-es';
 import { IOwner } from '../core/owners/IOwner';
 import { IPick } from '../core/picks/IPick';
 import { IPlayer } from '../core/players/IPlayer';
+import { SnapshotAction } from 'angularfire2/database';
 
 @Component({
   selector: 'app-owners',
@@ -11,17 +12,18 @@ import { IPlayer } from '../core/players/IPlayer';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OwnersComponent {
-  @Input() owners: IOwner[];
-  @Input() currentPick: IPick;
+  @Input() owners: SnapshotAction<IOwner>[];
+  @Input() currentPick: SnapshotAction<IPick>;
 
-  selectedOwner: IOwner | '' = '';
+  selectedOwner: SnapshotAction<IOwner> | '' = '';
 
   getCurrentPickOwner(): IOwner {
-    return find(this.owners, owner => owner.name === (this.currentPick && this.currentPick.teamId));
+    const foundOwner = find(this.owners, owner => owner.payload.val().name === (this.currentPick.payload.val() && this.currentPick.payload.val().teamId));
+    return foundOwner && foundOwner.payload.val();
   }
 
   owner() {
-    return this.selectedOwner || this.getCurrentPickOwner();
+    return this.selectedOwner && this.selectedOwner.payload.val() || this.getCurrentPickOwner();
   }
 
   qb(): IPlayer {
@@ -74,7 +76,7 @@ export class OwnersComponent {
     return owner && owner.roster.bench || [];
   }
 
-  tackBenchBy(player: IPlayer): string {
+  trackBenchBy(player: IPlayer): string {
     return player && player.espnPlayerId;
   }
 }

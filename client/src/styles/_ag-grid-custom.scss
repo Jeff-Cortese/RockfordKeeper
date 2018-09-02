@@ -1,14 +1,14 @@
-.datatable-header {
-  background-color: #fafafa;
+.ag-header {
+  background-color: #fafafa !important;
 }
 
-.datatable-body-row {
+.ag-row {
   :hover {
-    background-color: #f2f2f2;
+    background-color: #f2f2f2 !important;
   }
 }
 
-.datatable-body-cell {
+.ag-cell {
   :hover {
     .show-on-hover {
       display: block;

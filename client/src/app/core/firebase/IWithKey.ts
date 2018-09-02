@@ -1,5 +1,5 @@
 export interface IWithKey {
   $key?: string;
-  $value?: any;
+  $value?: () => any;
   $exists?: () => boolean;
 }

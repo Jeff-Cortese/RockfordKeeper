@@ -1,4 +1,4 @@
-.datatable-body-row {
+.ag-row {
   :hover {
     .clickable {
       .player-name {
@@ -11,10 +11,14 @@
   .player-name-cell {
     margin: 0;
   }
+}
 
-  &.player-taken {
-    text-decoration: line-through;
-  }
+.ag-cell {
+  text-decoration: inherit;
+}
+
+.player-taken {
+  text-decoration: line-through;
 }
 
 .datatable-header {}

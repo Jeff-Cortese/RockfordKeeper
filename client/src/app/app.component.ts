@@ -8,6 +8,7 @@ import {
 } from './state/appActions';
 import { IPlayer } from './core/players/IPlayer';
 import { IPick } from './core/picks/IPick';
+import { SnapshotAction } from 'angularfire2/database';
 
 @Component({
   selector: 'app-root',
@@ -23,19 +24,19 @@ export class AppComponent {
 
   constructor(private store: Store<{ app: IAppState }>) {}
 
-  onPlayerClicked(player: IPlayer): void {
-    if (!this.state.isAdmin || player.isTaken) { return; }
+  onPlayerClicked(player: SnapshotAction<IPlayer>): void {
+    if (!this.state.isAdmin || player.payload.val().isTaken) { return; }
 
     this.store.dispatch(<SelectPlayerAction> { type: 'SELECT_PLAYER', player });
   }
 
-  onUndoPick(pick: IPick) {
+  onUndoPick(pick: SnapshotAction<IPick>) {
     if (!this.state.isAdmin) { return; }
 
     this.store.dispatch(<UnSelectPlayerAction> { type: 'UNSELECT_PLAYER', pick});
   }
 
-  onSelectPick(pick: IPick) {
+  onSelectPick(pick: SnapshotAction<IPick>) {
     if (!this.state.isAdmin) { return; }
 
     this.store.dispatch(<ChangeCurrentPickAction> { type: 'CHANGE_CURRENT_PICK', newPick: pick });

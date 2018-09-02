@@ -9,10 +9,10 @@
     <div class="content-area" *ngIf="!state.isLoadingPlayers && !state.isLoadingPicks && !state.isLoadingOwners; else loading">
       <h2>
         <a *ngIf="picksScrollOverridden" class="clickable link-normal" (click)="onCurrentPickClick()">
-          Round {{state.currentPick.round}} Pick {{state.currentPick.roundSelection}}
+          Round {{state.currentPick.payload.val()?.round}} Pick {{state.currentPick.payload.val()?.roundSelection}}
         </a>
         <span *ngIf="!picksScrollOverridden">
-          Round {{state.currentPick.round}} Pick {{state.currentPick.roundSelection}}
+          Round {{state.currentPick.payload.val()?.round}} Pick {{state.currentPick.payload.val()?.roundSelection}}
         </span>
       </h2>
       <div class="row">
@@ -33,7 +33,7 @@
         <div class="col-xs">
           <div class="row hidden-sm-down">
             <div class="col-xs-7">
-              <h2>Available Players</h2>
+              <h2>Players</h2>
             </div>
 
             <div class="row">
@@ -71,6 +71,7 @@
             </app-players>
 
             <app-owners class="col-xs-12 col-md-5"
+                        #owners
                         [class.hidden-sm-down]="mobileTab !== 'ROSTER'"
                         [owners]="state?.owners"
                         [currentPick]="state?.currentPick">

@@ -74,7 +74,7 @@ let parsePlayerCell (cell: string) =
         let otherStuff = tokens.[1].Split(' ')
         let moreStuff = otherStuff |> Array.filter (fun s -> s <> "")
         let team = moreStuff.[0]
-        let bye = Byes.byesByTeam.Item team
+        let bye = Byes.byesByTeam.Item (team.ToUpper())
         let position = moreStuff.[1]
         let tns = String.Join(" ", (moreStuff |> Seq.skip 2))
 
@@ -89,11 +89,12 @@ let parsePlayerCell (cell: string) =
         let dTokens = tokens.[0].Split(' ');
         let name = dTokens.[0]
         let position = dTokens.[1]
-        // let team = TODO
-        // let bye = TODO 
+        let bye = Byes.ByeByNickname.Item name
 
         { Player.Empty with
             Name = name;
+            LowerName = name.ToLower();
+            Bye = bye;
             Position = position; }
             
 
@@ -126,14 +127,14 @@ let parsePage () =
     |> List.map parsePlayerRow
 
 let parseRankedPlayers () =
-    use reader = new StreamReader("2017playerRanks.txt")
+    use reader = new StreamReader("2018playerRanks.txt")
     [while not reader.EndOfStream do
         let line = reader.ReadLine()
         let rank = line.Split('.').[0]
-        let namePosTeam = line.Substring(rank.Length + 2).Split(',')
-        let name = namePosTeam.[0].Replace("*", "").Trim()
+        let namePosTeam = line.Substring(rank.Length + 1).Split('\t')
+        let name = namePosTeam.[0].Trim()
         let pos = namePosTeam.[1].Trim()
-        let team = namePosTeam.[2].Split('\t').[0].Trim()
+        let team = namePosTeam.[2].Trim()
         yield { 
             Player.Empty with 
                 Name = name; 
@@ -152,18 +153,19 @@ let scrapePlayerProjections () =
     |> List.concat
 
 let joinPlayers ranked projected =
-    let mutable secondaryRank = 199;
-    let rankedMap: Map<string, Player> = ranked |> List.map (fun p -> p.Name, p) |> Map.ofList
+    let mutable secondaryRank = 299;
+    let rankedMap: Map<string, Player> = ranked |> List.map (fun p -> p.Name.ToLower(), p) |> Map.ofList
+    
     projected
     |> List.map 
         (fun player ->
-            let thing = rankedMap.TryFind (player.Name.Replace("*", ""))
+            let thing = rankedMap.TryFind (player.Name.Replace("*", "").Trim().ToLower())
             let other = match thing with 
                         | Some p -> p 
                         | None -> 
                             secondaryRank <- secondaryRank + 1
                             { player with EspnRank = secondaryRank }
-            { player with EspnRank = other.EspnRank }
+            { player with EspnRank = other.EspnRank; Bye = player.Bye }
         )
     |> List.sortWith (fun player1 player2 -> player1.EspnRank.CompareTo(player2.EspnRank))
     |> List.mapi (fun i p -> { p with EspnRank = i + 1 } )
@@ -179,8 +181,8 @@ let populatePlayers () =
     start chrome
     pin types.direction.Right
 
-    let playerProjections = scrapePlayerProjections ()
     let playerRanks = parseRankedPlayers ()
+    let playerProjections = scrapePlayerProjections ()
     let players = joinPlayers playerRanks playerProjections
 
     

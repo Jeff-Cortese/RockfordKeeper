@@ -2,7 +2,7 @@
   <div class="select col-xs">
     <select [(ngModel)]="selectedOwner">
       <option value="" selected>Team on the Clock</option>
-      <option *ngFor="let owner of owners; let i = index" [ngValue]="owner" [selected]="i === 0">{{owner.name}}</option>
+      <option *ngFor="let owner of owners; let i = index" [ngValue]="owner" [selected]="i === 0">{{owner.payload.val().name}}</option>
     </select>
   </div>
 </div>
@@ -20,7 +20,7 @@
 
   <h4 *ngIf="bench().length > 0" ngClass="col-xs-12">Bench</h4>
   <app-roster-card class="col-xs-12"
-                   *ngFor="let player of bench(); trackBy: tackBenchBy"
+                   *ngFor="let player of bench(); trackBy: trackBenchBy"
                    [player]="player"
                    [cardTitle]="player | friendlyPositionName">
   </app-roster-card>

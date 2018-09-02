@@ -1,6 +1,7 @@
 import { IPlayer } from '../core/players/IPlayer';
 import { IPick } from '../core/picks/IPick';
 import { IOwner } from '../core/owners/IOwner';
+import { SnapshotAction } from 'angularfire2/database';
 
 export interface IAppState {
   isLoadingPicks: boolean;
@@ -9,10 +10,10 @@ export interface IAppState {
   isAdmin: boolean;
 
   // server state
-  picks: IPick[];
-  owners: IOwner[];
-  players: IPlayer[];
-  currentPick?: IPick;
+  picks: SnapshotAction<IPick>[];
+  owners: SnapshotAction<IOwner>[];
+  players: SnapshotAction<IPlayer>[];
+  currentPick?: SnapshotAction<IPick>;
 }
 
 export const initialState: IAppState = {

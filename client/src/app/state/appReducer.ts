@@ -25,7 +25,7 @@ export function appReducer(state: IAppState = initialState, action: AppAction): 
     }
 
     case 'GET_CURRENT_PICK_DONE': {
-      if (action.pick.$exists()) {
+      if (action.pick.payload.val()) {
         return { ...state, currentPick: action.pick };
       } else {
         return state;

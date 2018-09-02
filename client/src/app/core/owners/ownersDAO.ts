@@ -3,9 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { take, map, mergeMap } from 'rxjs/operators';
 
-import { IOwner, IRoster } from './IOwner';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { IOwner } from './IOwner';
+import { AngularFireDatabase, SnapshotAction } from 'angularfire2/database';
 import { IPlayer } from '../players/IPlayer';
+import { filter, isArray, omitBy } from 'lodash-es';
 
 @Injectable()
 export class OwnersDAO {
@@ -13,35 +14,36 @@ export class OwnersDAO {
 
   constructor(private firebase: AngularFireDatabase) {}
 
-  getOwners(): Observable<IOwner[]> {
-    return this.firebase.list<IOwner>(this.ownerUrl).valueChanges(); // todo? is valueChanges right???
+  getOwners(): Observable<SnapshotAction<IOwner>[]> {
+    return this.firebase.list<IOwner>(this.ownerUrl).snapshotChanges();
   }
 
   addToRoster(teamId: string, playerToAdd: IPlayer): Observable<any> {
     const ownerRef = this.firebase.object(`${this.ownerUrl}/${teamId}`);
-    return ownerRef.valueChanges().pipe(
+    return ownerRef.snapshotChanges().pipe(
       take(1),
-      map((owner: IOwner) => this.addPlayer(owner, playerToAdd)),
+      map((owner: SnapshotAction<IOwner>) => this.addPlayer(owner, playerToAdd)),
       mergeMap((updatedOwner: IOwner) => ownerRef.update(updatedOwner))
     );
   }
 
-  removeFromRoster(teamId: string, player: IPlayer): Observable<any> {
+  removeFromRoster(teamId: string, player: SnapshotAction<IPlayer>): Observable<any> {
     const ownerRef = this.firebase.object(`${this.ownerUrl}/${teamId}`);
-    return ownerRef.valueChanges().pipe(
+    return ownerRef.snapshotChanges().pipe(
       take(1),
-      map((owner: IOwner) => this.removePlayer(owner, player)),
+      map((owner: SnapshotAction<IOwner>) => this.removePlayer(owner, player.payload.val())),
       mergeMap((updatedOwner: IOwner) => ownerRef.update(updatedOwner))
     );
   }
 
-  private removePlayer(owner: IOwner, playerToRemove: IPlayer): IOwner {
+  private removePlayer(ownerToRemoveFrom: SnapshotAction<IOwner>, playerToRemove: IPlayer): IOwner {
+    const owner = ownerToRemoveFrom.payload.val();
     const roster = owner.roster || {};
     const removeFromBench =
-        player => _.filter(roster.bench || [], (p: IPlayer) => p.espnPlayerId !== player.espnPlayerId);
+        player => filter(roster.bench || [], (p: IPlayer) => p.espnPlayerId !== player.espnPlayerId);
 
-    const newRoster = _.omitBy(roster, (property: IPlayer | IPlayer[]) =>
-      !_.isArray(property) ? (<IPlayer>property).espnPlayerId === playerToRemove.espnPlayerId : false
+    const newRoster = omitBy(roster, (property: IPlayer | IPlayer[]) =>
+      !isArray(property) ? (<IPlayer>property).espnPlayerId === playerToRemove.espnPlayerId : false
     );
 
     return {
@@ -53,7 +55,8 @@ export class OwnersDAO {
     };
   }
 
-  private addPlayer(owner: IOwner, playerToAdd): IOwner {
+  private addPlayer(addToOwner: SnapshotAction<IOwner>, playerToAdd: IPlayer): IOwner {
+    const owner = addToOwner.payload.val();
     const roster = owner.roster || {};
     const addToBench = player => roster.bench = [...(owner.roster.bench || []), player];
 

@@ -1,8 +1,9 @@
 import {
-  ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output,
+  ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, Output,
   SimpleChanges
 } from '@angular/core';
 import { IPick } from '../core/picks/IPick';
+import { SnapshotAction } from 'angularfire2/database';
 
 @Component({
   moduleId: module.id,
@@ -13,13 +14,13 @@ import { IPick } from '../core/picks/IPick';
 })
 
 export class PickCardComponent implements OnChanges {
-  @Input() pick: IPick;
+  @Input() pick: SnapshotAction<IPick>;
   @Input() isCurrentPick: boolean;
   @Input() canAutoScroll = true;
   @Input() canClick = false;
   @Input() canDoActions = false;
 
-  @Output() cardClick = new EventEmitter<IPick>();
+  @Output() cardClick = new EventEmitter<SnapshotAction<IPick>>();
   @Output() autoScroll = new EventEmitter();
 
   constructor(private element: ElementRef) {}

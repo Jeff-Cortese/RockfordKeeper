@@ -58,6 +58,7 @@
                      [doesExternalFilterPass]="shouldShowPlayer"
                      [cacheQuickFilter]="true"
                      [getRowClass]="getRowClass"
+                     [deltaRowDataMode]="true"
                      (rowDataUpdated)="grid?.api?.sizeColumnsToFit()"
                      (gridReady)="grid?.api?.sizeColumnsToFit()"
                      style="height: 775px; width: 100%;"> <!--TODO correct height-->

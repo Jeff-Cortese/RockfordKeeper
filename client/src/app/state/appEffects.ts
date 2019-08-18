@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { switchMap, map, catchError, withLatestFrom, ignoreElements, concatMap, filter } from 'rxjs/operators';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
-import { find, isUndefined } from 'lodash-es';
+import { drop, find, isUndefined } from 'lodash-es';
 
 import { OwnersDAO } from '../core/owners/ownersDAO';
 import { PicksDAO } from '../core/picks/picksDAO';
@@ -74,16 +74,22 @@ export class AppEffects {
       ofType('SELECT_PLAYER'),
       withLatestFrom(this.store.pipe(select('app'))),
       filter(([ignored, state]) => !state.isUnselectingPlayer),
-      concatMap(([{ player }, state]: [SelectPlayerAction, IAppState]) =>
-        this.picksDao.selectPlayer(
+      concatMap(([{ player }, state]: [SelectPlayerAction, IAppState]) => {
+        const picksAfterCurrent = drop(state.picks, state.currentPick.payload.val().overallSelection);
+        const nextPick = find(picksAfterCurrent, pick => isUndefined(pick.payload.val().player));
+        const getFallBackNextPick = () => find(state.picks, pick =>
+          pick.payload.val().overallSelection !== state.currentPick.payload.val().overallSelection &&
+          isUndefined(pick.payload.val().player)
+        );
+        return this.picksDao.selectPlayer(
           state.currentPick,
           player,
-          find(state.picks, pick => pick.payload.val().overallSelection !== state.currentPick.payload.val().overallSelection && isUndefined(pick.payload.val().player))
+          nextPick || getFallBackNextPick()
         ).pipe(
-          map(() => <SelectionChangingDone> { type: 'SELECTION_CHANGING_DONE' }),
-          catchError(() => of(<SelectionChangingDone> { type: 'SELECTION_CHANGING_DONE' }))
-        )
-      )
+          map(() => <SelectionChangingDone>{ type: 'SELECTION_CHANGING_DONE' }),
+          catchError(() => of(<SelectionChangingDone>{ type: 'SELECTION_CHANGING_DONE' }))
+        );
+      })
     );
 
   @Effect() unselectPlayer: Observable<SelectionChangingDone> =

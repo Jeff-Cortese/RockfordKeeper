@@ -8,15 +8,15 @@
 </div>
 
 <div class="row">
-  <app-roster-card class="col-xs-12" [player]="qb()" cardTitle="Quarter Back"></app-roster-card>
-  <app-roster-card class="col-xs-12" [player]="rb1()" cardTitle="Running Back"></app-roster-card>
-  <app-roster-card class="col-xs-12" [player]="rb2()" cardTitle="Running Back"></app-roster-card>
-  <app-roster-card class="col-xs-12" [player]="wr1()" cardTitle="Wide Receiver"></app-roster-card>
-  <app-roster-card class="col-xs-12" [player]="wr2()" cardTitle="Wide Receiver"></app-roster-card>
-  <app-roster-card class="col-xs-12" [player]="te()" cardTitle="Tight End"></app-roster-card>
-  <app-roster-card class="col-xs-12" [player]="flx()" cardTitle="Flex"></app-roster-card>
-  <app-roster-card class="col-xs-12" [player]="dst()" cardTitle="Defense / Special Teams"></app-roster-card>
-  <app-roster-card class="col-xs-12" [player]="k()" cardTitle="Kicker"></app-roster-card>
+  <app-roster-card class="col-xs-12 col-lg-6" [player]="qb()" cardTitle="Quarter Back"></app-roster-card>
+  <app-roster-card class="col-xs-12 col-lg-6" [player]="rb1()" cardTitle="Running Back"></app-roster-card>
+  <app-roster-card class="col-xs-12 col-lg-6" [player]="rb2()" cardTitle="Running Back"></app-roster-card>
+  <app-roster-card class="col-xs-12 col-lg-6" [player]="wr1()" cardTitle="Wide Receiver"></app-roster-card>
+  <app-roster-card class="col-xs-12 col-lg-6" [player]="wr2()" cardTitle="Wide Receiver"></app-roster-card>
+  <app-roster-card class="col-xs-12 col-lg-6" [player]="te()" cardTitle="Tight End"></app-roster-card>
+  <app-roster-card class="col-xs-12 col-lg-6" [player]="flx()" cardTitle="Flex"></app-roster-card>
+  <app-roster-card class="col-xs-12 col-lg-6" [player]="dst()" cardTitle="Defense / Special Teams"></app-roster-card>
+  <app-roster-card class="col-xs-12 col-lg-6" [player]="k()" cardTitle="Kicker"></app-roster-card>
 
   <h4 *ngIf="bench().length > 0" ngClass="col-xs-12">Bench</h4>
   <app-roster-card class="col-xs-12"

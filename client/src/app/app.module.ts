@@ -25,9 +25,16 @@ import { OwnersComponent } from './owners/owners.component';
 import { AppContainerComponent } from './app-container.component';
 import { RosterCardComponent } from './owners/roster-card.component';
 import { LibsModule } from './libs/libs.module';
+import { BigBoardComponent } from './big-board/big-board.component';
+import { BigBoardCardComponent } from './big-board/big-board-card.component';
 
 export const REDUCERS_TOKEN = new InjectionToken<ActionReducerMap<IRockfordKeeper>>('Registered Reducers');
 Object.assign(REDUCERS_TOKEN, rockfordKeeperReducer);
+
+const bigBoardComponents = [
+  BigBoardComponent,
+  BigBoardCardComponent
+];
 
 const pickComponents = [
   PicksComponent,
@@ -54,6 +61,7 @@ export class HackModule {
   declarations: [
     AppContainerComponent,
     AppComponent,
+    ...bigBoardComponents,
     ...pickComponents,
     PlayersComponent,
     ...ownerComponents

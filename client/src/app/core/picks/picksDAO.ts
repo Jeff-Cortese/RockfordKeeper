@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, SnapshotAction } from 'angularfire2/database';
+import { AngularFireDatabase, SnapshotAction, AngularFireAction, DatabaseSnapshot } from 'angularfire2/database';
 import { Observable, concat, from, of } from 'rxjs';
 import { reduce } from 'rxjs/operators';
 import { omit } from 'lodash-es';
@@ -21,7 +21,7 @@ export class PicksDAO {
     private playersDao: PlayersDAO
   ) {}
 
-  getPicks(): Observable<SnapshotAction<IPick>[]> {
+  getPicks(): Observable<AngularFireAction<DatabaseSnapshot<IPick>>[]> {
     return this.firebase.list<IPick>(this.picksUrl).snapshotChanges();
   }
 
@@ -39,17 +39,23 @@ export class PicksDAO {
       return of({});
     }
 
+    const updatedPick: IPick = {
+      ...pick.payload.val(),
+      player: player.payload.val(),
+      timestamp: new Date().toISOString()
+    };
+
     return concat(
       // set picks
-      this.firebase.object(`${this.picksUrl}/${pick.payload.val().overallSelection}/player`).set(player.payload.val()),
+      this.firebase.object(`${this.picksUrl}/${pick.payload.val().overallSelection}`).set(updatedPick),
       // update player is selected flag
       this.playersDao.markTaken(player.key),
       // set owner roster
       this.ownerDao.addToRoster(pick.payload.val().teamId, player.payload.val()),
       // set current pick to the next pick
-      this.firebase.object(this.currentPickUrl).set(nextPick && nextPick.payload.val() || pick.payload.val()),
+      this.firebase.object(this.currentPickUrl).set(nextPick && nextPick.payload.val() || updatedPick),
       // set the previous pick to the current pick
-      this.firebase.object(this.previousPickUrl).set(pick.payload.val())
+      this.firebase.object(this.previousPickUrl).set(updatedPick)
     ).pipe(
       reduce(() => {})
     );
@@ -73,5 +79,9 @@ export class PicksDAO {
     ).pipe(
       reduce(() => {})
     );
+  }
+
+  getPick(overallSelection: number): Observable<IPick> {
+    return this.firebase.object<IPick>(`${this.picksUrl}/${overallSelection}`).valueChanges();
   }
 }

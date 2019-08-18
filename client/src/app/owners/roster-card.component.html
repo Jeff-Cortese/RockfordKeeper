@@ -4,9 +4,12 @@
   </div>
   <div class="card-block">
     <div class="row">
-      <!--<div class="col-xs-2 col-xl-1" *ngIf="player">
-        <img #headshot src="http://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/{{player?.espnPlayerId}}.png&w=40&h=50&scale=crop&background=0xcccccc&transparent=false"
-             (error)="headshot.style.display = 'none'"/>
+      <!--<div class="col-xs-2 col-xl-1" *ngIf="player" style="display: flex; align-items: center">
+        <img #headshot
+             src="https://a.espncdn.com/i/headshots/nfl/players/full/{{player.espnPlayerId}}.png?w=250&h=100&scale=crop&background=0xcccccc&transparent=false"
+             (error)="headshot.src = 'http://g.espncdn.com/s/ffllm/14//images/playerpop/design2/no-mugshot-7.png'"
+             height="35px"
+             width="48px"/>
       </div>-->
       <div class="col-xs">
         <h6>{{player?.name}} &mdash; {{player?.team}}</h6>

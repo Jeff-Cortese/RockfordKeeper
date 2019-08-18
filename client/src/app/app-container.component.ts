@@ -14,9 +14,13 @@ import {
 @Component({
   moduleId: module.id,
   selector: 'app-container',
-  template: `<app-root [state]="state$ | async"></app-root>`
+  template: `
+    <app-root *ngIf="!showBigBoard" [state]="state$ | async"></app-root>
+    <app-big-board *ngIf="showBigBoard"></app-big-board>
+  `
 })
 export class AppContainerComponent implements OnInit, OnDestroy {
+  showBigBoard = false;
   state$: Observable<IAppState>;
   ngDestroy$ = new Subject<any>();
 
@@ -37,6 +41,8 @@ export class AppContainerComponent implements OnInit, OnDestroy {
         if (params.admin === 'true') {
           this.store.dispatch(<MakeAdminAction> { type: 'MAKE_USER_ADMIN' });
         }
+
+        this.showBigBoard = params.bigBoard === 'true';
       }),
       takeUntil(this.ngDestroy$)
     ).subscribe();

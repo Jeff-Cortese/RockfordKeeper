@@ -14,16 +14,25 @@
   </div>
 
   <!--<div class="card-img" style="height: 75px; overflow-y: hidden" *ngIf="pick.payload.val()?.player">
-    <img #headshot src="http://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/{{pick.payload.val()?.player.espnPlayerId}}.png&w=250&h=100&scale=crop&background=0xcccccc&transparent=false"
-         (error)="headshot.src = 'http://g.espncdn.com/s/ffllm/14//images/playerpop/design2/no-mugshot-7.png'"/>
+
   </div>-->
 
   <div class="card-block" *ngIf="pick.payload.val()?.player">
-    <div class="card-text">
+    <div class="card-text" style="display: flex; align-items: center">
+      <img #headshot
+           src="https://a.espncdn.com/i/headshots/nfl/players/full/{{pick.payload.val()?.player.espnPlayerId}}.png?w=250&h=100&scale=crop&background=0xcccccc&transparent=false"
+           (error)="headshot.src = 'http://g.espncdn.com/s/ffllm/14//images/playerpop/design2/no-mugshot-7.png'"
+           height="45px"
+           width="58px"/>
       <div>
-        <h6>{{pick.payload.val()?.player.name}} <span *ngIf="pick.payload.val()?.player.tns">{{pick.payload.val()?.player.tns}}</span></h6>
+        <h6>
+          {{pick.payload.val()?.player.name}}
+          <span *ngIf="pick.payload.val()?.player.injuryStatus && pick.payload.val().player.injuryStatus !== 'ACTIVE' ">
+          {{pick.payload.val()?.player.injuryStatus}}
+          </span>
+        </h6>
+        <div>{{pick.payload.val()?.player.position}} &mdash; {{pick.payload.val()?.player.team}}</div>
       </div>
-      <div>{{pick.payload.val()?.player.position}} &mdash; {{pick.payload.val()?.player.team}}</div>
     </div>
   </div>
 

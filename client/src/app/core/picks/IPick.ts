@@ -5,8 +5,9 @@ export interface IPick extends IWithKey {
   round: number;
   roundSelection: number;
   overallSelection: number;
-  player: IPlayer;
+  player?: IPlayer;
   teamId: string;
   isKeeper: boolean;
   byWayOf: string;
+  timestamp: string;
 }

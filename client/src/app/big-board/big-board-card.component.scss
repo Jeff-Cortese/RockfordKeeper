@@ -1,0 +1,53 @@
+.pick-container {
+  height: 100%;
+  width: 100%;
+}
+.unselected {
+  padding: 5px;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  font-size: .9vmax;
+}
+
+.selection {
+  height: 100%;
+  width: 100%;
+  padding: 5px;
+
+  color: white;
+  line-height: 1.6vmin;
+  border-radius: 4px;
+
+  background-color: #698a98; //#08415C;
+  background-size: contain;
+  background-position: bottom right;
+  background-repeat: no-repeat;
+
+  animation: fadeIn .5s, selection-made 2s 3.2s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes selection-made {
+  from { z-index: 2; }
+  to {
+    transform: translate(0) scale(1);
+    z-index: 1;
+  }
+}
+
+.selection-name {
+  font-size: 1.2vmin
+}
+
+.selection-info {
+  font-size: .5vmax;
+}
+
+

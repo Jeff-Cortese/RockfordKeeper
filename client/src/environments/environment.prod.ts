@@ -1,11 +1,12 @@
 export const environment = {
   production: true,
   firebase: {
-    apiKey: 'AIzaSyA4EzCgL3MDpBq0ja6YbUj5sjhH9P0MgCA',
-    authDomain: 'rockfordkeeper.firebaseapp.com',
-    databaseURL: 'https://rockfordkeeper.firebaseio.com',
-    projectId: 'rockfordkeeper',
-    storageBucket: 'rockfordkeeper.appspot.com',
-    messagingSenderId: '725670937502'
+    apiKey: 'AIzaSyApNhF0Vkq2_Zg_8LUNbRj2qYlz6otG0NA',
+    authDomain: 'rockfordkeeper2019.firebaseapp.com',
+    databaseURL: 'https://rockfordkeeper2019.firebaseio.com',
+    projectId: 'rockfordkeeper2019',
+    storageBucket: '',
+    messagingSenderId: '14816530961',
+    appId: '1:14816530961:web:b23bc1076aa186a1'
   }
 };

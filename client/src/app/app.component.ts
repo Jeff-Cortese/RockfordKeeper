@@ -11,7 +11,7 @@ import { IPick } from './core/picks/IPick';
 import { SnapshotAction } from 'angularfire2/database';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

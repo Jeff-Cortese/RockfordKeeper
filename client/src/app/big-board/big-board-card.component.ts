@@ -12,7 +12,7 @@ import { shareReplay, take, tap } from 'rxjs/operators';
         {{pick.overallSelection}} {{pick.teamId}}
       </div>
 
-      <a class="selection"
+      <a class="selection {{pick?.player?.position.replace('/', '')}}"
          *ngIf="pick.player"
          href="https://www.espn.com/nfl/player/news/_/id/{{pick?.player?.espnPlayerId}}"
          target="_blank"

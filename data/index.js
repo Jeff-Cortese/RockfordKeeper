@@ -1,12 +1,13 @@
 const getPlayerData = require('./espn-projections');
 const generatePicks = require('./picks');
-const generateOwners = require('./owners');
+const { generateOwnerData, addPlayerToRoster } = require('./owners');
+
 const firebase = require('./firebaseDataAccess');
 
 (async () => {
   const players = await getPlayerData();
   const picks = await generatePicks();
-  const owners = generateOwners();
+  const owners = generateOwnerData();
 
   for (const pick of picks) {
     if (pick.keeperName) {
@@ -15,6 +16,7 @@ const firebase = require('./firebaseDataAccess');
         player.isTaken = true;
         pick.player = player;
         pick.playerId = player.espnPlayerId;
+        owners[pick.teamId] = addPlayerToRoster(owners[pick.teamId], player)
       } else {
         console.error(`Could not find matching player for keeper ${pick.keeperName}`)
       }

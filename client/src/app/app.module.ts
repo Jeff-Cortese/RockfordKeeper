@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { Inject, InjectionToken, NgModule } from '@angular/core';
+import { Component, Inject, InjectionToken, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { noop } from 'lodash-es';
 import { AngularFireModule } from 'angularfire2';
@@ -46,6 +46,17 @@ const ownerComponents = [
   RosterCardComponent
 ];
 
+const routes: Routes = [
+  { path: 'draft-board', component: BigBoardComponent },
+  { path: '**', component: AppContainerComponent }
+];
+
+@Component({
+  selector: 'app-root',
+  template: `<router-outlet></router-outlet>`
+})
+class RootComponent {}
+
 @NgModule({
   providers: [
     { provide: REDUCERS_TOKEN, useValue: rockfordKeeperReducer }
@@ -64,10 +75,11 @@ export class HackModule {
     ...bigBoardComponents,
     ...pickComponents,
     PlayersComponent,
-    ...ownerComponents
+    ...ownerComponents,
+    RootComponent
   ],
   imports: [
-    RouterModule.forRoot([]),
+    RouterModule.forRoot(routes),
     AgGridModule.withComponents([]),
     AngularFireDatabaseModule,
     AngularFireModule.initializeApp(environment.firebase),
@@ -84,7 +96,7 @@ export class HackModule {
   providers: [
     // { provide: REDUCERS_TOKEN, useValue: rockfordKeeperReducer }
   ],
-  bootstrap: [AppContainerComponent]
+  bootstrap: [RootComponent]
 })
 export class AppModule { }
 

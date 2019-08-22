@@ -57,6 +57,7 @@ import { Observable, ReplaySubject } from 'rxjs';
               class="player-card"
               [initialPick]="context.pick"
               [showOwner]="context.atBat || context.onDeck || context.inTheHole || context.cleanup"
+              [class.has-player]="context.hasPlayer"
               [class.at-bat]="context.atBat"
               [class.on-deck]="context.onDeck"
               [class.in-the-hole]="context.inTheHole"

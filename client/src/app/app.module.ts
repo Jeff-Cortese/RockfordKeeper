@@ -55,7 +55,7 @@ const routes: Routes = [
   selector: 'app-root',
   template: `<router-outlet></router-outlet>`
 })
-class RootComponent {}
+export class RootComponent {}
 
 @NgModule({
   providers: [

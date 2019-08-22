@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { IPick } from '../core/picks/IPick';
 import { PicksDAO } from '../core/picks/picksDAO';
-import { fromEvent, Observable } from 'rxjs';
-import { map, shareReplay, take, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { shareReplay, take, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-big-board-card',
@@ -12,15 +12,21 @@ import { map, shareReplay, take, tap } from 'rxjs/operators';
         {{pick.overallSelection}} {{pick.teamId}}
       </div>
 
-      <div class="selection" *ngIf="pick.player"
+      <a class="selection"
+         *ngIf="pick.player"
+         href="https://www.espn.com/nfl/player/news/_/id/{{pick?.player?.espnPlayerId}}"
+         target="_blank"
         [ngStyle]="{
           'background-image': getBackgroundImage(pick),
           'transform': getTransformStyle(pick)
         }">
         <div class="selection-name">{{pick?.player?.firstName}}</div>
-        <div class="selection-name">{{pick?.player?.lastName}}</div>
+        <div class="selection-name">
+          {{pick?.player?.lastName}}
+          <span *ngIf="pick?.player?.injuryStatus && pick?.player?.injuryStatus !== 'ACTIVE'"> ({{pick?.player?.injuryStatus[0]}})</span>
+        </div>
         <div class="selection-info">{{pick?.player?.position}} - {{pick.player.team}}, {{pick.player.bye}}</div>
-      </div>
+      </a>
     </div>
   `,
   styleUrls: ['big-board-card.component.scss'],
@@ -47,7 +53,9 @@ export class BigBoardCardComponent implements OnInit {
 
   getBackgroundImage(pick): string {
     return pick && pick.player
-      ? `url("https://a.espncdn.com/i/headshots/nfl/players/full/${pick.player.espnPlayerId}.png")`
+      ? pick.player.position !== 'D/ST'
+        ? `url("https://a.espncdn.com/i/headshots/nfl/players/full/${pick.player.espnPlayerId}.png")`
+        : `url("https://a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/${pick.player.team.toLowerCase()}.png")`
       : '';
   }
 

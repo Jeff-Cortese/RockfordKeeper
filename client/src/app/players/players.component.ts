@@ -81,4 +81,13 @@ export class PlayersComponent {
   getQuickFilter() {
     return this.playerSearchQuery;
   }
+
+  playerCellClicked(player: SnapshotAction<IPlayer>) {
+    if (this.canMakePick) {
+      this.playerSearchQuery = '';
+      this.playerClicked.emit(player);
+    } else {
+      window.open(`https://www.espn.com/nfl/player/news/_/id/${player.payload.val().espnPlayerId}`);
+    }
+  }
 }

@@ -11,26 +11,33 @@ import { Observable, ReplaySubject } from 'rxjs';
     <div class="big-board">
       <ng-container *ngIf="currentPick$ | async as currentPick">
         <div class="on-the-clock-list" [style.left.vw]="(currentPick?.overallSelection - 1) * -25">
-          <span
-            class="pick"
-            *ngFor="let pick of allPicks$ | async"
-            [class.at-bat]="currentPick?.overallSelection === pick.overallSelection"
-            [class.on-deck]="(onDeck$ | async)?.overallSelection === pick?.overallSelection"
-            [class.in-the-hole]="(inTheHole$ | async)?.overallSelection === pick?.overallSelection"
-            [class.clean-up]="(cleanUp$ | async)?.overallSelection === pick?.overallSelection"
-          >
-            <span style="margin-right: 15px;">
-              <div>
-                {{pick.teamId}}
-              </div>
-              <div>
-                Round {{pick.round}}, Pick {{pick.roundSelection}}
-              </div>
+          <ng-container *ngFor="let pick of allPicks$ | async">
+            <span
+              class="pick"
+              [class.has-player]="pick.player"
+              [class.at-bat]="currentPick?.overallSelection === pick.overallSelection"
+              [class.on-deck]="(onDeck$ | async)?.overallSelection === pick?.overallSelection"
+              [class.in-the-hole]="(inTheHole$ | async)?.overallSelection === pick?.overallSelection"
+              [class.clean-up]="(cleanUp$ | async)?.overallSelection === pick?.overallSelection"
+            >
+              <img src="./assets/{{pick.teamId}}.jpg"
+                   [alt]="pick.teamId"
+                   width="50"
+                   height="50"
+              >
+              <span style="margin-right: 15px; padding-left: 10px;">
+                <div>
+                  {{pick.teamId}}
+                </div>
+                <div>
+                  Round {{pick.round}}, Pick {{pick.roundSelection}}
+                </div>
+              </span>
+              <span class="hidden-md-down" style="align-self: flex-end">
+                {{pick.isKeeper ? 'KEEPER' : ''}}
+              </span>
             </span>
-            <span style="align-self: flex-end">
-              {{pick.player?.name}}
-            </span>
-          </span>
+          </ng-container>
         </div>
 
         <div class="round-header"></div>
@@ -50,7 +57,6 @@ import { Observable, ReplaySubject } from 'rxjs';
               class="player-card"
               [initialPick]="context.pick"
               [showOwner]="context.atBat || context.onDeck || context.inTheHole || context.cleanup"
-              [class.has-player]="context.hasPlayer"
               [class.at-bat]="context.atBat"
               [class.on-deck]="context.onDeck"
               [class.in-the-hole]="context.inTheHole"

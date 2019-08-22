@@ -66,10 +66,12 @@
 
       <ag-grid-column grid-template headerName="Name" [valueGetter]="getPayloadValue('name')">
           <ng-template let-row="row">
-            <div class="row player-name-cell" [class.clickable]="canMakePick && !row.payload.val().isTaken" (click)="playerSearchQuery = ''; playerClicked.emit(row)">
+            <div class="row player-name-cell clickable"
+                 (click)="playerCellClicked(row)"
+            >
               <div class="col-xs">
                 <span class="player-name">{{row.payload.val().name}}</span>
-                <span *ngIf="row.payload.val().tns">({{row.payload.val().tns}})</span>
+                <span *ngIf="row.payload.val().injuryStatus && row.payload.val().injuryStatus !== 'ACTIVE'"> ({{row.payload.val().injuryStatus[0]}})</span>
               </div>
               <div *ngIf="canMakePick && !row.payload.val().isTaken" class="col-xs-5 show-on-hover click-to-pick">Click to draft!</div>
             </div>

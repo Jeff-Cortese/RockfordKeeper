@@ -111,6 +111,7 @@ $roundColWidth: 40px;
 }
 
 .player-card {
+  position: relative;
   padding: 0 2px;
   transition-property: background-color;
   transition-duration: 1.5s;

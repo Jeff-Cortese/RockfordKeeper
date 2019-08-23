@@ -1,13 +1,22 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  HostBinding,
+  Input,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 import { IPick } from '../core/picks/IPick';
 import { PicksDAO } from '../core/picks/picksDAO';
-import { Observable } from 'rxjs';
-import { shareReplay, take, tap } from 'rxjs/operators';
+import { Observable, ReplaySubject } from 'rxjs';
+import { shareReplay, take, takeUntil, tap } from 'rxjs/operators';
 
+let z = 1;
 @Component({
   selector: 'app-big-board-card',
   template: `
-    <div class="pick-container" *ngIf="pick$ | async as pick">
+    <div class="pick-container" *ngIf="pick$ | async as pick" [style.z-index]="zIndex">
       <div class="unselected" *ngIf="showOwner && !pick.player">
         {{pick.overallSelection}} {{pick.teamId}}
       </div>
@@ -18,7 +27,8 @@ import { shareReplay, take, tap } from 'rxjs/operators';
          target="_blank"
         [ngStyle]="{
           'background-image': getBackgroundImage(pick),
-          'transform': getTransformStyle(pick)
+          'transform': getTransformStyle(pick),
+          'z-index': zIndex
         }">
         <div class="selection-name">{{pick?.player?.firstName}}</div>
         <div class="selection-name">
@@ -32,13 +42,15 @@ import { shareReplay, take, tap } from 'rxjs/operators';
   styleUrls: ['big-board-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BigBoardCardComponent implements OnInit {
+export class BigBoardCardComponent implements OnInit, OnDestroy {
   @Input() initialPick: IPick;
   @Input() showOwner = false;
   isNew = false;
   pick$: Observable<IPick>;
+  destroy$ = new ReplaySubject(1);
+  @HostBinding('style.z-index') zIndex = 1;
 
-  constructor(private pickDao: PicksDAO) {}
+  constructor(private pickDao: PicksDAO, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.pick$ = this.pickDao.getPick(this.initialPick.overallSelection).pipe(
@@ -47,8 +59,24 @@ export class BigBoardCardComponent implements OnInit {
 
     this.pick$.pipe(
       take(1),
-      tap(pick => this.isNew = !Boolean(pick.player))
+      tap(pick => this.isNew = !Boolean(pick.player)),
+      takeUntil(this.destroy$)
     ).subscribe();
+
+    this.pick$.pipe(
+      tap(pick => {
+        if (!this.initialPick.player && pick.player) {
+          z++;
+          this.zIndex = z;
+        }
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   getBackgroundImage(pick): string {

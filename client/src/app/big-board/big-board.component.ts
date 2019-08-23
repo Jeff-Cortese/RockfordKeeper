@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { PicksDAO } from '../core/picks/picksDAO';
-import { map, shareReplay, take, tap, withLatestFrom } from 'rxjs/operators';
+import { map, shareReplay, take, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
 import { drop, groupBy, toPairs } from 'lodash-es';
 import { IPick } from '../core/picks/IPick';
 import { Observable, ReplaySubject } from 'rxjs';
@@ -62,7 +62,6 @@ import { Observable, ReplaySubject } from 'rxjs';
               [class.on-deck]="context.onDeck"
               [class.in-the-hole]="context.inTheHole"
               [class.clean-up]="context.cleanup"
-              [style.z-index]="context.isPrevious ? 2 : 1"
             ></app-big-board-card>
           </ng-template>
           <ng-container *ngFor="let team of teamsPicks">
@@ -89,7 +88,7 @@ import { Observable, ReplaySubject } from 'rxjs';
   styleUrls: ['./big-board.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BigBoardComponent implements OnInit {
+export class BigBoardComponent implements OnInit, OnDestroy {
   teamsPicks: { teamId: string; picks: IPick[] }[];
   allPicks$ = new ReplaySubject<IPick[]>(1);
   currentPick$: Observable<IPick>;
@@ -97,6 +96,7 @@ export class BigBoardComponent implements OnInit {
   onDeck$: Observable<IPick>;
   inTheHole$: Observable<IPick>;
   cleanUp$: Observable<IPick>;
+  destroy$ = new ReplaySubject(1);
 
   trackPickBy = (pick: IPick) => pick && pick.overallSelection;
 
@@ -138,7 +138,13 @@ export class BigBoardComponent implements OnInit {
         teamsAndPicks.sort(([, picksA], [, picksB]) => picksA[0].overallSelection - picksB[0].overallSelection);
         return teamsAndPicks.map(([teamId, picks]) => ({ teamId, picks }));
       }),
-      tap((teamPicks) => this.teamsPicks = teamPicks)
+      tap((teamPicks) => this.teamsPicks = teamPicks),
+      takeUntil(this.destroy$)
     ).subscribe();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

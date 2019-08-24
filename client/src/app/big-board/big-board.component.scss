@@ -43,6 +43,9 @@ $roundColWidth: 40px;
   background-color: #F9FBFF;
   color: #494949;
   font-size: 1vmax;
+  @media (max-width: 768px) {
+    line-height: 1.7vmax;
+  }
 }
 
 .at-bat {

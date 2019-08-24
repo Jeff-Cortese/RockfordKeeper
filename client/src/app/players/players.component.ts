@@ -30,7 +30,7 @@ export class PlayersComponent {
   playerSearchQuery: string;
   positionFilter = defaultFilter;
   anyPositionFilters = false;
-  isMobile = /iPhone|iPod|Android/i.test(navigator.userAgent);
+  isMobile = /iPhone|iPod|iPad|Android/i.test(navigator.userAgent) || screen.width <= 768;
 
   getPlayerId = (player: SnapshotAction<IPlayer>) => player.payload.val().espnPlayerId;
 

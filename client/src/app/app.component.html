@@ -14,6 +14,7 @@
         <span *ngIf="!picksScrollOverridden">
           Round {{state.currentPick.payload.val()?.round}} Pick {{state.currentPick.payload.val()?.roundSelection}}
         </span>
+        <a target="_blank" class="hidden-sm-down float-sm-right" style="display: flex; align-items: center" routerLink="/draft-board">Draft Board <clr-icon style="margin-left: 8px" shape="pop-out"></clr-icon></a>
       </h2>
       <div class="row">
         <app-picks class="col-xs-12"

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "projections": "node ./espn-projections.js",
+    "backup": "node ./backup.js",
     "start": "node ./index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,7 +12,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "firebase": "^6.4.2",
     "lodash": "^4.17.15",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "rxfire": "^3.7.0",
+    "rxjs": "^6.5.2"
   }
 }

@@ -1,5 +1,6 @@
 node_modules
-.idea
+.idea/
 picks.csv
 owners.json
 nickNames.json
+backups/

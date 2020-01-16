@@ -64,7 +64,7 @@
                      style="height: 775px; width: 100%;"> <!--TODO correct height-->
       <ag-grid-column grid-template headerName="Espn" [valueGetter]="getPayloadValue('espnRank')" [maxWidth]=50></ag-grid-column>
 
-      <ag-grid-column grid-template headerName="Name" [valueGetter]="getPayloadValue('name')">
+      <ag-grid-column grid-template headerName="Name" [valueGetter]="getPayloadValue('name')" [minWidth]="isTinyScreen ? 190 : undefined">
           <ng-template let-row="row">
             <div class="row player-name-cell clickable"
                  (click)="playerCellClicked(row)"
@@ -78,10 +78,11 @@
           </ng-template>
       </ag-grid-column>
 
-      <ag-grid-column grid-template headerName="Pos" [valueGetter]="getPayloadValue('position')" [maxWidth]="50"></ag-grid-column>
+      <ag-grid-column grid-template headerName="Pos" [valueGetter]="getPayloadValue('position')" [maxWidth]="isTinyScreen ? 30 : 50"></ag-grid-column>
       <ag-grid-column grid-template [hide]="isMobile" headerName="Team" [valueGetter]="getPayloadValue('team')" [maxWidth]="50"></ag-grid-column>
-      <ag-grid-column grid-template headerName="Bye" [valueGetter]="getPayloadValue('bye')" [maxWidth]="50"></ag-grid-column>
-      <ag-grid-column grid-template [hide]="isMobile" headerName="Proj" [valueGetter]="getPayloadValue('projection')" [maxWidth]="50"></ag-grid-column>
+      <ag-grid-column grid-template headerName="Bye" [valueGetter]="getPayloadValue('bye')" [maxWidth]="isTinyScreen ? 30 : 50"></ag-grid-column>
+      <ag-grid-column grid-template headerName="Proj" [valueGetter]="getPayloadValue('projection')" [maxWidth]="isTinyScreen ? 40 : 50"></ag-grid-column>
+      <ag-grid-column grid-template headerName="Avg" [valueGetter]="getPayloadValue('projectedAverage')" [maxWidth]="isTinyScreen ? 35 : 50"></ag-grid-column>
     </ag-grid-angular>
   </div>
 </div>

@@ -11,6 +11,7 @@ export interface IPlayer extends IWithKey {
   bye: number;
   espnRank: number;
   projection: number;
+  projectedAverage: number;
   lastYearPoints?: number;
   injuryStatus?: string;
   isInjured: boolean;

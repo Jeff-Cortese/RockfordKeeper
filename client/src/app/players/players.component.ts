@@ -30,7 +30,10 @@ export class PlayersComponent {
   playerSearchQuery: string;
   positionFilter = defaultFilter;
   anyPositionFilters = false;
-  isMobile = /iPhone|iPod|iPad|Android/i.test(navigator.userAgent) || screen.width <= 768;
+  isMobile = /iPhone|iPod|iPad|Android/i.test(navigator.userAgent);
+  width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+  height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+  isTinyScreen = this.width <= 768;
 
   getPlayerId = (player: SnapshotAction<IPlayer>) => player.payload.val().espnPlayerId;
 

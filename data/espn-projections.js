@@ -53,8 +53,8 @@ module.exports = async () => {
     firstName: player.firstName,
     lastName: player.lastName,
     position: positionById[player.defaultPositionId],
-    projectedAverage: player.stats[0] && player.stats[0].appliedAverage,
-    projection: player.stats[0] && player.stats[0].appliedTotal,
+    projectedAverage: player.stats[0] && Math.floor(player.stats[0].appliedAverage || 0),
+    projection: player.stats[0] && Math.floor(player.stats[0].appliedTotal || 0),
     team: getProTeamById(player.proTeamId).abbrev,
     isInjured: player.injured,
     injuryStatus: player.injuryStatus

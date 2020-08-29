@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 const proTeams = require('./pro-teams');
 
-const playerDataUrl2019 = 'https://fantasy.espn.com/apis/v3/games/ffl/seasons/2019/segments/0/leaguedefaults/1?scoringPeriodId=0&view=kona_player_info';
+const playerDataUrl2020 = 'https://fantasy.espn.com/apis/v3/games/ffl/seasons/2020/segments/0/leaguedefaults/1?scoringPeriodId=0&view=kona_player_info';
 
 async function getPlayerData(start, count) {
   const filterParams = {
@@ -17,7 +17,7 @@ async function getPlayerData(start, count) {
       filterStatsForTopScoringPeriodIds: {value: 2, additionalValue: ['002019', '102019', '002018']}
     }
   };
-  const response = await fetch(playerDataUrl2019, {
+  const response = await fetch(playerDataUrl2020, {
     headers: {
       'x-fantasy-filter': JSON.stringify(filterParams)
     }

@@ -2,7 +2,7 @@ const fs = require('fs');
 const teamNicknames = require('./nickNames.json');
 
 module.exports = async () => {
-  const rawPicks = fs.readFileSync('picks.csv', { encoding: 'ascii'}).split('\n');
+  const rawPicks = fs.readFileSync('picks.csv', { encoding: 'ascii'}).split('\n').filter(Boolean);
   return rawPicks
     .filter(rawPick => rawPick.indexOf('ROUND') < 0 && rawPick.indexOf('Pick') < 0)
     .map(rawPick => {
@@ -14,7 +14,7 @@ module.exports = async () => {
         isKeeper: Boolean(keeper),
         keeperName: keeper,
         teamId: teamNicknames[owner],
-        byWayOf: byWayOf.replace('\r', '')
+        byWayOf: byWayOf && byWayOf.replace('\r', '')
       };
     });
 };

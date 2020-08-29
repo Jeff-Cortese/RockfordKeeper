@@ -1,9 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { PicksDAO } from '../core/picks/picksDAO';
 import { map, shareReplay, take, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
-import { drop, groupBy, toPairs } from 'lodash-es';
+import { drop, groupBy, range, toPairs } from 'lodash-es';
 import { IPick } from '../core/picks/IPick';
 import { Observable, ReplaySubject } from 'rxjs';
+
+interface ITeamPicks {
+  teamId: string;
+  picks: IPick[];
+}
 
 @Component({
   selector: 'app-big-board',
@@ -49,8 +54,8 @@ import { Observable, ReplaySubject } from 'rxjs';
         </div>
 
         <div class="picks">
-          <div class="round-label" *ngFor="let round of teamsPicks[0].picks; let idx = index">
-            {{idx + 1}}
+          <div class="round-label" *ngFor="let pick of (selectedTeamPicks?.picks || emptyTeamPicks)">
+            {{pick?.round}}
           </div>
           <ng-template #cardTmpl let-context>
             <app-big-board-card
@@ -89,7 +94,7 @@ import { Observable, ReplaySubject } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BigBoardComponent implements OnInit, OnDestroy {
-  teamsPicks: { teamId: string; picks: IPick[] }[];
+  teamsPicks: ITeamPicks[];
   allPicks$ = new ReplaySubject<IPick[]>(1);
   currentPick$: Observable<IPick>;
   previousPick$: Observable<IPick>;
@@ -97,6 +102,9 @@ export class BigBoardComponent implements OnInit, OnDestroy {
   inTheHole$: Observable<IPick>;
   cleanUp$: Observable<IPick>;
   destroy$ = new ReplaySubject(1);
+  selectedTeamPicks: ITeamPicks;
+  currentPick: IPick;
+  emptyTeamPicks = range(1, 18).map(i => ({ round: i }));
 
   trackPickBy = (pick: IPick) => pick && pick.overallSelection;
 
@@ -105,6 +113,12 @@ export class BigBoardComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.currentPick$ = this.picksDao.getCurrentPick().pipe(
       map(pick => pick.payload.val()),
+      tap((pick: IPick) => {
+        this.currentPick = pick;
+        if (this.teamsPicks) {
+          this.selectedTeamPicks = this.teamsPicks.find(tp => tp.teamId === pick.teamId);
+        }
+      }),
       shareReplay(1)
     );
 
@@ -138,7 +152,11 @@ export class BigBoardComponent implements OnInit, OnDestroy {
         teamsAndPicks.sort(([, picksA], [, picksB]) => picksA[0].overallSelection - picksB[0].overallSelection);
         return teamsAndPicks.map(([teamId, picks]) => ({ teamId, picks }));
       }),
-      tap((teamPicks) => this.teamsPicks = teamPicks),
+      withLatestFrom(this.currentPick$),
+      tap(([teamPicks, currentPick]) => {
+        this.teamsPicks = teamPicks;
+        this.selectedTeamPicks = teamPicks.find(tp => tp.teamId === currentPick.teamId);
+      }),
       takeUntil(this.destroy$)
     ).subscribe();
   }

@@ -101,7 +101,7 @@ export class AppEffects {
         this.picksDao.unselectPlayer(pick, find(state.players, p => p.payload.val().espnPlayerId === pick.payload.val().player.espnPlayerId))
           .pipe(
             map(() => <SelectionChangingDone> { type: 'SELECTION_CHANGING_DONE' }),
-            catchError(() => of(<SelectionChangingDone> { type: 'SELECTION_CHANGING_DONE' }))
+            catchError(() => of(<SelectionChangingDone> { type: 'SELECTION_CHANGING_DONE' })) // todo this is probs the undo bug
           )
       )
     );

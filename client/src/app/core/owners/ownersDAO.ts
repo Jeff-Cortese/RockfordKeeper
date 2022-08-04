@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
-import { take, map, mergeMap } from 'rxjs/operators';
+import { take, map, mergeMap, tap } from 'rxjs/operators';
 
 import { IOwner } from './IOwner';
 import { AngularFireDatabase, SnapshotAction } from 'angularfire2/database';

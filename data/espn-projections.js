@@ -1,7 +1,17 @@
 const fetch = require('node-fetch');
-const proTeams = require('./pro-teams');
+//const proTeams = require('./pro-teams');
 
-const playerDataUrl2020 = 'https://fantasy.espn.com/apis/v3/games/ffl/seasons/2020/segments/0/leaguedefaults/1?scoringPeriodId=0&view=kona_player_info';
+const thisYear = 2021;
+const lastYear = thisYear - 1;
+
+const playerDataUrl = `https://fantasy.espn.com/apis/v3/games/ffl/seasons/${thisYear}/segments/0/leaguedefaults/3?scoringPeriodId=0&view=kona_player_info`;
+const seasonsUrl = `https://fantasy.espn.com/apis/v3/games/ffl/seasons/${thisYear}?view=proTeamSchedules_wl`
+
+async function getProTeams() {
+  const resp = await fetch(seasonsUrl);
+  const { settings } = await resp.json();
+  return settings.proTeams;
+}
 
 async function getPlayerData(start, count) {
   const filterParams = {
@@ -9,15 +19,15 @@ async function getPlayerData(start, count) {
       filterSlotIds: {value: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 23, 24]},
       filterStatsForSplitTypeIds: {value: [0]},
       filterStatsForSourceIds: {value: [1]},
-      filterStatsForExternalIds: {value: [2019]},
+      filterStatsForExternalIds: {value: [thisYear]},
       sortDraftRanks: {sortPriority: 2, sortAsc: true, value: 'STANDARD'},
       sortPercOwned: {sortPriority: 3, sortAsc: false},
       limit: count,
       offset: start,
-      filterStatsForTopScoringPeriodIds: {value: 2, additionalValue: ['002019', '102019', '002018']}
+      filterStatsForTopScoringPeriodIds: {value: 2, additionalValue: [`00${thisYear}`,`10${thisYear}`,`00${lastYear}`,`02${thisYear}`]}
     }
   };
-  const response = await fetch(playerDataUrl2020, {
+  const response = await fetch(playerDataUrl, {
     headers: {
       'x-fantasy-filter': JSON.stringify(filterParams)
     }
@@ -35,16 +45,12 @@ const positionById = {
   16: 'D/ST'
 };
 
-function getProTeamById(id) {
-  return proTeams.find(team => team.id === id);
-}
-
-
 module.exports = async () => {
   const { players } = await getPlayerData(0, 400);
+  const proTeams = await getProTeams();
 
   const rkPlayers = players.map(({ player }) => ({
-    bye: getProTeamById(player.proTeamId).byeWeek,
+    bye: proTeams.find(team => team.id === player.proTeamId)?.byeWeek ?? 20,
     espnPlayerId: player.id,
     espnRank: player.draftRanksByRankType.STANDARD.rank,
     isTaken: false,
@@ -55,7 +61,7 @@ module.exports = async () => {
     position: positionById[player.defaultPositionId],
     projectedAverage: player.stats[0] && Math.floor(player.stats[0].appliedAverage || 0),
     projection: player.stats[0] && Math.floor(player.stats[0].appliedTotal || 0),
-    team: getProTeamById(player.proTeamId).abbrev,
+    team: proTeams.find(team => team.id === player.proTeamId)?.abbrev ?? 'FA',
     isInjured: player.injured,
     injuryStatus: player.injuryStatus
   }));

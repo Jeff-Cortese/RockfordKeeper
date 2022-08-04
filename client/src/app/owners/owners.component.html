@@ -1,25 +1,27 @@
-<div class="row">
-  <div class="select col-xs">
-    <select [(ngModel)]="selectedOwner" (change)="ngOnInit()">
-      <option value="TEAM_ON_CLOCK" selected>Team on the Clock ({{currentPick.payload.val()?.teamId}})</option>
-      <option *ngFor="let owner of owners" [ngValue]="owner.key">{{owner.payload.val().name}}</option>
-    </select>
+<div class="clr-row">
+  <div class="select clr-col clr-flex-grow-1">
+    <clr-select-container style="margin-top: 0;">
+      <select clrSelect [(ngModel)]="selectedOwner" (change)="ngOnInit()">
+        <option value="TEAM_ON_CLOCK" selected>Team on the Clock ({{currentPick.payload.val()?.teamId}})</option>
+        <option *ngFor="let owner of owners" [ngValue]="owner.key">{{owner.payload.val().name}}</option>
+      </select>
+    </clr-select-container>
   </div>
 </div>
 
-<div class="row">
-  <app-roster-card class="col-xs-12 col-lg-6" [player]="qb()" cardTitle="Quarter Back"></app-roster-card>
-  <app-roster-card class="col-xs-12 col-lg-6" [player]="rb1()" cardTitle="Running Back"></app-roster-card>
-  <app-roster-card class="col-xs-12 col-lg-6" [player]="rb2()" cardTitle="Running Back"></app-roster-card>
-  <app-roster-card class="col-xs-12 col-lg-6" [player]="wr1()" cardTitle="Wide Receiver"></app-roster-card>
-  <app-roster-card class="col-xs-12 col-lg-6" [player]="wr2()" cardTitle="Wide Receiver"></app-roster-card>
-  <app-roster-card class="col-xs-12 col-lg-6" [player]="te()" cardTitle="Tight End"></app-roster-card>
-  <app-roster-card class="col-xs-12 col-lg-6" [player]="flx()" cardTitle="Flex"></app-roster-card>
-  <app-roster-card class="col-xs-12 col-lg-6" [player]="dst()" cardTitle="Defense / Special Teams"></app-roster-card>
-  <app-roster-card class="col-xs-12 col-lg-6" [player]="k()" cardTitle="Kicker"></app-roster-card>
+<div class="clr-row">
+  <app-roster-card class="clr-col-12 clr-col-lg-6" [player]="qb()" cardTitle="Quarterback"></app-roster-card>
+  <app-roster-card class="clr-col-12 clr-col-lg-6" [player]="rb1()" cardTitle="Running Back"></app-roster-card>
+  <app-roster-card class="clr-col-12 clr-col-lg-6" [player]="rb2()" cardTitle="Running Back"></app-roster-card>
+  <app-roster-card class="clr-col-12 clr-col-lg-6" [player]="wr1()" cardTitle="Wide Receiver"></app-roster-card>
+  <app-roster-card class="clr-col-12 clr-col-lg-6" [player]="wr2()" cardTitle="Wide Receiver"></app-roster-card>
+  <app-roster-card class="clr-col-12 clr-col-lg-6" [player]="te()" cardTitle="Tight End"></app-roster-card>
+  <app-roster-card class="clr-col-12 clr-col-lg-6" [player]="flx()" cardTitle="Flex"></app-roster-card>
+  <app-roster-card class="clr-col-12 clr-col-lg-6" [player]="dst()" cardTitle="Defense / Special Teams"></app-roster-card>
+  <app-roster-card class="clr-col-12 clr-col-lg-6" [player]="k()" cardTitle="Kicker"></app-roster-card>
 
-  <h4 *ngIf="bench().length > 0" ngClass="col-xs-12">Bench</h4>
-  <app-roster-card class="col-xs-12"
+  <h4 *ngIf="bench().length > 0" ngClass="clr-col-12">Bench</h4>
+  <app-roster-card class="clr-col-12"
                    *ngFor="let player of bench(); trackBy: trackBenchBy"
                    [player]="player"
                    [cardTitle]="player | friendlyPositionName">

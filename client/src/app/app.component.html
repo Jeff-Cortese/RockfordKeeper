@@ -14,10 +14,10 @@
         <span *ngIf="!picksScrollOverridden">
           Round {{state.currentPick.payload.val()?.round}} Pick {{state.currentPick.payload.val()?.roundSelection}}
         </span>
-        <a target="_blank" class="hidden-sm-down float-sm-right" style="display: flex; align-items: center" routerLink="/draft-board">Draft Board <clr-icon style="margin-left: 8px" shape="pop-out"></clr-icon></a>
+        <a target="_blank" class="clr-hidden-sm-down clr-float-sm-right" style="display: flex; align-items: center" routerLink="/draft-board">Draft Board <clr-icon style="margin-left: 8px" shape="pop-out"></clr-icon></a>
       </h2>
-      <div class="row">
-        <app-picks class="col-xs-12"
+      <div class="clr-row">
+        <app-picks class="clr-col-12 w-full"
                    [currentPick]="state?.currentPick"
                    [picks]="state?.picks"
                    [scrollOverridden]="picksScrollOverridden"
@@ -29,22 +29,22 @@
         </app-picks>
       </div>
 
-      <div class="row">
+      <div class="clr-row">
 
-        <div class="col-xs">
-          <div class="row hidden-sm-down">
-            <div class="col-xs-7">
+        <div class="clr-col">
+          <div class="clr-row clr-hidden-sm-down">
+            <div class="clr-col-7">
               <h2>Players</h2>
             </div>
 
-            <div class="row">
-              <div class="col-xs-5">
+            <div class="clr-row">
+              <div class="clr-col-5">
                 <h2>Rosters</h2>
               </div>
             </div>
           </div>
 
-          <div class="row hidden-md-up">
+          <div class="clr-row clr-hidden-md-up">
             <ul class="nav" role="tablist">
               <li role="presentation" class="nav-item">
                 <button class="btn btn-link nav-link"
@@ -62,18 +62,18 @@
             <br/>
           </div>
 
-          <div class="row">
+          <div class="clr-row">
             <app-players
-              class="col-xs-12 col-md-7"
-              [class.hidden-sm-down]="mobileTab !== 'PLAYERS'"
+              class="clr-col-12 clr-col-md-7"
+              [class.clr-hidden-sm-down]="mobileTab !== 'PLAYERS'"
               [players]="state?.players"
               [canMakePick]="state?.isAdmin"
               (playerClicked)="onPlayerClicked($event)">
             </app-players>
 
-            <app-owners class="col-xs-12 col-md-5"
+            <app-owners class="clr-col-12 clr-col-md-5"
                         #owners
-                        [class.hidden-sm-down]="mobileTab !== 'ROSTER'"
+                        [class.clr-hidden-sm-down]="mobileTab !== 'ROSTER'"
                         [owners]="state?.owners"
                         [currentPick]="state?.currentPick">
             </app-owners>

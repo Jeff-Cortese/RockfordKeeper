@@ -3,12 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "ng serve --source-map",
+    "build": "ng build --configuration production --base-href \"https://jeff-cortese.github.io/RockfordKeeper/\"",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "ng build --prod --base-href \"https://jeff-cortese.github.io/RockfordKeeper/\" && ngh"
+    "deploy": "npm run build && ngh"
   },
   "private": true,
   "dependencies": {
@@ -57,6 +57,7 @@
     "karma-coverage-istanbul-reporter": "2.0.1",
     "karma-jasmine": "1.1.2",
     "karma-jasmine-html-reporter": "1.2.0",
+    "ngh": "0.6.2",
     "protractor": "5.3.2",
     "ts-node": "7.0.0",
     "tslint": "5.10.0",

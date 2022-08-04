@@ -1,11 +1,18 @@
+import { createReducer, on } from '@ngrx/store';
 import { IAppState, initialState } from './appState';
-import { AppAction } from './appActions';
+import { AppActions } from './appActions';
 
-export const rockfordKeeperReducer = {
-  app: appReducer
-};
 
-export function appReducer(state: IAppState = initialState, action: AppAction): IAppState {
+export const appReducer =
+  createReducer(initialState, ...AppActions.map(act => on(act, reducer)));
+
+export function rockfordKeeperReducer(state, action) {
+  return appReducer(state, action);
+}
+
+export function reducer(state: IAppState = initialState, action: any): IAppState {
+  // tslint:disable-next-line:no-console
+  console.log('reducer', state, action);
   switch (action.type) {
     case 'GET_OWNERS_DONE': {
       return { ...state, owners: action.owners, isLoadingOwners: false };

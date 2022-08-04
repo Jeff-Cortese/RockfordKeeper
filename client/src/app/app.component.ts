@@ -27,19 +27,19 @@ export class AppComponent {
   onPlayerClicked(player: SnapshotAction<IPlayer>): void {
     if (!this.state.isAdmin || player.payload.val().isTaken) { return; }
 
-    this.store.dispatch(<SelectPlayerAction> { type: 'SELECT_PLAYER', player });
+    this.store.dispatch(SelectPlayerAction({ player }));
   }
 
   onUndoPick(pick: SnapshotAction<IPick>) {
     if (!this.state.isAdmin) { return; }
 
-    this.store.dispatch(<UnSelectPlayerAction> { type: 'UNSELECT_PLAYER', pick});
+    this.store.dispatch(UnSelectPlayerAction({ pick }));
   }
 
   onSelectPick(pick: SnapshotAction<IPick>) {
     if (!this.state.isAdmin) { return; }
 
-    this.store.dispatch(<ChangeCurrentPickAction> { type: 'CHANGE_CURRENT_PICK', newPick: pick });
+    this.store.dispatch(ChangeCurrentPickAction({ newPick: pick }));
     this.picksScrollOverridden = false;
   }
 

@@ -12,10 +12,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "firebase": "^6.4.2",
+    "firebase": "8.9.1",
     "lodash": "^4.17.15",
     "node-fetch": "^2.6.0",
-    "rxfire": "^3.7.0",
+    "rxfire": "4.0.0",
     "rxjs": "^6.5.2"
   }
 }

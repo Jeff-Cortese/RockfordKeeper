@@ -1,6 +1,6 @@
-<div class="row">
-  <div class="row">
-    <input class="col-xs-10"
+<div class="clr-row clr-flex-column">
+  <div class="clr-row w-full">
+    <input class="clr-col-10 clr-input clr-flex-grow-1"
            type="text"
            placeholder="Search Player Name"
            (keydown.esc)="playerSearchQuery = ''"
@@ -11,43 +11,43 @@
               size="24"
               (click)="playerSearchQuery = ''">
     </clr-icon>
+  </div>
 
-    <div class="col-xs-12">
-      <button type="button" class="btn btn-sm" (click)="toggleFilter('QB')">
-        <clr-icon *ngIf="isFilterOn('QB')" shape="check"></clr-icon>
-        QB
-      </button>
-      <button type="button" class="btn btn-sm" (click)="toggleFilter('RB')">
-        <clr-icon *ngIf="isFilterOn('RB')" shape="check"></clr-icon>
-        RB
-      </button>
-      <button type="button" class="btn btn-sm" (click)="toggleFilter('WR')">
-        <clr-icon *ngIf="isFilterOn('WR')" shape="check"></clr-icon>
-        WR
-      </button>
+  <div class="clr-col-12">
+    <button type="button" class="btn btn-sm" (click)="toggleFilter('QB')">
+      <clr-icon *ngIf="isFilterOn('QB')" shape="check"></clr-icon>
+      QB
+    </button>
+    <button type="button" class="btn btn-sm" (click)="toggleFilter('RB')">
+      <clr-icon *ngIf="isFilterOn('RB')" shape="check"></clr-icon>
+      RB
+    </button>
+    <button type="button" class="btn btn-sm" (click)="toggleFilter('WR')">
+      <clr-icon *ngIf="isFilterOn('WR')" shape="check"></clr-icon>
+      WR
+    </button>
 
-      <button type="button" class="btn btn-sm" (click)="toggleFilter('TE')">
-        <clr-icon *ngIf="isFilterOn('TE')" shape="check"></clr-icon>
-        TE
-      </button>
-      <button type="button" class="btn btn-sm" (click)="toggleFilter('D/ST')">
-        <clr-icon *ngIf="isFilterOn('D/ST')" shape="check"></clr-icon>
-        D/ST
-      </button>
-      <button type="button" class="btn btn-sm" (click)="toggleFilter('K')">
-        <clr-icon *ngIf="isFilterOn('K')" shape="check"></clr-icon>
-        K
-      </button>
-      <button type="button" class="btn btn-sm pull-right" (click)="onToggleUnavailable()">
-        <clr-icon *ngIf="showUnavailable" shape="check"></clr-icon>
-        Show Taken
-      </button>
+    <button type="button" class="btn btn-sm" (click)="toggleFilter('TE')">
+      <clr-icon *ngIf="isFilterOn('TE')" shape="check"></clr-icon>
+      TE
+    </button>
+    <button type="button" class="btn btn-sm" (click)="toggleFilter('D/ST')">
+      <clr-icon *ngIf="isFilterOn('D/ST')" shape="check"></clr-icon>
+      D/ST
+    </button>
+    <button type="button" class="btn btn-sm" (click)="toggleFilter('K')">
+      <clr-icon *ngIf="isFilterOn('K')" shape="check"></clr-icon>
+      K
+    </button>
+    <button type="button" class="btn btn-sm pull-right" (click)="onToggleUnavailable()">
+      <clr-icon *ngIf="showUnavailable" shape="check"></clr-icon>
+      Show Taken
+    </button>
   </div>
 </div>
-</div>
 
-<div class="row">
-  <div class="col-xs">
+<div class="clr-row">
+  <!--<div class="clr-col">-->
     <ag-grid-angular #grid
                      [rowData]="players"
                      [getRowNodeId]="getPlayerId"
@@ -66,10 +66,10 @@
 
       <ag-grid-column grid-template headerName="Name" [valueGetter]="getPayloadValue('name')" [minWidth]="isTinyScreen ? 190 : undefined">
           <ng-template let-row="row">
-            <div class="row player-name-cell clickable"
+            <div class="clr-row player-name-cell clickable"
                  (click)="playerCellClicked(row)"
             >
-              <div class="col-xs">
+              <div class="clr-col">
                 <span class="player-name">{{row.payload.val().name}}</span>
                 <span *ngIf="row.payload.val().injuryStatus && row.payload.val().injuryStatus !== 'ACTIVE'"> ({{row.payload.val().injuryStatus[0]}})</span>
               </div>
@@ -84,5 +84,5 @@
       <ag-grid-column grid-template headerName="Proj" [valueGetter]="getPayloadValue('projection')" [maxWidth]="isTinyScreen ? 40 : 50"></ag-grid-column>
       <ag-grid-column grid-template headerName="Avg" [valueGetter]="getPayloadValue('projectedAverage')" [maxWidth]="isTinyScreen ? 35 : 50"></ag-grid-column>
     </ag-grid-angular>
-  </div>
+  <!--</div>-->
 </div>

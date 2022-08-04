@@ -1,31 +1,39 @@
 <div class="card" [ngClass]="{ 'selected-pick': isCurrentPick, 'clickable': canClick }" (click)="onCardClick(pick)">
-  <div class="card-block">
+  <div class="card-block" style="display: flex; align-items: center">
     <div *ngIf="isCurrentPick" class="progress top">
       <progress value="100" max="100"></progress>
     </div>
-
-    <div class="card-text">
-      <span>Round {{ pick.payload.val()?.round }}, Pick {{ pick.payload.val()?.roundSelection }}</span>
+    <div class="card-image" style="align-self: center">
+      <img src="./assets/{{pick.payload.val()?.teamId}}.jpg"
+           [alt]="pick.payload.val()?.teamId"
+           width="50"
+           height="50"
+      >
     </div>
-    <h2 class="card-title">
-      {{ pick.payload.val()?.teamId }}
-      <span class="p5" *ngIf="pick.payload.val()?.byWayOf">{{ pick.payload.val()?.byWayOf }}</span>
-    </h2>
+    <div class="clr-col">
+      <div class="card-text">
+        <span>Round {{ pick.payload.val()?.round }}, Pick {{ pick.payload.val()?.roundSelection }}</span>
+      </div>
+      <h2 class="card-title">
+        {{ pick.payload.val()?.teamId }}
+        <span class="p5" *ngIf="pick.payload.val()?.byWayOf">{{ pick.payload.val()?.byWayOf }}</span>
+      </h2>
+    </div>
   </div>
 
   <!--<div class="card-img" style="height: 75px; overflow-y: hidden" *ngIf="pick.payload.val()?.player">
 
   </div>-->
 
-  <div class="card-block" *ngIf="pick.payload.val()?.player">
-    <div class="card-text" style="display: flex; align-items: center">
+  <div class="card-block {{pick.payload.val()?.player?.position.replace('/', '')}}" *ngIf="pick.payload.val()?.player">
+    <div class="card-text" style="display: flex; align-items: center; color: white">
       <img #headshot
            src="https://a.espncdn.com/i/headshots/nfl/players/full/{{pick.payload.val()?.player.espnPlayerId}}.png?w=250&h=100&scale=crop&background=0xcccccc&transparent=false"
            (error)="headshot.src = 'http://g.espncdn.com/s/ffllm/14//images/playerpop/design2/no-mugshot-7.png'"
            height="45px"
            width="58px"/>
       <div>
-        <h6>
+        <h6 style="color: white;">
           {{pick.payload.val()?.player.name}}
           <span *ngIf="pick.payload.val()?.player.injuryStatus && pick.payload.val().player.injuryStatus !== 'ACTIVE' ">
           {{pick.payload.val()?.player.injuryStatus}}

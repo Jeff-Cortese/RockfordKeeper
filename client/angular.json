@@ -24,7 +24,7 @@
               "src/styles.scss",
               "node_modules/@clr/icons/clr-icons.min.css",
               "node_modules/@clr/ui/clr-ui.min.css",
-              "node_modules/ag-grid/dist/styles/ag-grid.css"
+              "node_modules/@ag-grid-community/all-modules/dist/styles/ag-grid.css"
             ],
             "scripts": [
               "node_modules/lodash/lodash.min.js",
@@ -34,7 +34,14 @@
           },
           "configurations": {
             "production": {
-              "optimization": true,
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                },
+                "fonts": true
+              },
               "outputHashing": "all",
               "sourceMap": false,
               "extractCss": true,
@@ -49,6 +56,13 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ]
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true
             }
           }
         },

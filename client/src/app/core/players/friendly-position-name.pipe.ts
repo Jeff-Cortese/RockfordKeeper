@@ -11,7 +11,7 @@ export class FriendlyPositionNamePipe implements PipeTransform {
 
     switch (position) {
       case 'QB':
-        return 'Quarter Back';
+        return 'Quarterback';
       case 'RB':
         return 'Running Back';
       case 'WR':

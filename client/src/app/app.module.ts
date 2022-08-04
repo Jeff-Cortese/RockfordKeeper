@@ -28,8 +28,8 @@ import { LibsModule } from './libs/libs.module';
 import { BigBoardComponent } from './big-board/big-board.component';
 import { BigBoardCardComponent } from './big-board/big-board-card.component';
 
-export const REDUCERS_TOKEN = new InjectionToken<ActionReducerMap<IRockfordKeeper>>('Registered Reducers');
-Object.assign(REDUCERS_TOKEN, rockfordKeeperReducer);
+/*export const REDUCERS_TOKEN = new InjectionToken<ActionReducerMap<IRockfordKeeper>>('Registered Reducers');
+Object.assign(REDUCERS_TOKEN, { app: rockfordKeeperReducer });*/
 
 const bigBoardComponents = [
   BigBoardComponent,
@@ -57,7 +57,7 @@ const routes: Routes = [
 })
 export class RootComponent {}
 
-@NgModule({
+/*@NgModule({
   providers: [
     { provide: REDUCERS_TOKEN, useValue: rockfordKeeperReducer }
   ]
@@ -66,7 +66,7 @@ export class HackModule {
   constructor(@Inject(REDUCERS_TOKEN) r: any) {
     noop(r);
   }
-}
+}*/
 
 @NgModule({
   declarations: [
@@ -88,8 +88,8 @@ export class HackModule {
     CoreModule,
     FormsModule,
     LibsModule,
-    HackModule,
-    StoreModule.forRoot(REDUCERS_TOKEN),
+    /*HackModule,*/
+    StoreModule.forRoot(/*REDUCERS_TOKEN*/{ app: rockfordKeeperReducer }, { runtimeChecks: { strictActionImmutability: false, strictStateImmutability: false, strictActionWithinNgZone: false }}),
     EffectsModule.forRoot([AppEffects]),
     // ...(!environment.production ? [StoreDevtoolsModule.instrument()] : [])
   ],

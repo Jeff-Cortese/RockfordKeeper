@@ -5,7 +5,7 @@ import { select, Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { tap, publishReplay, refCount, takeUntil } from 'rxjs/operators';
 
-import { IAppState } from './state/appState';
+import { IAppState, initialState } from './state/appState';
 import {
   GetCurrentPickAction, GetOwnersAction, GetPicksAction, GetPlayersAction,
   MakeAdminAction
@@ -28,7 +28,7 @@ export class AppContainerComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) {
     this.state$ = this.store.pipe(
-      select(thing => thing.app),
+      select(thing => thing?.app ?? initialState),
       publishReplay(1),
       refCount()
     );
@@ -38,16 +38,16 @@ export class AppContainerComponent implements OnInit, OnDestroy {
     this.route.queryParams.pipe(
       tap((params: Params) => {
         if (params.admin === 'true') {
-          this.store.dispatch(<MakeAdminAction> { type: 'MAKE_USER_ADMIN' });
+          this.store.dispatch(MakeAdminAction());
         }
       }),
       takeUntil(this.ngDestroy$)
     ).subscribe();
 
-    this.store.dispatch(<GetOwnersAction> { type: 'GET_OWNERS' });
-    this.store.dispatch(<GetPicksAction> { type: 'GET_PICKS' });
-    this.store.dispatch(<GetPlayersAction> { type: 'GET_PLAYERS' });
-    this.store.dispatch(<GetCurrentPickAction> { type: 'GET_CURRENT_PICK' });
+    this.store.dispatch(GetOwnersAction());
+    this.store.dispatch(GetPicksAction());
+    this.store.dispatch(GetPlayersAction());
+    this.store.dispatch(GetCurrentPickAction());
   }
 
   ngOnDestroy(): void {

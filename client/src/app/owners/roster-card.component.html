@@ -2,8 +2,8 @@
   <div class="card-block" *ngIf="cardTitle">
     <span class="card-title">{{cardTitle}}</span>
   </div>
-  <div class="card-block">
-    <div class="row">
+  <div class="card-block {{player?.position?.replace('/', '')}}">
+    <div class="clr-row">
       <!--<div class="col-xs-2 col-xl-1" *ngIf="player" style="display: flex; align-items: center">
         <img #headshot
              src="https://a.espncdn.com/i/headshots/nfl/players/full/{{player.espnPlayerId}}.png?w=250&h=100&scale=crop&background=0xcccccc&transparent=false"
@@ -11,8 +11,8 @@
              height="35px"
              width="48px"/>
       </div>-->
-      <div class="col-xs">
-        <h6>{{player?.name}} &mdash; {{player?.team}}</h6>
+      <div class="clr-col" style="color: white">
+        <h6 style="color: white;">{{player?.name}} &mdash; {{player?.team}}</h6>
         <div *ngIf="player">Bye Week {{player.bye}}</div>
       </div>
     </div>

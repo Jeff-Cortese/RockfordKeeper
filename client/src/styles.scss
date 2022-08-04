@@ -2,3 +2,43 @@
 @import "styles/global";
 @import "styles/ag-grid-custom";
 @import "styles/sections";
+
+.h-full {
+  height: 100%;
+}
+.w-full {
+  width: 100%;
+}
+.full {
+  height: 100%;
+  width: 100%;
+}
+
+.clr-row {
+  margin-right: -.5rem !important;
+  margin-left: -.5rem !important;
+}
+
+.QB {
+  background-color: #7F7297 !important;
+}
+
+.RB {
+  background-color: #70A2C6 !important;
+}
+
+.WR {
+  background-color: #DA6C6F !important;
+}
+
+.TE {
+  background-color: #CB904D !important;
+}
+
+.DST {
+  background-color: #698a98 !important;
+}
+
+.K {
+  background-color: #E38EA9 !important;
+}

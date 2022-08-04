@@ -1,5 +1,5 @@
-<div class="row" (scroll)="rawScroll.emit()">
-  <app-pick-card class="col-xl-2 col-lg-3 col-md-4 col-sm-5 col-xs-6"
+<div class="clr-row clr-flex-nowrap" style="overflow-x: auto" (scroll)="rawScroll.emit()">
+  <app-pick-card class="clr-col-xl-2 clr-col-lg-3 clr-col-md-4 clr-col-sm-5 clr-col-6"
                  *ngFor="let pick of picks; trackBy: trackPickBy"
                  [isCurrentPick]="currentPick.payload.val()?.overallSelection === pick.payload.val().overallSelection"
                  [pick]="pick"

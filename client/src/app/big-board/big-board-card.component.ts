@@ -30,7 +30,7 @@ let z = 1;
           'transform': getTransformStyle(pick),
           'z-index': zIndex
         }">
-        <div class="selection-name hidden-md-down">{{pick?.player?.firstName}}</div>
+        <div class="selection-name clr-hidden-md-down">{{pick?.player?.firstName}}</div>
         <div class="selection-name">
           {{pick?.player?.lastName}}
           <span *ngIf="pick?.player?.injuryStatus && pick?.player?.injuryStatus !== 'ACTIVE'"> ({{pick?.player?.injuryStatus[0]}})</span>

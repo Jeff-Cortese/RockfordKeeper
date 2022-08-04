@@ -48,6 +48,10 @@ $roundColWidth: 40px;
   }
 }
 
+.has-player {
+  font-size: 1.5vmin;
+}
+
 .at-bat {
   background-color: #e2e483;
   font-size: 1.5vmin;

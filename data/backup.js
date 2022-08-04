@@ -4,7 +4,7 @@ const { getRoot$ } = require('./firebaseDataAccess');
   getRoot$()
     .subscribe(
       (dbVal) => {
-        const fileName = `2020_${new Date().getTime()}.json`;
+        const fileName = `2021_${new Date().getTime()}.json`;
         console.log(`Backing up db to ${fileName}. Overall Selection: ${dbVal.currentPick && dbVal.currentPick.overallSelection}`);
         writeFileSync(`${__dirname}/backups/${fileName}`, JSON.stringify(dbVal, null, 2));
       },

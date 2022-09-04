@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 //const proTeams = require('./pro-teams');
 
-const thisYear = 2021;
+const thisYear = 2022;
 const lastYear = thisYear - 1;
 
 const playerDataUrl = `https://fantasy.espn.com/apis/v3/games/ffl/seasons/${thisYear}/segments/0/leaguedefaults/3?scoringPeriodId=0&view=kona_player_info`;
@@ -52,7 +52,7 @@ module.exports = async () => {
   const rkPlayers = players.map(({ player }) => ({
     bye: proTeams.find(team => team.id === player.proTeamId)?.byeWeek ?? 20,
     espnPlayerId: player.id,
-    espnRank: player.draftRanksByRankType.STANDARD.rank,
+    espnRank: player.draftRanksByRankType?.STANDARD.rank,
     isTaken: false,
     lowerName: player.fullName.toLowerCase(),
     name: player.fullName,

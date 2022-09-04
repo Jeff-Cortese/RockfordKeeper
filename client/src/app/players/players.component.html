@@ -51,14 +51,16 @@
     <ag-grid-angular #grid
                      [rowData]="players"
                      [getRowNodeId]="getPlayerId"
-                     [enableSorting]="true"
-                     [enableColResize]="true"
                      [quickFilterText]="getQuickFilter()"
                      [isExternalFilterPresent]="anyFiltersOn"
                      [doesExternalFilterPass]="shouldShowPlayer"
                      [cacheQuickFilter]="true"
                      [getRowClass]="getRowClass"
                      [deltaRowDataMode]="true"
+                     [defaultColDef]="{
+                       sortable: true,
+                       resizable: true
+                     }"
                      (rowDataUpdated)="grid?.api?.sizeColumnsToFit()"
                      (gridReady)="grid?.api?.sizeColumnsToFit()"
                      style="height: 775px; width: 100%;"> <!--TODO correct height-->

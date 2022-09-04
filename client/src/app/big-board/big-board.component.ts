@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { IOwner } from '../core/owners/IOwner';
+import { OwnersDAO } from '../core/owners/ownersDAO';
 import { PicksDAO } from '../core/picks/picksDAO';
 import { map, shareReplay, take, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
 import { drop, groupBy, range, toPairs } from 'lodash-es';
@@ -95,6 +97,7 @@ interface ITeamPicks {
 })
 export class BigBoardComponent implements OnInit, OnDestroy {
   teamsPicks: ITeamPicks[];
+  owners: IOwner[];
   allPicks$ = new ReplaySubject<IPick[]>(1);
   currentPick$: Observable<IPick>;
   previousPick$: Observable<IPick>;
@@ -105,10 +108,11 @@ export class BigBoardComponent implements OnInit, OnDestroy {
   selectedTeamPicks: ITeamPicks;
   currentPick: IPick;
   emptyTeamPicks = range(1, 18).map(i => ({ round: i }));
+  ownerOrdinalByName$: Observable<Record<string, number>>;
 
   trackPickBy = (pick: IPick) => pick && pick.overallSelection;
 
-  constructor(private picksDao: PicksDAO) { }
+  constructor(private picksDao: PicksDAO, private ownerDAO: OwnersDAO) { }
 
   ngOnInit() {
     this.currentPick$ = this.picksDao.getCurrentPick().pipe(
@@ -143,6 +147,11 @@ export class BigBoardComponent implements OnInit, OnDestroy {
     this.cleanUp$ = remainingPicksAfterCurrent$
       .pipe(map(picks => picks[2]));
 
+    this.ownerOrdinalByName$ = this.ownerDAO.getOwners().pipe(
+      map(val => val.map(o => o.payload.val())),
+      map(owners => (owners.reduce((accum, next) => ({...accum, [next.name]: next.colOrdinal}), {})) )
+    );
+
     this.picksDao.getPicks().pipe(
       take(1),
       tap(allPicks => this.allPicks$.next(allPicks.map(pick => pick.payload.val()))),
@@ -152,8 +161,9 @@ export class BigBoardComponent implements OnInit, OnDestroy {
         teamsAndPicks.sort(([, picksA], [, picksB]) => picksA[0].overallSelection - picksB[0].overallSelection);
         return teamsAndPicks.map(([teamId, picks]) => ({ teamId, picks }));
       }),
-      withLatestFrom(this.currentPick$),
-      tap(([teamPicks, currentPick]) => {
+      withLatestFrom(this.currentPick$, this.ownerOrdinalByName$),
+      tap(([teamPicks, currentPick, owners]) => {
+        teamPicks.sort((a, b) => owners[a.teamId] - owners[b.teamId]);
         this.teamsPicks = teamPicks;
         this.selectedTeamPicks = teamPicks.find(tp => tp.teamId === currentPick.teamId);
       }),

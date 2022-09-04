@@ -4,6 +4,7 @@ import { IWithKey } from '../firebase/IWithKey';
 export interface IOwner extends IWithKey {
   name: string;
   teamName: string;
+  colOrdinal: number;
 
   roster?: IRoster;
 }

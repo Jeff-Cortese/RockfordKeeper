@@ -1,6 +1,6 @@
 node_modules
 .idea/*
-picks.csv
+picks*.csv
 owners.json
 nickNames.json
 backups/

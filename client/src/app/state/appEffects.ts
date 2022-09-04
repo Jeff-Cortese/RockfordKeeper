@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
+import { HttpErrorResponse as Response } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
 import { switchMap, map, catchError, withLatestFrom, ignoreElements, concatMap, filter, tap } from 'rxjs/operators';
@@ -22,7 +22,7 @@ import { IPick } from '../core/picks/IPick';
 import { IOwner } from '../core/owners/IOwner';
 import { GetOwnersAction, GetOwnersDoneAction, GetOwnersFailAction } from './appActions';
 import { IAppState } from './appState';
-import { SnapshotAction } from 'angularfire2/database';
+import { SnapshotAction } from '@angular/fire/database';
 
 @Injectable()
 export class AppEffects {

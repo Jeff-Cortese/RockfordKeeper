@@ -1,16 +1,14 @@
-$roundColWidth: 40px;
-
 .big-board {
   display: grid;
   height: 100vh;
-  grid-template-columns: $roundColWidth 100vw;
+  grid-template-columns: 40px 100vw;
   grid-template-rows: 50px 45px calc(100vh - 95px);
   grid-template-areas:
     "on-the-clock on-the-clock"
     "round-header owners"
     "picks picks";
   overflow: hidden;
-  background-color: #e8eceb;//#bdcac7;
+  background-color: #e8eceb;/*#bdcac7;*/
 }
 
 .on-the-clock-list {
@@ -23,10 +21,9 @@ $roundColWidth: 40px;
   transition-timing-function: cubic-bezier(0.13, 0.9, 0.25, 1);
   transition-delay: 0s;
   font-weight: inherit;
-
-  &.has-player {
-    opacity: .6;
-  }
+}
+.on-the-clock-list.has-player {
+  opacity: .6;
 }
 
 .pick {
@@ -43,7 +40,9 @@ $roundColWidth: 40px;
   background-color: #F9FBFF;
   color: #494949;
   font-size: 1vmax;
-  @media (max-width: 768px) {
+}
+@media (max-width: 768px) {
+  .pick {
     line-height: 1.7vmax;
   }
 }
@@ -58,7 +57,7 @@ $roundColWidth: 40px;
 }
 
 .on-deck {
-  background-color: #C2E3B4; //B8D3AD;
+  background-color: #C2E3B4; /*B8D3AD;*/
   font-size: 1.4vmin;
 }
 
@@ -68,14 +67,14 @@ $roundColWidth: 40px;
 }
 
 .clean-up {
-  background-color: #C2E3B4; //CFE9C5;
+  background-color: #C2E3B4; /*CFE9C5;*/
   font-size: 1.1vmin;
 }
 
 .owners {
   grid-area: owners;
   padding-bottom: 5px;
-  max-width: calc(100vw - #{$roundColWidth});
+  max-width: calc(100vw - 40px);
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-column-gap: 6px;
@@ -111,10 +110,10 @@ $roundColWidth: 40px;
   grid-auto-flow: column;
   grid-row-gap: 2px;
   grid-template-rows: repeat(17, minmax(0, 5.88%));
-  grid-template-columns: $roundColWidth repeat(12, 1fr);
-  >.player-card:not(:nth-child(n + 205)) {
-    border-right: 1px dashed;
-  }
+  grid-template-columns: 40px repeat(12, 1fr);
+}
+.picks > .player-card:not(:nth-child(n + 205)) {
+  border-right: 1px dashed;
 }
 
 .player-card {

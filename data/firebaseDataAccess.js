@@ -6,17 +6,17 @@ const { object } = require('rxfire/database');
 const { initializeApp } = require('firebase');
 require('firebase/database');
 
-const baseUrl = 'https://rockfordkeeper2021-default-rtdb.firebaseio.com';
+const baseUrl = 'https://rockfordkeeper2022-default-rtdb.firebaseio.com';
 
 module.exports.getRoot$ = () => {
   const app = initializeApp({
-    apiKey: "AIzaSyBrjCUKzkL-Rjn9AthTPKMYmImKyH2ZYyE",
-    authDomain: "rockfordkeeper2021.firebaseapp.com",
-    databaseURL: "https://rockfordkeeper2021-default-rtdb.firebaseio.com",
-    projectId: "rockfordkeeper2021",
-    storageBucket: "rockfordkeeper2021.appspot.com",
-    messagingSenderId: "1039162262304",
-    appId: "1:1039162262304:web:5f9d216ffb6e514d28cd45"
+    apiKey: 'AIzaSyAWYMT1YTd0ETez_F6I8Y6HsbyFhMMcZbA',
+    authDomain: 'rockfordkeeper2022.firebaseapp.com',
+    databaseUrl: 'https://rockfordkeeper2022-default-rtdb.firebaseio.com',
+    projectId: 'rockfordkeeper2022',
+    storageBucket: 'rockfordkeeper2022.appspot.com',
+    messagingSenderId: '588249551467',
+    appId: '1:588249551467:web:58a960aec7419d3c4e572e'
   });
 
   const root$ = object(app.database().ref());

@@ -4,4 +4,4 @@ interface NodeModule {
   id: string;
 }
 
-declare var _: any;
+//declare var _: any;

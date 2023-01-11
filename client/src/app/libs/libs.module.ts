@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule as AngularCommon, TitleCasePipe } from '@angular/common';
-import { AgGridModule } from 'ag-grid-angular';
+import { AgGridModule } from '@ag-grid-community/angular';
 
 import {
   GridTemplateDirective,

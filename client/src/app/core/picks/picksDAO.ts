@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, SnapshotAction, AngularFireAction, DatabaseSnapshot } from 'angularfire2/database';
+import { AngularFireDatabase, SnapshotAction, AngularFireAction, DatabaseSnapshot } from '@angular/fire/database';
 import { Observable, concat, from, of } from 'rxjs';
 import { reduce } from 'rxjs/operators';
 import { omit } from 'lodash-es';

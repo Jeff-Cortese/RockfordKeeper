@@ -8,12 +8,12 @@ import {
 } from './state/appActions';
 import { IPlayer } from './core/players/IPlayer';
 import { IPick } from './core/picks/IPick';
-import { SnapshotAction } from 'angularfire2/database';
+import { SnapshotAction } from '@angular/fire/database';
 
 @Component({
   selector: 'app',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  styleUrls: ['./app.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {

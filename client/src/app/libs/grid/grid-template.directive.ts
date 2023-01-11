@@ -1,7 +1,7 @@
 import { AfterContentInit, ChangeDetectionStrategy, Component, ContentChild, Directive, Input, TemplateRef } from '@angular/core';
 
-import { IAfterGuiAttachedParams, ICellRendererParams, IHeaderParams } from 'ag-grid';
-import { AgGridColumn, ICellRendererAngularComp, IHeaderAngularComp } from 'ag-grid-angular';
+import { IAfterGuiAttachedParams, ICellRendererParams, IHeaderParams } from '@ag-grid-community/all-modules';
+import { AgGridColumn, ICellRendererAngularComp, IHeaderAngularComp } from '@ag-grid-community/angular';
 
 @Component({
   selector: 'dynamic-template-cell',
@@ -58,6 +58,10 @@ export class DynamicTemplateHeaderComponent implements IHeaderAngularComp {
     this.params = params;
     this.template = (params as any).template;
   }
+
+  refresh(params: IHeaderParams): boolean {
+    return false;
+  }
 }
 
 @Directive({
@@ -79,9 +83,9 @@ export class ColumnHeaderTemplateDirective {
 })
 export class GridTemplateDirective implements AfterContentInit {
   @Input() fixedWidth: number;
-  @ContentChild(TemplateRef) implicitCellTemplate: TemplateRef<any>;
-  @ContentChild(ColumnCellTemplateDirective) cellTemplate: ColumnCellTemplateDirective;
-  @ContentChild(ColumnHeaderTemplateDirective) headerTemplate: ColumnHeaderTemplateDirective;
+  @ContentChild(TemplateRef, /* TODO: add static flag */ {}) implicitCellTemplate: TemplateRef<any>;
+  @ContentChild(ColumnCellTemplateDirective, /* TODO: add static flag */ {}) cellTemplate: ColumnCellTemplateDirective;
+  @ContentChild(ColumnHeaderTemplateDirective, /* TODO: add static flag */ {}) headerTemplate: ColumnHeaderTemplateDirective;
 
   constructor(private host: AgGridColumn) {}
 

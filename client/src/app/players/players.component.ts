@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { identity, includes, isEmpty, some } from 'lodash-es';
 import { IPlayer, PlayerPosition } from '../core/players/IPlayer';
-import { SnapshotAction } from 'angularfire2/database';
-import { AgGridNg2 } from 'ag-grid-angular';
+import { SnapshotAction } from '@angular/fire/database';
+import { AgGridAngular } from '@ag-grid-community/angular';
 
 const defaultFilter: { [TKey in PlayerPosition]: boolean } = Object.freeze({
   'QB': false,
@@ -16,7 +16,7 @@ const defaultFilter: { [TKey in PlayerPosition]: boolean } = Object.freeze({
 @Component({
   selector: 'app-players',
   templateUrl: './players.component.html',
-  styleUrls: ['./players.component.scss'],
+  styleUrls: ['./players.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlayersComponent {
@@ -25,7 +25,7 @@ export class PlayersComponent {
 
   @Output() playerClicked = new EventEmitter<SnapshotAction<IPlayer>>();
 
-  @ViewChild('grid') grid: AgGridNg2;
+  @ViewChild('grid', { static: true }) grid: AgGridAngular;
   showUnavailable = false;
   playerSearchQuery: string;
   positionFilter = defaultFilter;

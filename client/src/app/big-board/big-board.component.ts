@@ -92,7 +92,7 @@ interface ITeamPicks {
       </ng-container>
     </div>
   `,
-  styleUrls: ['./big-board.component.scss'],
+  styleUrls: ['./big-board.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BigBoardComponent implements OnInit, OnDestroy {

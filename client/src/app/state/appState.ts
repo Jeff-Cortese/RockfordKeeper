@@ -1,7 +1,7 @@
 import { IPlayer } from '../core/players/IPlayer';
 import { IPick } from '../core/picks/IPick';
 import { IOwner } from '../core/owners/IOwner';
-import { SnapshotAction } from 'angularfire2/database';
+import { SnapshotAction } from '@angular/fire/database';
 
 export interface IAppState {
   isLoadingPicks: boolean;

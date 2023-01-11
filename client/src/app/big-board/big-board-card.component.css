@@ -20,7 +20,7 @@
   line-height: 1.6vmin;
   border-radius: 4px;
 
-  background-color: #698a98; //#08415C;
+  background-color: #698a98; /*#08415C;*/
   background-size: contain;
   background-position: bottom right;
   background-repeat: no-repeat;
@@ -36,10 +36,10 @@
 }
 
 @keyframes selection-made {
-  //from { z-index: 2; }
+  /*from { z-index: 2; }*/
   to {
     transform: translate(0) scale(1);
-    //z-index: 1;
+    /*z-index: 1;*/
   }
 }
 
@@ -51,26 +51,3 @@
   font-size: .5vmax;
 }
 
-.QB {
-  background-color: #7F7297;
-}
-
-.RB {
-  background-color: #70A2C6; //7BB2D9;
-}
-
-.WR {
-  background-color: #DA6C6F;//#EF767A;//#A07178;
-}
-
-.TE {
-  background-color: #CB904D ;
-}
-
-.DST {
-
-}
-
-.K {
-  background-color: #E38EA9;
-}

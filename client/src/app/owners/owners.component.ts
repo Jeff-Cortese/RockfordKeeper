@@ -3,12 +3,12 @@ import { find } from 'lodash-es';
 import { IOwner } from '../core/owners/IOwner';
 import { IPick } from '../core/picks/IPick';
 import { IPlayer } from '../core/players/IPlayer';
-import { SnapshotAction } from 'angularfire2/database';
+import { SnapshotAction } from '@angular/fire/database';
 
 @Component({
   selector: 'app-owners',
   templateUrl: './owners.component.html',
-  styleUrls: ['./owners.component.scss'],
+  styleUrls: ['./owners.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OwnersComponent implements OnInit, OnChanges {

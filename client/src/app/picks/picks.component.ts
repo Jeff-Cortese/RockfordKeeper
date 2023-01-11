@@ -6,12 +6,12 @@ import { switchMap, skip, tap, takeUntil } from 'rxjs/operators';
 import { IPick } from '../core/picks/IPick';
 import { IPlayer } from '../core/players/IPlayer';
 import { IOwner } from '../core/owners/IOwner';
-import { SnapshotAction } from 'angularfire2/database';
+import { SnapshotAction } from '@angular/fire/database';
 
 @Component({
   selector: 'app-picks',
   templateUrl: './picks.component.html',
-  styleUrls: ['./picks.component.scss'],
+  styleUrls: ['./picks.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PicksComponent implements OnInit, OnDestroy {

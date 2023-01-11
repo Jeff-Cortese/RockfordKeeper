@@ -3,13 +3,13 @@ import {
   SimpleChanges
 } from '@angular/core';
 import { IPick } from '../core/picks/IPick';
-import { SnapshotAction } from 'angularfire2/database';
+import { SnapshotAction } from '@angular/fire/database';
 
 @Component({
   moduleId: module.id,
   selector: 'app-pick-card',
   templateUrl: 'pick-card.component.html',
-  styleUrls: ['pick-card.component.scss'],
+  styleUrls: ['pick-card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 

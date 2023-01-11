@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { take, map, mergeMap, tap } from 'rxjs/operators';
 
 import { IOwner } from './IOwner';
-import { AngularFireDatabase, SnapshotAction } from 'angularfire2/database';
+import { AngularFireDatabase, SnapshotAction } from '@angular/fire/database';
 import { IPlayer } from '../players/IPlayer';
 import { filter, isArray, omitBy } from 'lodash-es';
 

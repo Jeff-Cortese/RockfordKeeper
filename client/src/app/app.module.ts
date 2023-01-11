@@ -4,13 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
 import { noop } from 'lodash-es';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { ClarityModule } from '@clr/angular';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ActionReducerMap, StoreModule } from '@ngrx/store';
-import { AgGridModule } from 'ag-grid-angular';
+import { AgGridModule } from '@ag-grid-community/angular';
 
 import { environment } from '../environments/environment';
 import { CoreModule } from './core/core.module';
@@ -79,7 +79,7 @@ export class HackModule {
     RootComponent
   ],
   imports: [
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }),
     AgGridModule.withComponents([]),
     AngularFireDatabaseModule,
     AngularFireModule.initializeApp(environment.firebase),

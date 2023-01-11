@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, SnapshotAction } from 'angularfire2/database';
+import { AngularFireDatabase, SnapshotAction } from '@angular/fire/database';
 import { Observable, from } from 'rxjs';
 
 import { IPlayer } from './IPlayer';

@@ -28,7 +28,7 @@ let z = 1;
         [ngStyle]="{
           'background-image': getBackgroundImage(pick),
           'transform': getTransformStyle(pick),
-          'z-index': zIndex
+          'z-index': zIndex.toString()
         }">
         <div class="selection-name clr-hidden-md-down">{{pick?.player?.firstName}}</div>
         <div class="selection-name">
@@ -39,7 +39,7 @@ let z = 1;
       </a>
     </div>
   `,
-  styleUrls: ['big-board-card.component.scss'],
+  styleUrls: ['big-board-card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BigBoardCardComponent implements OnInit, OnDestroy {

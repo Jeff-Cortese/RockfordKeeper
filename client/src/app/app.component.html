@@ -68,6 +68,7 @@
               [class.clr-hidden-sm-down]="mobileTab !== 'PLAYERS'"
               [players]="state?.players"
               [canMakePick]="state?.isAdmin"
+              [showDepth]="state?.showDepth"
               (playerClicked)="onPlayerClicked($event)">
             </app-players>
 

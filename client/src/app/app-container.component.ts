@@ -8,7 +8,7 @@ import { tap, publishReplay, refCount, takeUntil } from 'rxjs/operators';
 import { IAppState, initialState } from './state/appState';
 import {
   GetCurrentPickAction, GetOwnersAction, GetPicksAction, GetPlayersAction,
-  MakeAdminAction
+  MakeAdminAction, ShowDepthAction
 } from './state/appActions';
 
 @Component({
@@ -39,6 +39,9 @@ export class AppContainerComponent implements OnInit, OnDestroy {
       tap((params: Params) => {
         if (params.admin === 'true') {
           this.store.dispatch(MakeAdminAction());
+        }
+        if (params.showDepth === 'true') {
+          this.store.dispatch(ShowDepthAction());
         }
       }),
       takeUntil(this.ngDestroy$)

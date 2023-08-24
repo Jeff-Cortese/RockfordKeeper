@@ -1,0 +1,42 @@
+.depth-chart-1 {
+  height: 7px;
+  width: 7px;
+  margin-right: 5px;
+  background-color: #1873ff;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+
+.depth-chart-3 {
+  height: 7px;
+  width: 7px;
+  margin-right: 5px;
+  background-color: #d30fff;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+
+.depth-chart-2 {
+  height: 7px;
+  width: 7px;
+  margin-right: 5px;
+  background-color: #f10e56;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+
+.depth-chart-4 {
+  height: 7px;
+  width: 7px;
+  margin-right: 5px;
+  background-color: #71807f;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: middle;
+}

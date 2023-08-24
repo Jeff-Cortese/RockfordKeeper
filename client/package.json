@@ -5,7 +5,7 @@
     "ng": "ng",
     "setup": "npx firebase login",
     "start": "ng serve --source-map",
-    "build": "ng build --configuration production --base-href \"https://rockfordkeeper2022.web.app/\"",
+    "build": "ng build --configuration production --base-href \"https://rockfordkeeper2023.web.app/\"",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",

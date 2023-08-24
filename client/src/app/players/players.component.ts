@@ -22,6 +22,7 @@ const defaultFilter: { [TKey in PlayerPosition]: boolean } = Object.freeze({
 export class PlayersComponent {
   @Input() players: SnapshotAction<IPlayer>[];
   @Input() canMakePick = false;
+  @Input() showDepth = false;
 
   @Output() playerClicked = new EventEmitter<SnapshotAction<IPlayer>>();
 

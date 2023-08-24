@@ -72,6 +72,7 @@
                  (click)="playerCellClicked(row)"
             >
               <div class="clr-col">
+                <span *ngIf="showDepth" class="depth-chart-{{row.payload.val().positionDepth}}" title="Depth Chart: {{row.payload.val().positionDepth}}"></span>
                 <span class="player-name">{{row.payload.val().name}}</span>
                 <span *ngIf="row.payload.val().injuryStatus && row.payload.val().injuryStatus !== 'ACTIVE'"> ({{row.payload.val().injuryStatus[0]}})</span>
               </div>

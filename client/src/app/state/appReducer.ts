@@ -68,8 +68,8 @@ export function reducer(state: IAppState = initialState, action: any): IAppState
       return { ...state, isAdmin: true };
     }
 
-    case 'SHOW_DEPTH': {
-      return { ...state, showDepth: true };
+    case 'SHOW_EXTRA': {
+      return { ...state, showExtra: true };
     }
 
     default: {

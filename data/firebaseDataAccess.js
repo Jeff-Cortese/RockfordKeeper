@@ -6,21 +6,19 @@ const { object } = require('rxfire/database');
 const { initializeApp } = require('firebase');
 require('firebase/database');
 
-const baseUrl = 'https://rockfordkeeper2022-default-rtdb.firebaseio.com';
+const appConfig = {
+  apiKey: 'AIzaSyDsUS_QC_7jWkHba3t20c207ME5f82DuSE',
+  authDomain: 'rockfordkeeper2023.firebaseapp.com',
+  databaseURL: 'https://rockfordkeeper2023-default-rtdb.firebaseio.com',
+  projectId: 'rockfordkeeper2023',
+  storageBucket: 'rockfordkeeper2023.appspot.com',
+  messagingSenderId: '674579017967',
+  appId: '1:674579017967:web:fc0eab8ef5a42942daab1a'
+};
 
 module.exports.getRoot$ = () => {
-  const app = initializeApp({
-    apiKey: 'AIzaSyAWYMT1YTd0ETez_F6I8Y6HsbyFhMMcZbA',
-    authDomain: 'rockfordkeeper2022.firebaseapp.com',
-    databaseUrl: 'https://rockfordkeeper2022-default-rtdb.firebaseio.com',
-    projectId: 'rockfordkeeper2022',
-    storageBucket: 'rockfordkeeper2022.appspot.com',
-    messagingSenderId: '588249551467',
-    appId: '1:588249551467:web:58a960aec7419d3c4e572e'
-  });
-
+  const app = initializeApp(appConfig);
   const root$ = object(app.database().ref());
-
   // every 6 minutes
   return timer(0, 300000).pipe(
     mergeMap(() => root$.pipe(take(1))),
@@ -28,8 +26,20 @@ module.exports.getRoot$ = () => {
   )
 };
 
+module.exports.dropData = async () => {
+  await fetch(`${appConfig.databaseURL}/owners.json`, {
+    method: 'DELETE'
+  });
+  await fetch(`${appConfig.databaseURL}/players.json`, {
+    method: 'DELETE'
+  });
+  await fetch(`${appConfig.databaseURL}/picks.json`, {
+    method: 'DELETE'
+  });
+}
+
 module.exports.writeOwners = async owners => {
-  await fetch(`${baseUrl}/owners.json`, {
+  await fetch(`${appConfig.databaseURL}/owners.json`, {
     method: 'PUT',
     body: JSON.stringify(owners)
   });
@@ -37,7 +47,7 @@ module.exports.writeOwners = async owners => {
 
 module.exports.writePlayers = async players => {
   for (const player of players) {
-    await fetch(`${baseUrl}/players.json`, {
+    await fetch(`${appConfig.databaseURL}/players.json`, {
       method: 'POST',
       body: JSON.stringify(player)
     });
@@ -46,9 +56,14 @@ module.exports.writePlayers = async players => {
 
 module.exports.writePicks = async picks => {
   for (const pick of picks) {
-    await fetch(`${baseUrl}/picks/${pick.overallSelection}.json`, {
+    await fetch(`${appConfig.databaseURL}/picks/${pick.overallSelection}.json`, {
       method: 'PUT',
       body: JSON.stringify(pick)
     });
   }
+
+  await fetch(`${appConfig.databaseURL}/currentPick.json`, {
+    method: 'PUT',
+    body: JSON.stringify(picks[0])
+  });
 };

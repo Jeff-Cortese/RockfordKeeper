@@ -1,50 +1,50 @@
 {
   "Alex": {
     "name": "Alex",
-    "colOrdinal": 4
+    "colOrdinal": 5
   },
   "Andrew": {
     "name": "Andrew",
-    "colOrdinal": 11
+    "colOrdinal": 4
   },
   "Brad": {
     "name": "Brad",
-    "colOrdinal": 5
+    "colOrdinal": 2
   },
   "Collin": {
     "name": "Collin",
-    "colOrdinal": 10
+    "colOrdinal": 3
   },
   "Dustin": {
     "name": "Dustin",
-    "colOrdinal": 7
+    "colOrdinal": 6
   },
   "Jeff": {
     "name": "Jeff",
-    "colOrdinal": 8
+    "colOrdinal": 10
   },
   "Josh": {
     "name": "Josh",
-    "colOrdinal": 9
+    "colOrdinal": 1
   },
   "Petey": {
     "name": "Petey",
-    "colOrdinal": 12
+    "colOrdinal": 11
   },
   "Katie": {
     "name": "Katie",
-    "colOrdinal": 2
+    "colOrdinal": 9
   },
   "Shannon": {
     "name": "Shannon",
-    "colOrdinal": 6
+    "colOrdinal": 12
   },
   "Eron": {
     "name": "Eron",
-    "colOrdinal": 1
+    "colOrdinal": 7
   },
   "Zack": {
     "name": "Zack",
-    "colOrdinal": 3
+    "colOrdinal": 8
   }
 }

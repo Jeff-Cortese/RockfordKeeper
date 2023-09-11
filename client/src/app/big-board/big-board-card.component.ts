@@ -28,8 +28,10 @@ let z = 1;
         [ngStyle]="{
           'background-image': getBackgroundImage(pick),
           'transform': getTransformStyle(pick),
-          'z-index': zIndex.toString()
+          'z-index': zIndex.toString(),
+          'height': isNew ? '125%' : '100%'
         }">
+        <div *ngIf="isNew" class="big-pick-title text-center">{{pick.teamId}} selected</div>
         <div class="selection-name clr-hidden-md-down">{{pick?.player?.firstName}}</div>
         <div class="selection-name">
           {{pick?.player?.lastName}}

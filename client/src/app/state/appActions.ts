@@ -29,7 +29,7 @@ export const ChangePickOwner = createAction('CHANGE_PICK_OWNER', props<{ pick: I
 export const ChangeCurrentPickAction = createAction('CHANGE_CURRENT_PICK', props<{ newPick: SnapshotAction<IPick> }>());
 export const SelectionChangingDone = createAction('SELECTION_CHANGING_DONE');
 export const MakeAdminAction = createAction('MAKE_USER_ADMIN');
-export const ShowDepthAction = createAction('SHOW_DEPTH');
+export const ShowExtraAction = createAction('SHOW_EXTRA');
 
 export const AppActions = [
   GetPicksAction, GetPicksDoneAction, GetPicksFailAction,
@@ -41,5 +41,5 @@ export const AppActions = [
   ChangeCurrentPickAction,
   SelectionChangingDone,
   MakeAdminAction,
-  ShowDepthAction
+  ShowExtraAction
 ];

@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "setup": "npx firebase login",
-    "start": "ng serve --source-map",
+    "start": "ng serve --configuration development --source-map",
     "build": "ng build --configuration production --base-href \"https://rockfordkeeper2023.web.app/\"",
     "test": "ng test",
     "lint": "ng lint",

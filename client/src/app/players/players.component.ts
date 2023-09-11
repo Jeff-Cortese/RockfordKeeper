@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { identity, includes, isEmpty, some } from 'lodash-es';
+import { identity, includes, isEmpty, some, get } from 'lodash-es';
 import { IPlayer, PlayerPosition } from '../core/players/IPlayer';
 import { SnapshotAction } from '@angular/fire/database';
 import { AgGridAngular } from '@ag-grid-community/angular';
@@ -22,7 +22,7 @@ const defaultFilter: { [TKey in PlayerPosition]: boolean } = Object.freeze({
 export class PlayersComponent {
   @Input() players: SnapshotAction<IPlayer>[];
   @Input() canMakePick = false;
-  @Input() showDepth = false;
+  @Input() showExtra = false;
 
   @Output() playerClicked = new EventEmitter<SnapshotAction<IPlayer>>();
 
@@ -41,6 +41,8 @@ export class PlayersComponent {
   getRowClass = ({ data: playerSnapshot }) =>  playerSnapshot.payload.val().isTaken ? 'player-taken' : '';
 
   getPayloadValue = (prop) => ({ data }) => data.payload.val()[prop];
+
+  deepGetPayloadValue = prop => ({ data }) => get(data.payload.val(), prop);
 
   shouldShowPlayer = p => !this.shouldHidePlayer(p);
 

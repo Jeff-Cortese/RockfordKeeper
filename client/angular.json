@@ -75,6 +75,9 @@
           "configurations": {
             "production": {
               "browserTarget": "ffb-drafter:build:production"
+            },
+            "development": {
+              "browserTarget": "ffb-drafter:build:development"
             }
           }
         },

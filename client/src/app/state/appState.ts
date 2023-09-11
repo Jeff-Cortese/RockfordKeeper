@@ -11,7 +11,7 @@ export interface IAppState {
   isUnselectingPlayer: boolean;
   isSelectionChanging: boolean;
   isAdmin: boolean;
-  showDepth: boolean;
+  showExtra: boolean;
 
   // server state
   picks: SnapshotAction<IPick>[];
@@ -28,7 +28,7 @@ export const initialState: IAppState = {
   isUnselectingPlayer: false,
   isSelectionChanging: false,
   isAdmin: false,
-  showDepth: false,
+  showExtra: false,
 
   picks: [],
   owners: [],
